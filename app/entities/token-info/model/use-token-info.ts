@@ -1,6 +1,6 @@
 'use client';
 
-import { Token } from '@solflare-wallet/utl-sdk';
+import type { Token } from '@solflare-wallet/utl-sdk';
 import { Cluster } from '@utils/cluster';
 import { getTokenInfoSwrKey } from '@utils/token-info';
 import { useEffect } from 'react';

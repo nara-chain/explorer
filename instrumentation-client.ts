@@ -6,6 +6,16 @@ import * as Sentry from '@sentry/nextjs';
 
 import { createSentryConfig } from './sentry/config';
 
-Sentry.init(createSentryConfig('client'));
+const sentryDisabled = process.env.NEXT_DISABLE_SENTRY === 'true';
 
-export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
+if (!sentryDisabled) {
+    Sentry.init(createSentryConfig('client'));
+}
+
+export const onRouterTransitionStart = (...args: Parameters<typeof Sentry.captureRouterTransitionStart>) => {
+    if (sentryDisabled) {
+        return;
+    }
+
+    return Sentry.captureRouterTransitionStart(...args);
+};

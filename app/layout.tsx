@@ -15,7 +15,7 @@ import dynamic from 'next/dynamic';
 import { JetBrains_Mono } from 'next/font/google';
 import { Metadata } from 'next/types';
 
-import { TokenInfoBatchProvider } from '@/app/entities/token-info';
+import { TokenInfoBatchProvider } from '@/app/entities/token-info/model/token-info-batch-provider';
 import { CookieConsent } from '@/app/features/cookie';
 import { VisibilityProvider } from '@/app/shared/lib/visibility';
 

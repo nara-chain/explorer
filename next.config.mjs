@@ -11,6 +11,7 @@ const __dirname = path.dirname(__filename);
 const ADDRESS_ALIASES = ['account', 'accounts', 'addresses'];
 const TX_ALIASES = ['txs', 'txn', 'txns', 'transaction', 'transactions'];
 const SUPPLY_ALIASES = ['accounts', 'accounts/top'];
+const sentryDisabled = process.env.NEXT_DISABLE_SENTRY === 'true';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -88,7 +89,7 @@ const nextConfig = {
 };
 
 /// Add wrapper to track errors with Sentry and BotID for bot protection
-export default withBotId(withSentryConfig(nextConfig, createSentryBuildConfig()));
+export default withBotId(sentryDisabled ? nextConfig : withSentryConfig(nextConfig, createSentryBuildConfig()));
 
 /// We going to handle Sentry errors step-by-step by cathcing unhandled exceptions route-wise
 /// See: https://nextjs.org/docs/app/getting-started/error-handling#nested-error-boundaries

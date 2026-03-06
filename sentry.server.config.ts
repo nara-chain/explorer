@@ -6,4 +6,6 @@ import * as Sentry from '@sentry/nextjs';
 
 import { createSentryConfig } from './sentry/config';
 
-Sentry.init(createSentryConfig('server'));
+if (process.env.NEXT_DISABLE_SENTRY !== 'true') {
+    Sentry.init(createSentryConfig('server'));
+}

@@ -1,16 +1,22 @@
-import { ChainId } from '@solflare-wallet/utl-sdk';
+import type { ChainId } from '@solflare-wallet/utl-sdk';
 import { Cluster } from '@utils/cluster';
 
 import { GENESIS_HASHES } from './const';
 
+const CHAIN_ID = {
+    DEVNET: 103 as ChainId,
+    MAINNET: 101 as ChainId,
+    TESTNET: 102 as ChainId,
+} as const;
+
 function getChainIdFromGenesisHash(genesisHash: string): ChainId | undefined {
     switch (genesisHash) {
         case GENESIS_HASHES.MAINNET:
-            return ChainId.MAINNET;
+            return CHAIN_ID.MAINNET;
         case GENESIS_HASHES.DEVNET:
-            return ChainId.DEVNET;
+            return CHAIN_ID.DEVNET;
         case GENESIS_HASHES.TESTNET:
-            return ChainId.TESTNET;
+            return CHAIN_ID.TESTNET;
         default:
             return undefined;
     }
@@ -19,11 +25,11 @@ function getChainIdFromGenesisHash(genesisHash: string): ChainId | undefined {
 export function getChainId(cluster: Cluster, genesisHash?: string): ChainId | undefined {
     switch (cluster) {
         case Cluster.MainnetBeta:
-            return ChainId.MAINNET;
+            return CHAIN_ID.MAINNET;
         case Cluster.Testnet:
-            return ChainId.TESTNET;
+            return CHAIN_ID.TESTNET;
         case Cluster.Devnet:
-            return ChainId.DEVNET;
+            return CHAIN_ID.DEVNET;
         case Cluster.Simd296:
         case Cluster.Custom:
             return genesisHash ? getChainIdFromGenesisHash(genesisHash) : undefined;
