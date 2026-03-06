@@ -49,7 +49,7 @@ export default function RootLayout({ analytics, children }: { analytics: React.R
         <html lang="en" className={`${rubikFont.variable}`}>
             <head>
                 <link rel="icon" href="/favicon.png" type="image/png" />
-                <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+                <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
                 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
                 <BotIdClient
                     protect={isEnvEnabled(process.env.NEXT_PUBLIC_BOTID_ENABLED) ? botIdProtectedRoutes : []}

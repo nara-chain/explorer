@@ -62,6 +62,7 @@ function parseQuery(searchParams: ReadonlyURLSearchParams | null): Cluster {
             return Cluster.Testnet;
         case 'simd296':
             return Cluster.Simd296;
+        case 'mainnet':
         case 'mainnet-beta':
         default:
             return Cluster.MainnetBeta;

@@ -1,6 +1,5 @@
 'use client';
 
-import Logo from '@img/logos-solana/dark-explorer-logo.svg';
 import { useDisclosure } from '@mantine/hooks';
 import { useClusterPath } from '@utils/url';
 import Image from 'next/image';
@@ -18,17 +17,15 @@ export function Navbar({ children }: INavbarProps) {
     const [navOpened, navHandlers] = useDisclosure(false);
     const homePath = useClusterPath({ pathname: '/' });
     const featureGatesPath = useClusterPath({ pathname: '/feature-gates' });
-    const tosPath = useClusterPath({ pathname: '/tos' });
-    const supplyPath = useClusterPath({ pathname: '/supply' });
-    const programsPath = useClusterPath({ pathname: '/verified-programs' });
     const inspectorPath = useClusterPath({ pathname: '/tx/inspector' });
     const selectedLayoutSegment = useSelectedLayoutSegment();
     const selectedLayoutSegments = useSelectedLayoutSegments();
     return (
         <nav className="navbar navbar-expand-lg navbar-light">
             <div className="container px-4">
-                <Link href={homePath}>
-                    <Image alt="Solana Explorer" height={22} src={Logo} width={214} priority />
+                <Link href={homePath} className="d-inline-flex align-items-center gap-2 text-decoration-none">
+                    <Image alt="Explorer" className="object-contain" height={32} src="/favicon.png" width={32} priority />
+                    <span className="fw-bold text-white fs-4 lh-1">NARA</span>
                 </Link>
 
                 <button className="navbar-toggler" type="button" onClick={navHandlers.toggle}>
@@ -54,22 +51,6 @@ export function Navbar({ children }: INavbarProps) {
                         </li>
                         <li className="nav-item">
                             <Link
-                                className={`nav-link${selectedLayoutSegment === 'supply' ? ' active' : ''}`}
-                                href={supplyPath}
-                            >
-                                Supply
-                            </Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link
-                                className={`nav-link${selectedLayoutSegment === 'programs' ? ' active' : ''}`}
-                                href={programsPath}
-                            >
-                                Programs
-                            </Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link
                                 className={`nav-link${
                                     selectedLayoutSegments[0] === 'tx' && selectedLayoutSegments[1] === '(inspector)'
                                         ? ' active'
@@ -80,18 +61,10 @@ export function Navbar({ children }: INavbarProps) {
                                 Inspector
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link
-                                className={`nav-link${selectedLayoutSegment === 'tos' ? ' active' : ''}`}
-                                href={tosPath}
-                            >
-                                ToS
-                            </Link>
-                        </li>
                         <li className="nav-item align-items-center justify-content-center pt-2">
                             <a
                                 aria-label="GitHub Repository"
-                                href="https://github.com/solana-foundation/explorer"
+                                href="https://github.com/nara-chain/explorer"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="mx-3"

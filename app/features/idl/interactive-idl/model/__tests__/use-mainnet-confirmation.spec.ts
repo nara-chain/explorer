@@ -14,7 +14,7 @@ describe('useMainnetConfirmation', () => {
         vi.clearAllMocks();
     });
 
-    describe('when cluster is Mainnet Beta', () => {
+    describe('when cluster is Mainnet', () => {
         it('should require confirmation before executing action', async () => {
             setup();
 

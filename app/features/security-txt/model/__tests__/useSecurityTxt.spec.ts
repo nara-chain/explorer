@@ -13,7 +13,7 @@ import { useSecurityTxt } from '../useSecurityTxt';
 vi.mock('@/app/providers/cluster', () => ({
     useCluster: vi.fn(() => ({
         cluster: 'mainnet-beta',
-        url: 'https://api.mainnet-beta.solana.com',
+        url: 'https://mainnet-api.nara.build',
     })),
 }));
 

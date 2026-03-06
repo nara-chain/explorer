@@ -12,7 +12,7 @@ export enum Cluster {
     Custom,
 }
 
-export const CLUSTERS = [Cluster.MainnetBeta, Cluster.Testnet, Cluster.Devnet, Cluster.Simd296, Cluster.Custom];
+export const CLUSTERS = [Cluster.MainnetBeta, Cluster.Devnet, Cluster.Custom];
 
 export function clusterSlug(cluster: Cluster): string {
     switch (cluster) {
@@ -32,7 +32,7 @@ export function clusterSlug(cluster: Cluster): string {
 export function clusterName(cluster: Cluster): string {
     switch (cluster) {
         case Cluster.MainnetBeta:
-            return 'Mainnet Beta';
+            return 'Mainnet';
         case Cluster.Testnet:
             return 'Testnet';
         case Cluster.Devnet:
@@ -44,15 +44,14 @@ export function clusterName(cluster: Cluster): string {
     }
 }
 
-export const MAINNET_BETA_URL = 'https://api.mainnet-beta.solana.com';
+export const MAINNET_BETA_URL = 'https://mainnet-api.nara.build';
 export const TESTNET_URL = 'https://api.testnet.solana.com';
-export const DEVNET_URL = 'https://api.devnet.solana.com';
+export const DEVNET_URL = 'https://devnet-api.nara.build';
 export const SIMD296_URL = 'https://simd-0296.surfnet.dev:8899';
 
-// On localhost we use the default public Solana RPCs (e.g. api.mainnet-beta.solana.com)
-// unless custom ones (server + client) are specified via env vars.
-// In deployed environments (production/preview) we rewrite to the explorer-api subdomain
-// so the request goes to our own RPC instance.
+// On localhost we use the default RPCs unless custom ones (server + client)
+// are specified via env vars. For hosts that use the old api.* pattern we keep
+// the explorer-api rewrite in deployed environments.
 //
 // Custom RPC endpoints are configured via env vars in two tiers:
 //   NEXT_PUBLIC_*_RPC_URL — exposed to the browser (clusterUrl).
@@ -66,9 +65,13 @@ export const SIMD296_URL = 'https://simd-0296.surfnet.dev:8899';
 const modifyUrl = (url: string): string => {
     if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
         return url;
-    } else {
-        return url.replace('api', 'explorer-api');
     }
+
+    const parsedUrl = new URL(url);
+    if (parsedUrl.hostname.startsWith('api.')) {
+        parsedUrl.hostname = `explorer-api.${parsedUrl.hostname.slice(4)}`;
+    }
+    return parsedUrl.toString();
 };
 
 export function clusterUrl(cluster: Cluster, customUrl: string): string {

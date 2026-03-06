@@ -2,7 +2,7 @@
 
 import { useCluster, useClusterModal, useUpdateCustomUrl } from '@providers/cluster';
 import { useDebounceCallback } from '@react-hook/debounce';
-import { Cluster, clusterName, CLUSTERS, clusterSlug, ClusterStatus } from '@utils/cluster';
+import { Cluster, clusterName, CLUSTERS, clusterSlug, ClusterStatus, DEFAULT_CLUSTER } from '@utils/cluster';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -115,7 +115,7 @@ function ClusterToggle() {
 
                 const nextSearchParams = new URLSearchParams(searchParams?.toString());
                 const slug = clusterSlug(net);
-                if (slug !== 'mainnet-beta') {
+                if (slug !== clusterSlug(DEFAULT_CLUSTER)) {
                     nextSearchParams.set('cluster', slug);
                 } else {
                     nextSearchParams.delete('cluster');

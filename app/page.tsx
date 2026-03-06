@@ -21,10 +21,8 @@ import { Status, SupplyProvider, useFetchSupply, useSupply } from '@providers/su
 import { ClusterStatus } from '@utils/cluster';
 import { abbreviatedNumber, lamportsToSol, slotsToHumanString } from '@utils/index';
 import { percentage } from '@utils/math';
+import { getStakeTotals } from '@utils/staking';
 import React from 'react';
-
-import { DeveloperResources } from './components/DeveloperResources';
-import { UpcomingFeatures } from './utils/feature-gate/UpcomingFeatures';
 
 export default function Page() {
     return (
@@ -41,10 +39,6 @@ export default function Page() {
                             <LiveTransactionStatsCard />
                         </div>
                     </div>
-
-                    <DeveloperResources />
-
-                    <UpcomingFeatures />
                 </div>
             </SupplyProvider>
         </StatsProvider>
@@ -68,20 +62,7 @@ function StakingComponent() {
         }
     }, [status]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const delinquentStake = React.useMemo(() => {
-        if (voteAccounts) {
-            return voteAccounts.delinquent.reduce((prev, current) => prev + current.activatedStake, BigInt(0));
-        }
-    }, [voteAccounts]);
-
-    const activeStake = React.useMemo(() => {
-        if (voteAccounts && delinquentStake) {
-            return (
-                voteAccounts.current.reduce((prev, current) => prev + current.activatedStake, BigInt(0)) +
-                delinquentStake
-            );
-        }
-    }, [voteAccounts, delinquentStake]);
+    const { delinquentStake, activeStake } = React.useMemo(() => getStakeTotals(voteAccounts), [voteAccounts]);
 
     if (supply === Status.Disconnected) {
         // we'll return here to prevent flicker
@@ -103,7 +84,7 @@ function StakingComponent() {
     const circulatingPercentage = percentage(supply.circulating, supply.total, 2).toFixed(1);
 
     let delinquentStakePercentage;
-    if (delinquentStake && activeStake) {
+    if (delinquentStake !== undefined && activeStake !== undefined && activeStake > BigInt(0)) {
         delinquentStakePercentage = percentage(delinquentStake, activeStake, 2).toFixed(1);
     }
 
@@ -127,7 +108,7 @@ function StakingComponent() {
                 <div className="card">
                     <div className="card-body">
                         <h4>Active Stake</h4>
-                        {activeStake ? (
+                        {activeStake !== undefined ? (
                             <h1>
                                 <em>{displayLamports(activeStake)}</em> / <small>{displayLamports(supply.total)}</small>
                             </h1>

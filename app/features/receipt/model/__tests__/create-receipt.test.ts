@@ -48,7 +48,7 @@ describe('createReceipt', () => {
                     formatted: '0.000005',
                     raw: 5000,
                 },
-                network: 'Mainnet Beta',
+                network: 'Mainnet',
                 receiver: {
                     truncated: '65MUM..L2Fhk',
                 },
@@ -188,7 +188,7 @@ describe('createReceipt', () => {
                     formatted: '0.000005',
                     raw: 5000,
                 },
-                network: 'Mainnet Beta',
+                network: 'Mainnet',
                 receiver: {
                     truncated: 'Hd3f3..R3bD5',
                 },
@@ -290,7 +290,7 @@ describe('createReceipt', () => {
                     formatted: '0.000005',
                     raw: 5000,
                 },
-                network: 'Mainnet Beta',
+                network: 'Mainnet',
                 receiver: {
                     truncated: '65MUM..L2Fhk',
                 },
@@ -328,7 +328,7 @@ describe('createReceipt', () => {
                     formatted: '0.000005',
                     raw: 5000,
                 },
-                network: 'Mainnet Beta',
+                network: 'Mainnet',
                 receiver: {
                     truncated: '65MUM..L2Fhk',
                 },
