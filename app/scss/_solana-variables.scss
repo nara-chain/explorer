@@ -25,11 +25,11 @@ $rainbow-1: #fa62fc;
 $rainbow-2: #be84e8;
 $rainbow-3: #79abd2;
 $rainbow-4: #38d0bd;
-$rainbow-5: #1dd79b;
+$rainbow-5: #39ff14;
 
-$primary: #42ba96 !default;
-$primary-dark: #33a382 !default;
-$success: #19be56 !default;
+$primary: #39ff14 !default;
+$primary-dark: #2bc90f !default;
+$success: #39ff14 !default;
 $secondary: $gray-700;
 $danger: #b45be1;
 $warning: #d83aeb !default;
@@ -81,7 +81,7 @@ $popover-text-color: #ffffff !default;
     background: #38d0bd;
 }
 .bg-rainbow-5 {
-    background: #1dd79b;
+    background: #39ff14;
 }
 
 .text-rainbow-1 {
@@ -97,5 +97,5 @@ $popover-text-color: #ffffff !default;
     color: #38d0bd;
 }
 .text-rainbow-5 {
-    color: #1dd79b;
+    color: #39ff14;
 }

@@ -19,11 +19,11 @@ export function CustomToast(props: CustomToastProps) {
     const icon = (() => {
         switch (type) {
             case 'success':
-                return <CheckCircle className="e-text-green-400" size={12} aria-hidden="true" />;
+                return <CheckCircle className="e-text-accent" size={12} aria-hidden="true" />;
             case 'error':
                 return <AlertCircle className="e-text-destructive" size={12} aria-hidden="true" />;
             case 'info':
-                return <Info className="e-text-green-400" size={12} aria-hidden="true" />;
+                return <Info className="e-text-accent" size={12} aria-hidden="true" />;
         }
     })();
 

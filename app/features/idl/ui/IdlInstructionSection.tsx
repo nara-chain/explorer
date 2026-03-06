@@ -26,7 +26,7 @@ export function IdlInstructionSection({ title, description, commands }: IIdlInst
                     <div>
                         {commands.map((command, index) => (
                             <div key={index} className="e-font-mono e-text-xs">
-                                <pre className="e-whitespace-pre-wrap e-bg-transparent e-p-0 e-text-green-400">
+                                <pre className="e-whitespace-pre-wrap e-bg-transparent e-p-0 e-text-accent">
                                     <span>&gt; </span>
                                     {command}
                                 </pre>
@@ -42,7 +42,7 @@ export function IdlInstructionSection({ title, description, commands }: IIdlInst
                     aria-label={copied ? 'Copied' : 'Copy'}
                 >
                     {copied ? (
-                        <span className="e-text-green-400">Copied</span>
+                        <span className="e-text-accent">Copied</span>
                     ) : (
                         <>
                             <Copy size={16} /> Copy

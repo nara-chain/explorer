@@ -11,7 +11,7 @@ const riskLevelVariants = cva('', {
     variants: {
         level: {
             [ERiskLevel.Danger]: 'e-text-red-400',
-            [ERiskLevel.Good]: 'e-text-green-400',
+            [ERiskLevel.Good]: 'e-text-accent',
             [ERiskLevel.Warning]: 'e-text-orange-400',
         },
     },
@@ -49,7 +49,7 @@ function VerificationBadge({ source }: { source: VerificationSource }) {
             <SourceIcon source={source.name} />
             <span className="e-text-xs e-text-gray-200">{source.name}</span>
             {source.verified ? (
-                <Check className="e-text-green-400" size={16} />
+                <Check className="e-text-accent" size={16} />
             ) : (
                 <X className="e-text-red-400" size={16} />
             )}

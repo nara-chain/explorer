@@ -61,6 +61,16 @@ export function Navbar({ children }: INavbarProps) {
                                 Inspector
                             </Link>
                         </li>
+                        <li className="nav-item">
+                            <a
+                                className="nav-link"
+                                href="https://validators.nara.build/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Validators
+                            </a>
+                        </li>
                         <li className="nav-item align-items-center justify-content-center pt-2">
                             <a
                                 aria-label="GitHub Repository"

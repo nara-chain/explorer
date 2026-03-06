@@ -3,7 +3,6 @@
 import { Address } from '@components/common/Address';
 import { Epoch } from '@components/common/Epoch';
 import { ErrorCard } from '@components/common/ErrorCard';
-import { ExternalLinkWarning } from '@components/common/ExternalLinkWarning';
 import { LoadingCard } from '@components/common/LoadingCard';
 import { Slot } from '@components/common/Slot';
 import { TableCardBody } from '@components/common/TableCardBody';
@@ -11,12 +10,10 @@ import { BlockProvider, FetchStatus, useBlock, useFetchBlock } from '@providers/
 import { useCluster } from '@providers/cluster';
 import { ClusterStatus } from '@utils/cluster';
 import { displayTimestamp, displayTimestampUtc } from '@utils/date';
-import { IBRL_EXPLORER_URL } from '@utils/env';
 import { useClusterPath } from '@utils/url';
 import Link from 'next/link';
 import { notFound, useSelectedLayoutSegment } from 'next/navigation';
 import React, { PropsWithChildren } from 'react';
-import { ExternalLink } from 'react-feather';
 
 import { estimateRequestedComputeUnits } from '@/app/utils/compute-units-schedule';
 import { getEpochForSlot, getMaxComputeUnitsInBlock } from '@/app/utils/epoch-schedule';
@@ -70,14 +67,6 @@ function BlockLayoutInner({ children, params: { slot } }: Props) {
                 <div className="card">
                     <div className="card-header align-items-center">
                         <h3 className="card-header-title">Overview</h3>
-                        {IBRL_EXPLORER_URL && (
-                            <ExternalLinkWarning href={`${IBRL_EXPLORER_URL}/block/${slotNumber}`}>
-                                <>
-                                    <ExternalLink className="e-me-2 e-align-text-top" size={13} />
-                                    IBRL Explorer
-                                </>
-                            </ExternalLinkWarning>
-                        )}
                     </div>
                     <TableCardBody>
                         <tr>

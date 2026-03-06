@@ -12,7 +12,7 @@ import { isEnvEnabled } from '@utils/env';
 import { BotIdClient } from 'botid/client';
 import type { Viewport } from 'next';
 import dynamic from 'next/dynamic';
-import { Rubik } from 'next/font/google';
+import { JetBrains_Mono } from 'next/font/google';
 import { Metadata } from 'next/types';
 
 import { TokenInfoBatchProvider } from '@/app/entities/token-info';
@@ -37,16 +37,16 @@ export const viewport: Viewport = {
     width: 'device-width',
 };
 
-const rubikFont = Rubik({
+const jetbrainsMonoFont = JetBrains_Mono({
     display: 'swap',
     subsets: ['latin'],
     variable: '--explorer-default-font',
-    weight: ['300', '400', '700'],
+    weight: ['400', '500', '700', '800'],
 });
 
 export default function RootLayout({ analytics, children }: { analytics: React.ReactNode; children: React.ReactNode }) {
     return (
-        <html lang="en" className={`${rubikFont.variable}`}>
+        <html lang="en" className={`${jetbrainsMonoFont.variable}`}>
             <head>
                 <link rel="icon" href="/favicon.png" type="image/png" />
                 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />

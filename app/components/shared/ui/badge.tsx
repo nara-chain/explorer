@@ -60,7 +60,7 @@ const badgeVariants = cva(
                 destructive: 'e-border-transparent e-bg-destructive e-text-white',
                 info: 'e-border-transparent e-bg-teal-900 e-text-teal-400',
                 secondary: 'e-border-transparent e-bg-neutral-400 e-text-neutral-800',
-                success: 'e-border-transparent e-text-green-400 e-bg-green-900',
+                success: 'e-border-transparent e-text-accent e-bg-accent-900',
                 transparent:
                     'e-border-transparent e-bg-transparent e-text-neutral-200 [&_a]:e-text-neutral-200 [&_a]:hover:e-text-neutral-100',
                 warning: 'e-border-transparent e-bg-orange-950 e-text-orange-400',

@@ -28,10 +28,10 @@ export default function Page() {
     return (
         <StatsProvider>
             <SupplyProvider>
-                <div className="container mt-4">
+                <div className="container mt-4 nara-home">
                     <StakingComponent />
 
-                    <div className="row d-flex">
+                    <div className="row d-flex g-4 nara-home__grid">
                         <div className="col-md-6 d-flex">
                             <StatsCardBody />
                         </div>
@@ -89,9 +89,9 @@ function StakingComponent() {
     }
 
     return (
-        <div className="row staking-card">
+        <div className="row staking-card nara-stats-strip g-4">
             <div className="col-6 col-xl">
-                <div className="card">
+                <div className="card nara-metric-card">
                     <div className="card-body">
                         <h4>Circulating Supply</h4>
                         <h1>
@@ -105,7 +105,7 @@ function StakingComponent() {
                 </div>
             </div>
             <div className="col-6 col-xl">
-                <div className="card">
+                <div className="card nara-metric-card">
                     <div className="card-body">
                         <h4>Active Stake</h4>
                         {activeStake !== undefined ? (
@@ -155,7 +155,7 @@ function StatsCardBody() {
     const { blockHeight, absoluteSlot } = epochInfo;
 
     return (
-        <div className="card flex-grow-1">
+        <div className="card flex-grow-1 nara-panel-card">
             <div className="card-header">
                 <div className="row align-items-center">
                     <div className="col">

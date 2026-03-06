@@ -119,9 +119,7 @@ function ListItem({
 }) {
     if (!value) return null;
 
-    const content = (
-        <span className={cn('e-truncate e-text-right e-font-mono e-text-green-400', className)}>{value}</span>
-    );
+    const content = <span className={cn('e-truncate e-text-right e-font-mono e-text-accent', className)}>{value}</span>;
 
     return (
         <>
@@ -134,7 +132,7 @@ function ListItem({
                                 href={href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className={cn('e-truncate e-font-mono e-text-green-400 hover:e-underline', className)}
+                                className={cn('e-truncate e-font-mono e-text-accent hover:e-underline', className)}
                             >
                                 {value}
                             </a>
@@ -145,7 +143,7 @@ function ListItem({
                 </div>
                 {tooltipText && (
                     <TooltipContent side="top">
-                        <span className="e-text-green-400">{tooltipText}</span>
+                        <span className="e-text-accent">{tooltipText}</span>
                     </TooltipContent>
                 )}
             </Tooltip>

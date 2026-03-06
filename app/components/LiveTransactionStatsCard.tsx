@@ -15,6 +15,7 @@ Chart.register(BarElement, CategoryScale, LinearScale, Tooltip);
 type Series = 'short' | 'medium' | 'long';
 type SetSeries = (series: Series) => void;
 const SERIES: Series[] = ['short', 'medium', 'long'];
+const NARA_ACCENT = '#39FF14';
 const SERIES_INFO = {
     long: {
         interval: '6h',
@@ -160,10 +161,10 @@ function TpsBarChart({ performanceInfo, series, setSeries }: TpsBarChartProps) {
     const chartData: ChartData<'bar'> = {
         datasets: [
             {
-                backgroundColor: '#00D192',
+                backgroundColor: NARA_ACCENT,
                 borderWidth: 0,
                 data: seriesData.map(val => val || 0),
-                hoverBackgroundColor: '#00D192',
+                hoverBackgroundColor: NARA_ACCENT,
             },
         ],
         labels: seriesData.map((val, i) => {
@@ -207,19 +208,6 @@ function TpsBarChart({ performanceInfo, series, setSeries }: TpsBarChartProps) {
 
                 <div id="perf-history" className="mt-3 flex-grow-1" style={{ minHeight: '200px' }}>
                     <Bar data={chartData} options={chartOptions} style={{ height: '100%' }} />
-                </div>
-
-                <div className="text-center text-muted mt-3">
-                    <p className="mb-0">
-                        For transaction confirmation time statistics, please visit{' '}
-                        <a href="https://www.validators.app" target="_blank" rel="noopener noreferrer">
-                            validators.app
-                        </a>{' '}
-                        or{' '}
-                        <a href="https://solscan.io" target="_blank" rel="noopener noreferrer">
-                            solscan.io
-                        </a>
-                    </p>
                 </div>
             </div>
         </div>
