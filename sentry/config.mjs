@@ -54,6 +54,7 @@ export function createSentryConfig(_context) {
 export function createSentryBuildConfig() {
     // Respect the SENTRY_TELEMETRY_DISABLE environment variable
     const telemetryDisabled = process.env.SENTRY_TELEMETRY_DISABLE === 'true';
+    const hasAuthToken = Boolean(process.env.SENTRY_AUTH_TOKEN);
 
     return {
         // For all available options, see:
@@ -68,13 +69,15 @@ export function createSentryBuildConfig() {
         // This will be false in CI (disabled) and true in production (enabled)
         telemetry: !telemetryDisabled,
 
-        // Upload a larger set of source maps for prettier stack traces (increases build time)
-        widenClientFileUpload: true,
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+
+        // Keep the build lighter unless Sentry uploads are explicitly enabled.
+        widenClientFileUpload: hasAuthToken,
 
         // Automatically tree-shake Sentry logger statements to reduce bundle size
         disableLogger: true, // eslint-disable-line sort-keys-fix/sort-keys-fix,
 
         // Enables automatic instrumentation of Vercel Cron Monitors
-        automaticVercelMonitors: true, // eslint-disable-line sort-keys-fix/sort-keys-fix
+        automaticVercelMonitors: false, // eslint-disable-line sort-keys-fix/sort-keys-fix
     };
 }
