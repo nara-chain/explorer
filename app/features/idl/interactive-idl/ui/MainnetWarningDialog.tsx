@@ -34,7 +34,7 @@ export function MainnetWarningDialog({ open, onOpenChange, onConfirm, onCancel }
                     </DialogDescription>
                     <p className="e-text-sm e-text-neutral-400">
                         Please take note that this is a beta version feature and is provided on an &quot;as is&quot; and
-                        &quot;as available&quot; basis. Solana Explorer does not provide any warranties and will not be
+                        &quot;as available&quot; basis. Nara Explorer does not provide any warranties and will not be
                         liable for any loss, direct or indirect, through continued use of this feature.
                     </p>
                 </div>

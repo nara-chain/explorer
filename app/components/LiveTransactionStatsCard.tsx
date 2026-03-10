@@ -15,7 +15,9 @@ Chart.register(BarElement, CategoryScale, LinearScale, Tooltip);
 type Series = 'short' | 'medium' | 'long';
 type SetSeries = (series: Series) => void;
 const SERIES: Series[] = ['short', 'medium', 'long'];
-const NARA_ACCENT = '#39FF14';
+const NARA_ACCENT = 'rgba(57, 255, 20, 0.72)';
+const NARA_ACCENT_HOVER = 'rgba(57, 255, 20, 0.9)';
+const NARA_MUTED = 'rgba(139, 139, 139, 0.6)';
 const SERIES_INFO = {
     long: {
         interval: '6h',
@@ -34,7 +36,7 @@ const SERIES_INFO = {
 export function LiveTransactionStatsCard() {
     const [series, setSeries] = React.useState<Series>('short');
     return (
-        <div className="card flex-grow-1 d-flex flex-column">
+        <div className="card flex-grow-1 d-flex flex-column nara-panel-card">
             <div className="card-header">
                 <h4 className="card-header-title">Live Transaction Stats</h4>
             </div>
@@ -123,22 +125,35 @@ const TPS_CHART_OPTIONS = (historyMaxTps: number): ChartOptions<'bar'> => {
                 ticks: {
                     display: false,
                 },
+                border: {
+                    display: false,
+                },
             },
             y: {
-                grid: {
+                border: {
                     display: false,
+                },
+                grid: {
+                    color: 'rgba(57, 255, 20, 0.06)',
+                    lineWidth: 1,
                 },
                 min: 0,
                 suggestedMax: historyMaxTps,
                 ticks: {
-                    count: 10,
+                    count: 6,
                     display: true,
                     font: {
-                        size: 10,
+                        family: "'JetBrains Mono', monospace",
+                        size: 9,
                     },
+                    color: 'rgba(139, 139, 139, 0.5)',
                     precision: 0,
-                    stepSize: 500,
-                    textStrokeColor: '#EEE',
+                    padding: 8,
+                    callback: (value: number | string) => {
+                        const n = Number(value);
+                        if (n >= 1000) return `${(n / 1000).toFixed(1)}K`;
+                        return Math.round(n).toString();
+                    },
                 },
             },
         },
@@ -163,8 +178,11 @@ function TpsBarChart({ performanceInfo, series, setSeries }: TpsBarChartProps) {
             {
                 backgroundColor: NARA_ACCENT,
                 borderWidth: 0,
+                borderRadius: 1,
                 data: seriesData.map(val => val || 0),
-                hoverBackgroundColor: NARA_ACCENT,
+                hoverBackgroundColor: NARA_ACCENT_HOVER,
+                barPercentage: 0.8,
+                categoryPercentage: 0.9,
             },
         ],
         labels: seriesData.map((val, i) => {
@@ -188,17 +206,28 @@ function TpsBarChart({ performanceInfo, series, setSeries }: TpsBarChartProps) {
             <hr className="my-0" />
 
             <div className="card-body py-3 d-flex flex-column flex-grow-1">
-                <div className="d-flex justify-content-between w-100">
-                    <span className="mb-0 font-size-sm">TPS history</span>
+                <div className="d-flex justify-content-between align-items-center w-100">
+                    <span style={{ fontSize: '0.5625rem', fontWeight: 400, letterSpacing: '0.15em', textTransform: 'uppercase' as const, opacity: 0.5, color: '#39ff14' }}>TPS history</span>
 
-                    <div className="font-size-sm">
+                    <div style={{ display: 'flex', gap: '4px' }}>
                         {SERIES.map(key => (
                             <button
                                 key={key}
                                 onClick={() => setSeries(key)}
-                                className={classNames('btn btn-sm btn-white ms-2', {
+                                className={classNames('btn btn-sm', {
                                     active: series === key,
                                 })}
+                                style={{
+                                    fontSize: '0.5625rem',
+                                    fontWeight: 400,
+                                    letterSpacing: '0.08em',
+                                    padding: '2px 8px',
+                                    lineHeight: 1.6,
+                                    border: series === key ? '1px solid rgba(57, 255, 20, 0.4)' : '1px solid rgba(57, 255, 20, 0.12)',
+                                    background: series === key ? 'rgba(57, 255, 20, 0.1)' : 'transparent',
+                                    color: series === key ? '#39ff14' : '#8b8b8b',
+                                    borderRadius: 0,
+                                }}
                             >
                                 {SERIES_INFO[key].interval}
                             </button>

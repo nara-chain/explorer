@@ -12,8 +12,8 @@ type Props = Readonly<{
 
 export async function generateMetadata({ params: { signature } }: Props): Promise<Metadata> {
     return withSentryTraceData({
-        description: `Interactively inspect the transaction with signature ${signature} on Solana`,
-        title: `Transaction Inspector | ${signature} | Solana`,
+        description: `Interactively inspect the transaction with signature ${signature} on Nara`,
+        title: `Transaction Inspector | ${signature} | Nara`,
     });
 }
 

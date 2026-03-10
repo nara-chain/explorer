@@ -55,8 +55,8 @@ describe('SolBalanceChangesCard', () => {
 
         expect(screen.getByText('#')).toBeInTheDocument();
         expect(screen.getByText('Address')).toBeInTheDocument();
-        expect(screen.getByText('Change (SOL)')).toBeInTheDocument();
-        expect(screen.getByText('Post Balance (SOL)')).toBeInTheDocument();
+        expect(screen.getByText('Change (NARA)')).toBeInTheDocument();
+        expect(screen.getByText('Post Balance (NARA)')).toBeInTheDocument();
     });
 
     it('should render single balance change', () => {

@@ -216,17 +216,75 @@ a {
     position: sticky;
     top: 0;
     z-index: 100;
+    height: 56px;
+    padding-top: 0;
+    padding-bottom: 0;
     background: rgba(12, 12, 12, 0.9) !important;
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--nara-border) !important;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.24);
 }
 
+/* Logo: absolute left, outside the centered container */
+.navbar-brand-nara {
+    position: absolute;
+    left: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+/* Right side (GitHub + Devnet): absolute right, mirrors logo placement */
+.navbar-right-nara {
+    position: absolute;
+    right: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+/* Force navbar container to match content width & center.
+   Left padding 12px matches the content .container below so search bar left edge aligns with cards.
+   Right padding larger to clear the absolutely-positioned right-side (GitHub + Devnet). */
+.navbar > .container {
+    min-width: 0 !important;
+    max-width: 1140px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 12px !important;
+    padding-right: 160px !important;
+}
+
+/* Search bar wrapper: matches first card column width below.
+   No padding so edges align flush with card edges. */
+.navbar .navbar-children {
+    max-width: 546px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.navbar .search-bar__control {
+    min-height: 2.2rem !important;
+    height: 2.2rem !important;
+    border: none !important;
+    background: transparent !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Remove focus outline/shadow that shifts visual edges */
+.navbar .search-bar__control:focus,
+.navbar .search-bar__control--is-focused {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+
 .navbar .nav-link {
     color: var(--nara-muted) !important;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     transition:
         color 0.2s ease,
@@ -290,12 +348,29 @@ a {
 .card h5,
 .card .h4,
 .card .h5 {
+    font-weight: 400;
     letter-spacing: 0.04em;
+}
+
+.card-header-title {
+    font-size: 0.5625rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase;
+    opacity: 0.5;
+    color: var(--nara-accent) !important;
 }
 
 .card h1,
 .card .h1 {
     font-weight: 800;
+    letter-spacing: normal;
+}
+
+/* Stat value h1 — nara.build uses normal letter-spacing on stat values (28px/800) */
+.nara-metric-card h1,
+.nara-metric-card .h1 {
+    letter-spacing: normal !important;
 }
 
 .table,
@@ -309,6 +384,20 @@ a {
 .table td,
 .table th {
     color: var(--nara-text);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    padding: 0.65rem 1.25rem;
+}
+
+/* Left-side labels in stat tables: muted gray */
+.table td.w-100 {
+    color: var(--nara-muted);
+}
+
+/* Right-side values: normal text color */
+.table td.text-lg-end {
+    color: var(--nara-text);
+    white-space: nowrap;
 }
 
 .text-muted,
@@ -459,10 +548,11 @@ hr {
 .nara-hero__eyebrow {
     margin-bottom: 1rem;
     color: var(--nara-accent);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.28em;
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
+    opacity: 0.5;
 }
 
 .nara-hero__eyebrow::before {
@@ -508,17 +598,18 @@ hr {
 .nara-hero__meta-card strong {
     color: var(--nara-text);
     font-size: clamp(1rem, 2vw, 1.4rem);
-    font-weight: 800;
+    font-weight: 400;
     letter-spacing: -0.03em;
     overflow-wrap: anywhere;
 }
 
 .nara-hero__meta-label {
     color: rgba(57, 255, 20, 0.72);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
+    font-size: 0.5625rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
+    opacity: 0.5;
 }
 
 .nara-stats-strip .col-6 {
@@ -551,23 +642,25 @@ hr {
 .nara-metric-card__label {
     margin-bottom: 0.9rem;
     color: rgba(57, 255, 20, 0.68);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
+    font-size: 0.5625rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
+    opacity: 0.5;
 }
 
 .nara-metric-card h4 {
     margin-bottom: 0.8rem;
     color: var(--nara-text);
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 0.8125rem;
+    font-weight: 400;
 }
 
 .nara-metric-card h1 {
     margin-bottom: 0.9rem;
-    font-size: clamp(1.5rem, 3.1vw, 2.35rem);
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
     line-height: 1.08;
+    letter-spacing: normal;
 }
 
 .nara-metric-card em {
@@ -591,7 +684,7 @@ hr {
 .nara-panel-card .card-body,
 .nara-panel-card tbody td,
 .nara-panel-card tbody th {
-    font-size: 0.88rem;
+    font-size: 0.8125rem;
 }
 
 #perf-history {
@@ -627,7 +720,6 @@ hr {
 }
 
 .search-bar__control {
-    min-height: 3rem !important;
     background: rgba(17, 17, 17, 0.94) !important;
 }
 
@@ -676,5 +768,250 @@ hr {
 @media (max-width: 575px) {
     .nara-hero__meta {
         grid-template-columns: 1fr;
+    }
+}
+
+/* ═══════════════════════════════════════════
+   NARA ANIMATIONS & MICRO-INTERACTIONS
+   Matching nara.build design language
+   ═══════════════════════════════════════════ */
+
+/* --- Keyframes (ported from nara.build) --- */
+
+@keyframes nara-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+@keyframes nara-scan {
+    0% { top: -2px; }
+    100% { top: 100%; }
+}
+
+@keyframes nara-border-breathe {
+    0%, 100% { border-color: var(--nara-border); }
+    50% { border-color: rgba(57, 255, 20, 0.18); }
+}
+
+@keyframes nara-fade-in {
+    0% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes nara-label-flicker {
+    0% { opacity: 0.8; }
+    25% { opacity: 0.2; }
+    50% { opacity: 0.9; }
+    75% { opacity: 0.3; }
+    100% { opacity: 0.8; }
+}
+
+@keyframes nara-glow-pulse {
+    0%, 100% { box-shadow: 0 0 8px rgba(57, 255, 20, 0.08); }
+    50% { box-shadow: 0 0 20px rgba(57, 255, 20, 0.16); }
+}
+
+@keyframes nara-value-update {
+    0% { color: var(--nara-accent); text-shadow: 0 0 12px rgba(57, 255, 20, 0.4); }
+    100% { color: var(--nara-text); text-shadow: none; }
+}
+
+@keyframes nara-row-slide {
+    0% { opacity: 0; transform: translateY(-6px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Scan line overlay on panel cards (like nara.build feed) --- */
+
+.nara-panel-card {
+    position: relative;
+    animation: nara-border-breathe 5s ease-in-out infinite;
+}
+
+.nara-panel-card::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(transparent, rgba(57, 255, 20, 0.04), transparent);
+    animation: nara-scan 4s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* --- Scan line on the transaction stats card too --- */
+
+.nara-panel-card ~ .card,
+.col-md-6 > .card {
+    position: relative;
+}
+
+/* --- Card appear animation --- */
+
+.nara-metric-card,
+.nara-panel-card,
+.col-md-6 > .card {
+    animation: nara-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.nara-stats-strip .col-6:nth-child(1) .nara-metric-card { animation-delay: 0s; }
+.nara-stats-strip .col-6:nth-child(2) .nara-metric-card { animation-delay: 0.08s; }
+.nara-home__grid .col-md-6:nth-child(1) > * { animation-delay: 0.14s; }
+.nara-home__grid .col-md-6:nth-child(2) > * { animation-delay: 0.2s; }
+
+/* --- Card header: live indicator dot pulse --- */
+
+.card-header-title::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--nara-accent);
+    margin-right: 8px;
+    vertical-align: middle;
+    animation: nara-pulse 2s ease-in-out infinite;
+}
+
+/* --- Card hover: nara.build-style glow --- */
+
+.card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(57, 255, 20, 0.22) !important;
+    box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.45),
+        0 0 1px rgba(57, 255, 20, 0.12),
+        inset 0 0 0 1px rgba(57, 255, 20, 0.04) !important;
+}
+
+/* --- Metric card: subtle glow pulse on the whole card --- */
+
+.nara-metric-card {
+    animation: nara-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both,
+               nara-glow-pulse 4s ease-in-out infinite;
+}
+
+/* --- Table row hover: subtle highlight (like nara.build feed rows) --- */
+
+.table tbody tr {
+    transition: background 0.2s ease, border-color 0.2s ease;
+    border-left: 2px solid transparent;
+}
+
+.table tbody tr:hover {
+    background: rgba(57, 255, 20, 0.02);
+    border-left-color: rgba(57, 255, 20, 0.3);
+}
+
+/* --- Table value links: accent color on hover --- */
+
+.table td a {
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.table td a:hover {
+    color: var(--nara-accent) !important;
+    text-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
+}
+
+/* --- Metric card accent value: gentle glow --- */
+
+.nara-metric-card em {
+    transition: text-shadow 0.3s ease;
+}
+
+.nara-metric-card:hover em {
+    text-shadow: 0 0 24px rgba(57, 255, 20, 0.35);
+}
+
+/* --- TPS chart card: scan line + border breathe --- */
+
+.col-md-6:nth-child(2) > .card {
+    position: relative;
+    animation: nara-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both,
+               nara-border-breathe 5s ease-in-out 1s infinite;
+}
+
+.col-md-6:nth-child(2) > .card::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(transparent, rgba(57, 255, 20, 0.04), transparent);
+    animation: nara-scan 4s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* --- Epoch progress bar: accent gradient --- */
+
+.progress {
+    background: rgba(57, 255, 20, 0.06) !important;
+    border-radius: 0 !important;
+    height: 3px !important;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, var(--nara-accent), rgba(57, 255, 20, 0.6)) !important;
+    box-shadow: 0 0 8px rgba(57, 255, 20, 0.3);
+    transition: width 1s ease;
+}
+
+/* --- Loading spinner: use nara accent --- */
+
+.spinner-grow,
+.spinner-border {
+    color: var(--nara-accent) !important;
+}
+
+/* --- Smooth transition for countup values --- */
+
+.font-monospace {
+    transition: color 0.3s ease;
+}
+
+/* --- Refine HR separators in cards --- */
+
+.card hr {
+    border-color: var(--nara-border) !important;
+    opacity: 0.6;
+    margin: 0;
+}
+
+/* --- Badge refinements --- */
+
+.badge {
+    font-size: 0.5625rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 0 !important;
+}
+
+/* --- Tooltip refinement --- */
+
+#chartjs-tooltip {
+    border-radius: 0 !important;
+    backdrop-filter: blur(12px);
+    transition: opacity 0.15s ease;
+}
+
+/* --- Reduce motion for accessibility --- */
+
+@media (prefers-reduced-motion: reduce) {
+    .nara-panel-card::after,
+    .col-md-6:nth-child(2) > .card::after {
+        animation: none;
+    }
+    .nara-metric-card,
+    .nara-panel-card,
+    .col-md-6 > .card {
+        animation: none;
+    }
+    .card-header-title::before {
+        animation: none;
     }
 }

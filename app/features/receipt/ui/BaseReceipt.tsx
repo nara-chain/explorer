@@ -53,7 +53,7 @@ export function BaseReceipt({
 export function Header({ date }: { date?: FormattedExtendedReceipt['date'] }) {
     return (
         <div className="e-flex e-items-center e-justify-between e-gap-x-4 e-border-b e-border-white/10 e-p-6 e-pt-8 [border-bottom-style:solid]">
-            <h3 className="e-m-0 e-flex-shrink-0 e-font-medium e-text-white">Solana Receipt</h3>
+            <h3 className="e-m-0 e-flex-shrink-0 e-font-medium e-text-white">Nara Receipt</h3>
             {date && (
                 <Tooltip>
                     <TooltipTrigger asChild>

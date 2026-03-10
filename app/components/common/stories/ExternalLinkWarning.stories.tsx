@@ -33,7 +33,7 @@ export const Default: Story = {
         const body = within(document.body);
         const dialog = await body.findByRole('dialog');
         expect(dialog).toBeInTheDocument();
-        expect(body.getByText('Leaving Solana Explorer')).toBeInTheDocument();
+        expect(body.getByText('Leaving Nara Explorer')).toBeInTheDocument();
         expect(body.getByText('https://example.com')).toBeInTheDocument();
     },
 };

@@ -17,8 +17,8 @@ export function SolBalanceChangesCard({ balanceChanges }: { balanceChanges: SolB
                         <tr>
                             <th className="text-muted">#</th>
                             <th className="text-muted">Address</th>
-                            <th className="text-muted">Change (SOL)</th>
-                            <th className="text-muted">Post Balance (SOL)</th>
+                            <th className="text-muted">Change (NARA)</th>
+                            <th className="text-muted">Post Balance (NARA)</th>
                         </tr>
                     </thead>
                     <tbody>

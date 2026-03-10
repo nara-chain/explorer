@@ -3,8 +3,8 @@ import '@/app/styles.css';
 import { Metadata } from 'next/types';
 
 export const metadata: Metadata = {
-    description: 'Terms of Service for Solana Explorer',
-    title: 'Terms of Service | Solana Explorer',
+    description: 'Terms of Service for Nara Explorer',
+    title: 'Terms of Service | Nara Explorer',
 };
 
 export default function TermsOfServicePage() {

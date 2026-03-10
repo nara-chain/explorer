@@ -36,7 +36,7 @@ export function UnknownAccountCard({ account }: { account: Account }) {
                     </tr>
                 )}
                 <tr>
-                    <td>Balance (SOL)</td>
+                    <td>Balance (NARA)</td>
                     <td className="text-lg-end">
                         {account.lamports === 0 ? (
                             <AccountNofFound account={account} />

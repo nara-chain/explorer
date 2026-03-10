@@ -21,8 +21,8 @@ export async function generateMetadata({ params: { signature }, searchParams }: 
     const isReceiptView = searchParams.view === 'receipt' && isReceiptEnabled;
 
     if (isReceiptView) {
-        const title = `Receipt | ${signature.slice(0, 16)}... | Solana`;
-        const description = `Transaction receipt for ${signature} on Solana blockchain`;
+        const title = `Receipt | ${signature.slice(0, 16)}... | Nara`;
+        const description = `Transaction receipt for ${signature} on Nara blockchain`;
 
         const baseUrl = RECEIPT_BASE_URL;
         const cluster = getClusterParam(searchParams);
@@ -45,7 +45,7 @@ export async function generateMetadata({ params: { signature }, searchParams }: 
                 description,
                 images: [
                     {
-                        alt: 'Solana Transaction Receipt',
+                        alt: 'Nara Transaction Receipt',
                         height: 630,
                         url: ogImageUrl,
                         width: 1200,
@@ -67,8 +67,8 @@ export async function generateMetadata({ params: { signature }, searchParams }: 
     }
 
     return {
-        description: `Details of the Solana transaction with signature ${signature}`,
-        title: `Transaction | ${signature} | Solana`,
+        description: `Details of the Nara transaction with signature ${signature}`,
+        title: `Transaction | ${signature} | Nara`,
     };
 }
 

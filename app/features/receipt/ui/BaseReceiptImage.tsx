@@ -286,7 +286,7 @@ function NoReceipt({ size }: { size: { width: number; height: number } }) {
                     textAlign: 'center',
                 }}
             >
-                See the transaction details on the Solana Explorer.
+                See the transaction details on the Nara Explorer.
             </div>
         </div>
     );

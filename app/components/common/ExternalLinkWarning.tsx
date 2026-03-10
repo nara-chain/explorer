@@ -32,7 +32,7 @@ export function ExternalLinkWarning({ href, children }: ExternalLinkWarningProps
                 <DialogHeader>
                     <DialogTitle className="e-flex e-items-center e-gap-2">
                         <AlertCircle className="e-text-destructive" size={16} />
-                        Leaving Solana Explorer
+                        Leaving Nara Explorer
                     </DialogTitle>
                 </DialogHeader>
                 <div className="e-space-y-2 e-pl-6">

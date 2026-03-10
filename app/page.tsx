@@ -93,7 +93,7 @@ function StakingComponent() {
             <div className="col-6 col-xl">
                 <div className="card nara-metric-card">
                     <div className="card-body">
-                        <h4>Circulating Supply</h4>
+                        <div className="nara-metric-card__label">Circulating Supply</div>
                         <h1>
                             <em>{displayLamports(supply.circulating)}</em> /{' '}
                             <small>{displayLamports(supply.total)}</small>
@@ -107,7 +107,7 @@ function StakingComponent() {
             <div className="col-6 col-xl">
                 <div className="card nara-metric-card">
                     <div className="card-body">
-                        <h4>Active Stake</h4>
+                        <div className="nara-metric-card__label">Active Stake</div>
                         {activeStake !== undefined ? (
                             <h1>
                                 <em>{displayLamports(activeStake)}</em> / <small>{displayLamports(supply.total)}</small>

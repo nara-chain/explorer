@@ -80,7 +80,7 @@ const mintItems: AutocompleteItem[] = [
 ];
 
 /**
- * Default list of common Solana programs for autocomplete suggestions.
+ * Default list of common Nara programs for autocomplete suggestions.
  *
  * This list can be extended by adding new items to the array. Each item should follow
  * the `AutocompleteItem` type structure with appropriate `group`, `keywords`, `label`, and `value`.

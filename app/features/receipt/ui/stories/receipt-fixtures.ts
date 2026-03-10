@@ -27,7 +27,7 @@ const baseSolReceipt: Receipt = {
 };
 
 export const longMemoText =
-    'This is a very long description that demonstrates how the receipt component handles extended text content. It includes multiple sentences and various details about the transaction, such as the purpose of the payment, the services rendered, and any additional context that might be relevant to understanding the nature of this particular blockchain transaction on the Solana network.';
+    'This is a very long description that demonstrates how the receipt component handles extended text content. It includes multiple sentences and various details about the transaction, such as the purpose of the payment, the services rendered, and any additional context that might be relevant to understanding the nature of this particular blockchain transaction on the Nara network.';
 
 export const defaultReceipt: FormattedReceipt = formatReceiptData(baseSolReceipt, CLUSTER);
 

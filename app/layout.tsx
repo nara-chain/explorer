@@ -26,9 +26,9 @@ const SearchBar = dynamic(() => import('@components/SearchBar'), {
 });
 
 export const metadata: Metadata = {
-    description: 'Inspect transactions, accounts, blocks, and more on the Solana blockchain',
+    description: 'Inspect transactions, accounts, blocks, and more on the Nara blockchain',
     manifest: '/manifest.json',
-    title: 'Explorer | Solana',
+    title: 'Explorer | Nara',
 };
 
 export const viewport: Viewport = {

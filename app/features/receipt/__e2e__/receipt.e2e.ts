@@ -20,13 +20,13 @@ test.describe('receipt feature validation', () => {
         await waitForPage(page, VALID_TX, 'receipt');
 
         await page
-            .locator('h3:has-text("Solana Receipt")')
+            .locator('h3:has-text("Nara Receipt")')
             .or(page.locator('h2:has-text("Transaction")'))
             .or(page.locator('text=Receipts can only be generated'))
             .first()
             .waitFor({ state: 'visible', timeout: CONTENT_TIMEOUT });
 
-        const hasReceipt = await hasElement(page, 'h3:has-text("Solana Receipt")');
+        const hasReceipt = await hasElement(page, 'h3:has-text("Nara Receipt")');
         const hasNoReceipt = await hasElement(page, 'text=Receipts can only be generated');
         const hasTransactionPage = await hasElement(page, 'h2:has-text("Transaction")');
 
@@ -50,13 +50,13 @@ test.describe('when feature enabled', () => {
         await waitForPage(page, VALID_TX, 'receipt');
 
         await page
-            .locator('h3:has-text("Solana Receipt")')
+            .locator('h3:has-text("Nara Receipt")')
             .or(page.locator('text=Not Found'))
             .or(page.locator('text=Receipts can only be generated'))
             .first()
             .waitFor({ state: 'visible', timeout: CONTENT_TIMEOUT });
 
-        const hasReceipt = await hasElement(page, 'h3:has-text("Solana Receipt")');
+        const hasReceipt = await hasElement(page, 'h3:has-text("Nara Receipt")');
         const hasError = await hasElement(page, 'text=Not Found');
         const hasNoReceipt = await hasElement(page, 'text=Receipts can only be generated');
 
@@ -127,7 +127,7 @@ test.describe('when feature disabled', () => {
 
         await expect(page.locator('h2:has-text("Transaction")')).toBeVisible({ timeout: CONTENT_TIMEOUT });
 
-        expect(await hasElement(page, 'h3:has-text("Solana Receipt")')).toBe(false);
+        expect(await hasElement(page, 'h3:has-text("Nara Receipt")')).toBe(false);
         expect(await hasElement(page, 'h2:has-text("Transaction")')).toBe(true);
     });
 
@@ -145,7 +145,7 @@ test.describe('when feature disabled', () => {
         if (hasOverview) {
             await expect(page.locator('a:has-text("View Receipt")')).toBeHidden();
         } else {
-            expect(await hasElement(page, 'h3:has-text("Solana Receipt")')).toBe(false);
+            expect(await hasElement(page, 'h3:has-text("Nara Receipt")')).toBe(false);
         }
     });
 });

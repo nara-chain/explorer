@@ -10,7 +10,7 @@ export function SolBalance({
 }) {
     return (
         <span>
-            ◎<span className="font-monospace">{lamportsToSolString(lamports, maximumFractionDigits)}</span>
+            <span className="font-monospace">{lamportsToSolString(lamports, maximumFractionDigits)}</span> NARA
         </span>
     );
 }

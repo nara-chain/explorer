@@ -148,7 +148,7 @@ export function SearchBar() {
                 inputId={id}
                 noOptionsMessage={noOptionsMessageHandler}
                 loadingMessage={loadingMessageHandler}
-                placeholder="Search for blocks, accounts, transactions, programs, and tokens"
+                placeholder="Search"
                 value={RESET_VALUE}
                 inputValue={search}
                 blurInputOnSelect

@@ -31,7 +31,7 @@ export const Default: Story = {
     },
     play: async ({ canvasElement }) => {
         const canvas = within(canvasElement);
-        const receipt = canvas.getByText('Solana Receipt');
+        const receipt = canvas.getByText('Nara Receipt');
         expect(receipt).toBeInTheDocument();
     },
 };

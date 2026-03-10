@@ -9,7 +9,7 @@ import { checkURLForPrivateIP, isHTTPProtocol } from './feature/ip';
 
 type Params = { params: object };
 
-const USER_AGENT = process.env.NEXT_PUBLIC_METADATA_USER_AGENT ?? 'Solana Explorer';
+const USER_AGENT = process.env.NEXT_PUBLIC_METADATA_USER_AGENT ?? 'Nara Explorer';
 const MAX_SIZE = process.env.NEXT_PUBLIC_METADATA_MAX_CONTENT_SIZE
     ? Number(process.env.NEXT_PUBLIC_METADATA_MAX_CONTENT_SIZE)
     : 1_000_000; // 1 000 000 bytes
