@@ -17,23 +17,23 @@ function getCustomUrlClusterName(customUrl: string) {
 }
 
 const containerStyle: React.CSSProperties = {
-    display: 'flex',
     alignItems: 'center',
-    gap: '8px',
+    color: '#888',
     cursor: 'pointer',
+    display: 'flex',
     fontSize: '12px',
     fontWeight: 400,
-    color: '#888',
+    gap: '8px',
     letterSpacing: 'normal',
 };
 
 const dotStyle = (color: string): React.CSSProperties => ({
-    width: '5px',
-    height: '5px',
-    borderRadius: '50%',
     backgroundColor: color,
+    borderRadius: '50%',
     boxShadow: `0 0 4px 0 ${color}`,
     flexShrink: 0,
+    height: '5px',
+    width: '5px',
 });
 
 export const ClusterStatusButton = () => {

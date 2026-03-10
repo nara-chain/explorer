@@ -17,7 +17,6 @@ type SetSeries = (series: Series) => void;
 const SERIES: Series[] = ['short', 'medium', 'long'];
 const NARA_ACCENT = 'rgba(57, 255, 20, 0.72)';
 const NARA_ACCENT_HOVER = 'rgba(57, 255, 20, 0.9)';
-const NARA_MUTED = 'rgba(139, 139, 139, 0.6)';
 const SERIES_INFO = {
     long: {
         interval: '6h',
@@ -119,13 +118,13 @@ const TPS_CHART_OPTIONS = (historyMaxTps: number): ChartOptions<'bar'> => {
         resizeDelay: 0,
         scales: {
             x: {
+                border: {
+                    display: false,
+                },
                 grid: {
                     display: false,
                 },
                 ticks: {
-                    display: false,
-                },
-                border: {
                     display: false,
                 },
             },
@@ -140,20 +139,20 @@ const TPS_CHART_OPTIONS = (historyMaxTps: number): ChartOptions<'bar'> => {
                 min: 0,
                 suggestedMax: historyMaxTps,
                 ticks: {
+                    callback: (value: number | string) => {
+                        const n = Number(value);
+                        if (n >= 1000) return `${(n / 1000).toFixed(1)}K`;
+                        return Math.round(n).toString();
+                    },
+                    color: 'rgba(139, 139, 139, 0.5)',
                     count: 6,
                     display: true,
                     font: {
                         family: "'JetBrains Mono', monospace",
                         size: 9,
                     },
-                    color: 'rgba(139, 139, 139, 0.5)',
-                    precision: 0,
                     padding: 8,
-                    callback: (value: number | string) => {
-                        const n = Number(value);
-                        if (n >= 1000) return `${(n / 1000).toFixed(1)}K`;
-                        return Math.round(n).toString();
-                    },
+                    precision: 0,
                 },
             },
         },
@@ -177,12 +176,12 @@ function TpsBarChart({ performanceInfo, series, setSeries }: TpsBarChartProps) {
         datasets: [
             {
                 backgroundColor: NARA_ACCENT,
-                borderWidth: 0,
+                barPercentage: 0.8,
                 borderRadius: 1,
+                borderWidth: 0,
+                categoryPercentage: 0.9,
                 data: seriesData.map(val => val || 0),
                 hoverBackgroundColor: NARA_ACCENT_HOVER,
-                barPercentage: 0.8,
-                categoryPercentage: 0.9,
             },
         ],
         labels: seriesData.map((val, i) => {
@@ -207,7 +206,7 @@ function TpsBarChart({ performanceInfo, series, setSeries }: TpsBarChartProps) {
 
             <div className="card-body py-3 d-flex flex-column flex-grow-1">
                 <div className="d-flex justify-content-between align-items-center w-100">
-                    <span style={{ fontSize: '0.5625rem', fontWeight: 400, letterSpacing: '0.15em', textTransform: 'uppercase' as const, opacity: 0.5, color: '#39ff14' }}>TPS history</span>
+                    <span style={{ color: '#39ff14', fontSize: '0.5625rem', fontWeight: 400, letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase' as const }}>TPS history</span>
 
                     <div style={{ display: 'flex', gap: '4px' }}>
                         {SERIES.map(key => (
@@ -218,15 +217,15 @@ function TpsBarChart({ performanceInfo, series, setSeries }: TpsBarChartProps) {
                                     active: series === key,
                                 })}
                                 style={{
+                                    background: series === key ? 'rgba(57, 255, 20, 0.1)' : 'transparent',
+                                    border: series === key ? '1px solid rgba(57, 255, 20, 0.4)' : '1px solid rgba(57, 255, 20, 0.12)',
+                                    borderRadius: 0,
+                                    color: series === key ? '#39ff14' : '#8b8b8b',
                                     fontSize: '0.5625rem',
                                     fontWeight: 400,
                                     letterSpacing: '0.08em',
-                                    padding: '2px 8px',
                                     lineHeight: 1.6,
-                                    border: series === key ? '1px solid rgba(57, 255, 20, 0.4)' : '1px solid rgba(57, 255, 20, 0.12)',
-                                    background: series === key ? 'rgba(57, 255, 20, 0.1)' : 'transparent',
-                                    color: series === key ? '#39ff14' : '#8b8b8b',
-                                    borderRadius: 0,
+                                    padding: '2px 8px',
                                 }}
                             >
                                 {SERIES_INFO[key].interval}

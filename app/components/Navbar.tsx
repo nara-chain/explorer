@@ -25,7 +25,7 @@ export function Navbar({ children }: INavbarProps) {
             {/* Logo — positioned absolutely, stays at far left, not inside the centered container */}
             <Link href={homePath} className="navbar-brand-nara d-inline-flex align-items-center text-decoration-none" style={{ gap: '10px' }}>
                 <Image alt="Explorer" className="object-contain" height={20} src="/favicon.png" width={20} priority />
-                <span style={{ fontSize: '15px', fontWeight: 800, letterSpacing: '4.5px', lineHeight: 1, color: '#e8e8e8' }}>NARA</span>
+                <span style={{ color: '#e8e8e8', fontSize: '15px', fontWeight: 800, letterSpacing: '4.5px', lineHeight: 1 }}>NARA</span>
             </Link>
 
             <div className="container">
