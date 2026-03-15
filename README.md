@@ -1,65 +1,53 @@
 <p align="center">
-    <img alt="Solana" src="https://i.imgur.com/IKyzQ6T.png" width="250" />
+  <img src="https://raw.githubusercontent.com/nara-chain/nara-web/main/public/favicon.png" width="48" />
 </p>
 
-# Solana Explorer
+<h3 align="center">Nara Explorer</h3>
+<p align="center">
+  Block explorer for the agent-native Layer 1.
+  <br />
+  <a href="https://explorer.nara.build">explorer.nara.build</a>
+</p>
 
-The Solana Explorer is a web application that allows users to explore the Solana blockchain. It provides a user-friendly interface to view transactions, accounts, blocks, and other on-chain data. The Explorer supports various protocol integrations, allowing users to inspect and understand different types of transactions and instructions on the Solana network.
+---
+
+Inspect transactions, accounts, blocks, validators, and on-chain programs across Nara devnet and mainnet.
+
+## Quick Start
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Default RPC endpoint: `https://devnet-api.nara.build/`
+
+## Routes
+
+```
+/                        Dashboard — live stats, staking overview
+/tx/[signature]          Transaction detail + instruction trace
+/address/[address]       Account inspector (tokens, programs, IDL)
+/block/[slot]            Block detail with rewards
+/validators              Validator list and performance
+/epoch/[epoch]           Epoch summary
+/supply                  Network supply tracking
+```
+
+## Stack
+
+```
+Next.js 14 · React 18 · Nara Web3 SDK · Anchor · Radix UI · pnpm
+```
 
 ## Contributing
 
-We welcome contributions to the Solana Explorer! Before submitting a pull request, please:
+Pull requests welcome. Please open an issue first for non-trivial changes.
 
-1. Read the [CONTRIBUTING.md](CONTRIBUTING.md) guide for detailed information on our contribution process
-2. Ensure your code includes appropriate tests, especially for protocol integrations
-3. Make sure your PR passes all CI checks before requesting a review
-4. Include screenshots for any UI changes, particularly for protocol screens
+## License
 
-### Creating Issues
+MIT
 
-For bug reports, feature requests, or other issues:
+## Links
 
--   Use GitHub Issues to report non-security bugs
--   Include clear steps to reproduce, expected vs. actual behavior, and relevant screenshots
--   For security vulnerabilities, especially those related to Solana Verify (Verified Builds), please email disclosures@solana.org
-
-# Disclaimer
-
-All claims, content, designs, algorithms, estimates, roadmaps,
-specifications, and performance measurements described in this project
-are done with the Solana Foundation's ("SF") best efforts. It is up to
-the reader to check and validate their accuracy and truthfulness.
-Furthermore nothing in this project constitutes a solicitation for
-investment.
-
-Any content produced by SF or developer resources that SF provides, are
-for educational and inspiration purposes only. SF does not encourage,
-induce or sanction the deployment, integration or use of any such
-applications (including the code comprising the Solana blockchain
-protocol) in violation of applicable laws or regulations and hereby
-prohibits any such deployment, integration or use. This includes use of
-any such applications by the reader (a) in violation of export control
-or sanctions laws of the United States or any other applicable
-jurisdiction, (b) if the reader is located in or ordinarily resident in
-a country or territory subject to comprehensive sanctions administered
-by the U.S. Office of Foreign Assets Control (OFAC), or (c) if the
-reader is or is working on behalf of a Specially Designated National
-(SDN) or a person subject to similar blocking or denied party
-prohibitions.
-
-The reader should be aware that U.S. export control and sanctions laws
-prohibit U.S. persons (and other persons that are subject to such laws)
-from transacting with persons in certain countries and territories or
-that are on the SDN list. As a project based primarily on open-source
-software, it is possible that such sanctioned persons may nevertheless
-bypass prohibitions, obtain the code comprising the Solana blockchain
-protocol (or other project code or applications) and deploy, integrate,
-or otherwise use it. Accordingly, there is a risk to individuals that
-other persons using the Solana blockchain protocol may be sanctioned
-persons and that transactions with such persons would be a violation of
-U.S. export controls and sanctions law. This risk applies to
-individuals, organizations, and other ecosystem participants that
-deploy, integrate, or use the Solana blockchain protocol code directly
-(e.g., as a node operator), and individuals that transact on the Solana
-blockchain through light clients, third party interfaces, and/or wallet
-software.
+[Website](https://nara.build) · [Docs](https://nara.build/docs) · [Validator Explorer](https://validators.nara.build) · [GitHub](https://github.com/nara-chain) · [X](https://x.com/NaraBuildAI)
