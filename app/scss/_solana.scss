@@ -31,8 +31,8 @@ ul.log-messages {
     min-height: 12.5rem;
     max-height: 20rem;
     overflow: auto;
-    font-size: 0.8125rem;
-    font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    font-size: 12px;
+    font-family: var(--explorer-default-font), 'JetBrains Mono', monospace;
 }
 
 .popover-container {
@@ -62,7 +62,7 @@ ul.log-messages {
 
         .popover-body {
             color: $popover-text-color;
-            font-size: 14px;
+            font-size: 12px;
             line-height: 1.5;
         }
 
@@ -568,7 +568,7 @@ pre {
 }
 
 .address-highlight {
-    outline: 1px dashed #39ff14;
-    border-radius: 4px; 
-    box-sizing: border-box; 
+    outline: 1px dashed #3df51a;
+    border-radius: 6px;
+    box-sizing: border-box;
 }

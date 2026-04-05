@@ -1,6 +1,6 @@
 {
-    "short_name": "Solana Explorer",
-    "name": "Inspect transactions, accounts, blocks, and more on the Solana blockchain",
+    "short_name": "Nara Explorer",
+    "name": "Inspect transactions, accounts, blocks, and more on the Nara blockchain",
     "icons": [
         {
             "src": "/icon-192.png",
@@ -15,6 +15,6 @@
     ],
     "start_url": ".",
     "display": "standalone",
-    "theme_color": "#39ff14",
-    "background_color": "#ffffff"
+    "theme_color": "#3df51a",
+    "background_color": "#0c0c0c"
 }

@@ -41,15 +41,15 @@ const jetbrainsMonoFont = JetBrains_Mono({
     display: 'swap',
     subsets: ['latin'],
     variable: '--explorer-default-font',
-    weight: ['400', '500', '700', '800'],
+    weight: ['400', '700', '800'],
 });
 
 export default function RootLayout({ analytics, children }: { analytics: React.ReactNode; children: React.ReactNode }) {
     return (
         <html lang="en" className={`${jetbrainsMonoFont.variable}`}>
             <head>
-                <link rel="icon" href="/favicon.png" type="image/png" />
-                <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+                <link rel="icon" href="/favicon-v3.svg" type="image/svg+xml" />
+                <link rel="shortcut icon" href="/favicon-v3.svg" type="image/svg+xml" />
                 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
                 <BotIdClient
                     protect={isEnvEnabled(process.env.NEXT_PUBLIC_BOTID_ENABLED) ? botIdProtectedRoutes : []}

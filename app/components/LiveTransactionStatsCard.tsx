@@ -206,7 +206,7 @@ function TpsBarChart({ performanceInfo, series, setSeries }: TpsBarChartProps) {
 
             <div className="card-body py-3 d-flex flex-column flex-grow-1">
                 <div className="d-flex justify-content-between align-items-center w-100">
-                    <span style={{ color: '#39ff14', fontSize: '0.5625rem', fontWeight: 400, letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase' as const }}>TPS history</span>
+                    <span style={{ color: '#3df51a', fontSize: '9px', fontWeight: 400, letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase' as const }}>TPS history</span>
 
                     <div style={{ display: 'flex', gap: '4px' }}>
                         {SERIES.map(key => (
@@ -217,11 +217,11 @@ function TpsBarChart({ performanceInfo, series, setSeries }: TpsBarChartProps) {
                                     active: series === key,
                                 })}
                                 style={{
-                                    background: series === key ? 'rgba(57, 255, 20, 0.1)' : 'transparent',
-                                    border: series === key ? '1px solid rgba(57, 255, 20, 0.4)' : '1px solid rgba(57, 255, 20, 0.12)',
-                                    borderRadius: 0,
-                                    color: series === key ? '#39ff14' : '#8b8b8b',
-                                    fontSize: '0.5625rem',
+                                    background: series === key ? 'rgba(57, 255, 20, 0.06)' : 'transparent',
+                                    border: series === key ? '1px solid rgba(57, 255, 20, 0.18)' : '1px solid #1e1e1e',
+                                    borderRadius: 6,
+                                    color: series === key ? '#3df51a' : '#888',
+                                    fontSize: '10px',
                                     fontWeight: 400,
                                     letterSpacing: '0.08em',
                                     lineHeight: 1.6,

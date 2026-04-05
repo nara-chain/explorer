@@ -2,8 +2,8 @@
 @tailwind utilities;
 
 :root {
-    --accent: #39ff14;
-    --card-border: #111;
+    --accent: #3df51a;
+    --card-border: #1e1e1e;
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.145 0 0);
     --border: oklch(0.922 0 0);
@@ -54,7 +54,7 @@
         background-color: #1e2423;
         background-clip: border-box;
         border: 1px solid #282d2b;
-        border-radius: 0.5rem;
+        border-radius: var(--radius-terminal);
 
         margin-bottom: 1.5rem;
         border-color: #111;
@@ -143,16 +143,39 @@
 
 :root {
     --nara-bg: #0c0c0c;
-    --nara-surface: rgba(17, 17, 17, 0.92);
+    --nara-surface: #111;
     --nara-surface-strong: #111;
     --nara-surface-soft: #161616;
-    --nara-border: rgba(57, 255, 20, 0.12);
-    --nara-border-strong: rgba(57, 255, 20, 0.22);
+    --nara-border: #1e1e1e;
+    --nara-border-strong: rgba(57, 255, 20, 0.18);
     --nara-text: #e8e8e8;
-    --nara-muted: #8b8b8b;
-    --nara-accent: #39ff14;
-    --nara-accent-soft: rgba(57, 255, 20, 0.08);
+    --nara-muted: #888;
+    --nara-accent: #3df51a;
+    --nara-accent-soft: rgba(57, 255, 20, 0.06);
     --nara-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    /* Typography tokens (from nara.build) */
+    --xs: 10px;
+    --sm: 12px;
+    --md: 15px;
+    --lg: 19px;
+    --h1: clamp(38px, 4.2vw, 56px);
+    --h2: clamp(28px, 3vw, 40px);
+    --h3: 19px;
+    /* Letter-spacing tokens */
+    --ls-tight: 0.02em;
+    --ls-normal: 0.08em;
+    --ls-wide: 0.12em;
+    --ls-wider: 0.18em;
+    --ls-widest: 0.3em;
+    /* Border radius */
+    --radius-terminal: 6px;
+    /* Accent opacity tiers */
+    --accent-dim: rgba(57, 255, 20, 0.15);
+    --accent-mid: rgba(57, 255, 20, 0.5);
+    --accent-bright: rgba(57, 255, 20, 0.85);
+    /* Transition easings */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html {
@@ -165,8 +188,10 @@ body {
         radial-gradient(circle at bottom right, rgba(0, 212, 170, 0.07), transparent 24%),
         var(--nara-bg);
     color: var(--nara-text);
-    font-family: var(--explorer-default-font), 'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
+    font-family: var(--explorer-default-font), 'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Consolas', 'Courier New', monospace;
+    font-size: var(--md);
     letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
 }
 
 body::before {
@@ -177,12 +202,12 @@ body::before {
         0deg,
         transparent,
         transparent 2px,
-        rgba(57, 255, 20, 0.01) 2px,
-        rgba(57, 255, 20, 0.01) 4px
+        rgba(57, 255, 20, 0.008) 2px,
+        rgba(57, 255, 20, 0.008) 4px
     );
-    opacity: 0.65;
     pointer-events: none;
-    z-index: 0;
+    z-index: 50;
+    opacity: 0.5;
 }
 
 body::after {
@@ -219,28 +244,38 @@ a {
     height: 56px;
     padding-top: 0;
     padding-bottom: 0;
-    background: rgba(12, 12, 12, 0.9) !important;
-    backdrop-filter: blur(16px);
+    background: rgba(12, 12, 12, 0.96) !important;
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--nara-border) !important;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.24);
 }
 
-/* Logo: absolute left, outside the centered container */
+/* Logo: absolute left, matches nara.build nav padding (64px) */
 .navbar-brand-nara {
     position: absolute;
-    left: 48px;
+    left: 64px;
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
 }
 
-/* Right side (GitHub + Devnet): absolute right, mirrors logo placement */
+/* Right side: social icons + mainnet status — mirrors nara.build */
 .navbar-right-nara {
     position: absolute;
-    right: 48px;
+    right: 64px;
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
+}
+
+.nav-social-icon {
+    color: var(--nara-muted);
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.nav-social-icon:hover {
+    color: var(--nara-accent);
 }
 
 /* Force navbar container to match content width & center.
@@ -270,6 +305,17 @@ a {
     background: transparent !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
+    font-size: 12px !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 400 !important;
+}
+
+.search-bar__input input,
+.search-bar__single-value,
+.search-bar__placeholder {
+    font-size: 12px !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 400 !important;
 }
 
 /* Remove focus outline/shadow that shifts visual edges */
@@ -280,21 +326,43 @@ a {
 }
 
 
-.navbar .nav-link {
-    color: var(--nara-muted) !important;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    transition:
-        color 0.2s ease,
-        text-shadow 0.2s ease;
+/* Nav links — exact match with nara.build .nav-links a */
+.navbar .nav-link,
+.navbar-nav .nav-link {
+    color: #888 !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    font-family: var(--explorer-default-font), 'JetBrains Mono', monospace !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    transition: color 0.2s !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+
+.navbar-nav {
+    gap: 32px !important;
+    align-items: center !important;
 }
 
 .navbar .nav-link:hover,
-.navbar .nav-link.active {
+.navbar-nav .nav-link:hover {
+    color: #fff !important;
+    text-shadow: none !important;
+}
+
+.navbar .nav-link.active,
+.navbar-nav .nav-link.active {
     color: var(--nara-accent) !important;
-    text-shadow: 0 0 12px rgba(57, 255, 20, 0.28);
+    font-weight: 700 !important;
+}
+
+/* Kill Dashkit active left-border indicator */
+.navbar-nav .nav-link.active::before {
+    display: none !important;
 }
 
 .navbar .navbar-toggler {
@@ -312,12 +380,12 @@ a {
 .dropdown-menu,
 .search-bar__control,
 .search-bar__menu {
-    border-radius: 0 !important;
+    border-radius: var(--radius-terminal) !important;
 }
 
 .card,
 .dropdown-menu {
-    background: linear-gradient(180deg, rgba(17, 17, 17, 0.96), rgba(12, 12, 12, 0.96)) !important;
+    background: var(--nara-surface) !important;
     border: 1px solid var(--nara-border) !important;
     box-shadow: var(--nara-shadow) !important;
 }
@@ -332,14 +400,12 @@ a {
 
 .card:hover {
     transform: translateY(-1px);
-    border-color: var(--nara-border-strong) !important;
-    box-shadow:
-        var(--nara-shadow),
-        inset 0 0 0 1px rgba(57, 255, 20, 0.04) !important;
+    background: var(--nara-surface-soft) !important;
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.04) !important;
 }
 
 .card-header {
-    background: rgba(57, 255, 20, 0.03) !important;
+    background: var(--nara-surface) !important;
     border-bottom: 1px solid var(--nara-border) !important;
 }
 
@@ -353,7 +419,7 @@ a {
 }
 
 .card-header-title {
-    font-size: 0.5625rem !important;
+    font-size: 9px !important;
     font-weight: 400 !important;
     letter-spacing: 0.15em !important;
     text-transform: uppercase;
@@ -361,6 +427,16 @@ a {
     color: var(--nara-accent) !important;
 }
 
+/* Page-level headings — match nara.build .page-title (only outside cards) */
+.nara-page-header h1 {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+}
+
+/* Card-internal h1 (stat values) — large weight, normal spacing */
 .card h1,
 .card .h1 {
     font-weight: 800;
@@ -378,13 +454,13 @@ a {
 .table th,
 .table-card-body td,
 .table-card-body th {
-    border-color: rgba(57, 255, 20, 0.08) !important;
+    border-color: var(--nara-border) !important;
 }
 
 .table td,
 .table th {
     color: var(--nara-text);
-    font-size: 0.8125rem;
+    font-size: var(--sm);
     font-weight: 400;
     padding: 0.65rem 1.25rem;
 }
@@ -416,17 +492,15 @@ small,
 
 .btn-white:hover,
 .btn-outline-secondary:hover {
-    background: var(--nara-accent-soft) !important;
-    border-color: var(--nara-border-strong) !important;
+    border-color: var(--nara-accent) !important;
     color: var(--nara-accent) !important;
 }
 
 .btn-white.active,
 .btn-outline-secondary.active {
-    background: rgba(57, 255, 20, 0.12) !important;
+    background: rgba(57, 255, 20, 0.06) !important;
     border-color: var(--nara-accent) !important;
     color: var(--nara-accent) !important;
-    box-shadow: inset 0 0 0 1px rgba(57, 255, 20, 0.08);
 }
 
 .btn-primary,
@@ -435,8 +509,11 @@ small,
 .btn-primary:active {
     background: var(--nara-accent) !important;
     border-color: var(--nara-accent) !important;
-    color: #040404 !important;
-    box-shadow: 0 0 18px rgba(57, 255, 20, 0.18) !important;
+    color: #000 !important;
+}
+.btn-primary:hover {
+    box-shadow: 0 0 28px rgba(57, 255, 20, 0.45) !important;
+    transform: translateY(-1px);
 }
 
 .btn-warning,
@@ -452,8 +529,8 @@ small,
 }
 
 .form-control:focus {
-    border-color: var(--nara-border-strong) !important;
-    box-shadow: 0 0 0 0.2rem rgba(57, 255, 20, 0.12) !important;
+    border-color: rgba(57, 255, 20, 0.18) !important;
+    box-shadow: none !important;
 }
 
 .search-bar__placeholder,
@@ -465,6 +542,33 @@ code,
 pre,
 .font-monospace {
     font-family: var(--explorer-default-font), 'JetBrains Mono', monospace !important;
+}
+
+/* Page header — matches nara.build .page-header + .label + .page-title */
+.nara-page-header {
+    margin-bottom: 48px;
+}
+
+.nara-label {
+    font-size: 10px;
+    color: var(--nara-accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.5;
+    line-height: 1;
+}
+
+.nara-label::before {
+    content: '// ';
+}
+
+.nara-page-header h1 {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
 }
 
 pre,
@@ -519,7 +623,8 @@ hr {
 .nara-hero__copy,
 .nara-hero__meta {
     border: 1px solid var(--nara-border);
-    background: linear-gradient(180deg, rgba(17, 17, 17, 0.94), rgba(12, 12, 12, 0.96));
+    border-radius: var(--radius-terminal);
+    background: var(--nara-surface);
     box-shadow: var(--nara-shadow);
 }
 
@@ -543,14 +648,15 @@ hr {
             rgba(57, 255, 20, 0.018) 23px
         );
     pointer-events: none;
+    border-radius: var(--radius-terminal);
 }
 
 .nara-hero__eyebrow {
     margin-bottom: 1rem;
     color: var(--nara-accent);
-    font-size: 0.625rem;
+    font-size: var(--xs);
     font-weight: 400;
-    letter-spacing: 0.18em;
+    letter-spacing: var(--ls-widest);
     text-transform: uppercase;
     opacity: 0.5;
 }
@@ -573,7 +679,7 @@ hr {
     max-width: 42rem;
     margin-bottom: 0;
     color: var(--nara-muted);
-    font-size: 0.98rem;
+    font-size: var(--md);
     line-height: 1.8;
 }
 
@@ -604,8 +710,8 @@ hr {
 }
 
 .nara-hero__meta-label {
-    color: rgba(57, 255, 20, 0.72);
-    font-size: 0.5625rem;
+    color: var(--nara-accent);
+    font-size: 9px;
     font-weight: 400;
     letter-spacing: 0.15em;
     text-transform: uppercase;
@@ -624,7 +730,7 @@ hr {
 .nara-metric-card .card-body {
     position: relative;
     min-height: 9rem;
-    padding: 1.35rem 1.5rem 1.1rem;
+    padding: 24px 28px 24px;
 }
 
 .nara-metric-card .card-body::after {
@@ -640,9 +746,9 @@ hr {
 }
 
 .nara-metric-card__label {
-    margin-bottom: 0.9rem;
-    color: rgba(57, 255, 20, 0.68);
-    font-size: 0.5625rem;
+    margin-bottom: 8px;
+    color: var(--nara-accent);
+    font-size: 9px;
     font-weight: 400;
     letter-spacing: 0.15em;
     text-transform: uppercase;
@@ -652,39 +758,40 @@ hr {
 .nara-metric-card h4 {
     margin-bottom: 0.8rem;
     color: var(--nara-text);
-    font-size: 0.8125rem;
+    font-size: var(--md);
     font-weight: 400;
 }
 
 .nara-metric-card h1 {
     margin-bottom: 0.9rem;
-    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    font-size: clamp(20px, 2.5vw, 28px);
+    font-weight: 800;
     line-height: 1.08;
     letter-spacing: normal;
+    font-variant-numeric: tabular-nums;
 }
 
 .nara-metric-card em {
     color: var(--nara-accent);
     font-style: normal;
-    text-shadow: 0 0 16px rgba(57, 255, 20, 0.18);
     font-size: 0.92em;
 }
 
 .nara-metric-card h5 {
     margin-bottom: 0;
     color: var(--nara-muted);
-    font-size: 0.84rem;
+    font-size: var(--sm);
     line-height: 1.7;
 }
 
 .nara-panel-card .card-header {
-    padding: 1rem 1.25rem;
+    padding: 20px 28px;
 }
 
 .nara-panel-card .card-body,
 .nara-panel-card tbody td,
 .nara-panel-card tbody th {
-    font-size: 0.8125rem;
+    font-size: var(--sm);
 }
 
 #perf-history {
@@ -706,7 +813,7 @@ hr {
     padding: 0.65rem 0.75rem;
     color: var(--nara-text);
     font-family: var(--explorer-default-font), 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
+    font-size: var(--sm);
 }
 
 #chartjs-tooltip .value {
@@ -721,6 +828,13 @@ hr {
 
 .search-bar__control {
     background: rgba(17, 17, 17, 0.94) !important;
+    font-size: 12px !important;
+    font-family: 'JetBrains Mono', monospace !important;
+}
+
+.search-bar__menu {
+    font-size: 12px !important;
+    font-family: 'JetBrains Mono', monospace !important;
 }
 
 .search-bar__menu-list {
@@ -729,13 +843,15 @@ hr {
 
 .search-bar__group-heading {
     color: rgba(57, 255, 20, 0.65) !important;
-    letter-spacing: 0.16em;
+    font-size: var(--xs);
+    letter-spacing: var(--ls-wider);
     text-transform: uppercase;
 }
 
 .search-bar__option {
     color: var(--nara-text) !important;
     border-left: 2px solid transparent;
+    font-size: 12px !important;
 }
 
 .search-bar__option--is-focused,
@@ -744,9 +860,25 @@ hr {
     background: rgba(57, 255, 20, 0.06) !important;
 }
 
+/* Responsive: match nara.build breakpoints */
 @media (max-width: 991px) {
+    .navbar-brand-nara {
+        left: 24px;
+    }
+    .navbar-right-nara {
+        right: 24px;
+    }
     .nara-hero {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-brand-nara {
+        left: 16px;
+    }
+    .navbar-right-nara {
+        right: 16px;
     }
 }
 
@@ -874,15 +1006,12 @@ hr {
     animation: nara-pulse 2s ease-in-out infinite;
 }
 
-/* --- Card hover: nara.build-style glow --- */
+/* --- Card hover: nara.build-style --- */
 
 .card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(57, 255, 20, 0.22) !important;
-    box-shadow:
-        0 24px 80px rgba(0, 0, 0, 0.45),
-        0 0 1px rgba(57, 255, 20, 0.12),
-        inset 0 0 0 1px rgba(57, 255, 20, 0.04) !important;
+    transform: translateY(-1px);
+    background: var(--nara-surface-soft) !important;
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.04) !important;
 }
 
 /* --- Metric card: subtle glow pulse on the whole card --- */
@@ -949,7 +1078,7 @@ hr {
 
 .progress {
     background: rgba(57, 255, 20, 0.06) !important;
-    border-radius: 0 !important;
+    border-radius: var(--radius-terminal) !important;
     height: 3px !important;
     overflow: hidden;
 }
@@ -984,17 +1113,18 @@ hr {
 /* --- Badge refinements --- */
 
 .badge {
-    font-size: 0.5625rem;
+    font-size: var(--xs);
     font-weight: 500;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     padding: 3px 8px;
-    border-radius: 0 !important;
+    border: 1px solid var(--nara-border);
+    border-radius: var(--radius-terminal) !important;
 }
 
 /* --- Tooltip refinement --- */
 
 #chartjs-tooltip {
-    border-radius: 0 !important;
+    border-radius: var(--radius-terminal) !important;
     backdrop-filter: blur(12px);
     transition: opacity 0.15s ease;
 }

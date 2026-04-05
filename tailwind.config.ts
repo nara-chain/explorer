@@ -18,7 +18,7 @@ const config: Config = {
         extend: {
             boxShadow: {
                 // border for active states from Dashkit
-                active: '0 0 0 0.15rem #39ff14',
+                active: '0 0 0 0.15rem #3df51a',
             },
             colors: {
                 // TODO: replace with e-text-neutral-400
@@ -52,13 +52,13 @@ const config: Config = {
                     950: 'oklch(18.651% 0.00656 178.83)',
                 },
                 success: {
-                    DEFAULT: '#39ff14',
+                    DEFAULT: '#3df51a',
                     50: '#f1ffe8',
                     100: '#ddffcc',
                     200: '#bcff99',
                     300: '#90ff5c',
                     400: '#5eff2a',
-                    500: '#39ff14',
+                    500: '#3df51a',
                     600: '#2fd80e',
                     700: '#25aa0c',
                     800: '#1d7f0c',
@@ -66,13 +66,13 @@ const config: Config = {
                     950: '#0c3506',
                 },
                 accent: {
-                    DEFAULT: '#39ff14',
+                    DEFAULT: '#3df51a',
                     50: '#f1ffe8',
                     100: '#ddffcc',
                     200: '#bcff99',
                     300: '#90ff5c',
                     400: '#5eff2a',
-                    500: '#39ff14',
+                    500: '#3df51a',
                     600: '#2fd80e',
                     700: '#25aa0c',
                     800: '#1d7f0c',

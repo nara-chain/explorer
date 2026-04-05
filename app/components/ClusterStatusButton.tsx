@@ -25,15 +25,18 @@ const containerStyle: React.CSSProperties = {
     fontWeight: 400,
     gap: '8px',
     letterSpacing: 'normal',
+    textDecoration: 'none',
+    transition: 'color 0.2s',
 };
 
 const dotStyle = (color: string): React.CSSProperties => ({
+    animation: 'nara-pulse 2s ease-in-out infinite',
     backgroundColor: color,
     borderRadius: '50%',
-    boxShadow: `0 0 4px 0 ${color}`,
+    boxShadow: `0 0 4px ${color}`,
     flexShrink: 0,
-    height: '5px',
-    width: '5px',
+    height: '6px',
+    width: '6px',
 });
 
 export const ClusterStatusButton = () => {
@@ -47,8 +50,8 @@ export const ClusterStatusButton = () => {
         case ClusterStatus.Connected:
             return (
                 <span style={containerStyle} onClick={onClickHandler}>
-                    <span style={dotStyle('#39ff14')} />
-                    {statusName} Live
+                    <span style={dotStyle('#3df51a')} />
+                    {statusName}
                 </span>
             );
 

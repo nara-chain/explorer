@@ -57,45 +57,38 @@ ul.log-messages {
 
 // ── Typography alignment with nara.build ──
 
-// Nav links: nara.build uses 12px / 500 / 1.44px spacing / uppercase
+// Nav links: nara.build uses 12px / 500 / 0.12em spacing / uppercase
 .navbar .nav-link {
-    font-size: 0.75rem;          // 12px
+    font-size: 12px;
     font-weight: 500;
-    letter-spacing: 0.12em;      // ~1.44px
+    letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
-// Card header titles: nara.build section-label style
+// Card header titles: nara.build stat-label style
 .card-header-title {
-    font-size: 0.625rem;         // 10px — small label style
+    font-size: 9px;
     font-weight: 400;
-    letter-spacing: 0.15em;      // ~1.5px
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    opacity: 0.7;
+    opacity: 0.5;
+    color: #3df51a;
 }
 
-// General headings — lighter weight to match nara.build
+// Card-internal headings — keep light weight (data display)
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     font-weight: 400;
     letter-spacing: normal;
 }
 
-// Large display values (balances, totals, etc.)
+// Large stat values (h1 inside cards)
 h1, .h1 {
     font-weight: 800;
     letter-spacing: normal;
 }
 
-// Table cells — force 13px to match body base
+// Table cells — match nara.build --sm token
 .table td,
 .table th {
-    font-size: 0.8125rem;        // 13px
-}
-
-// Card header title — match nara.build 9px green label
-.card-header-title {
-    font-size: 0.5625rem;        // 9px
-    letter-spacing: 0.15em;      // ~1.35px
-    opacity: 0.5;
-    color: #39ff14;
+    font-size: 12px;             // --sm token
 }

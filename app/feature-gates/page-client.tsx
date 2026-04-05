@@ -41,7 +41,10 @@ export default function FeatureGatesPageClient() {
 
     return (
         <div className="mx-4 mt-4">
-            <h1>Feature Gates</h1>
+            <div className="nara-page-header">
+                <div className="nara-label">FEATURE GATES</div>
+                <h1>Feature Gates</h1>
+            </div>
             {cluster === Cluster.Custom ? (
                 <div className="alert alert-warning" role="alert">
                     This is a custom cluster. Enumeration of feature gates is not available.

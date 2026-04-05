@@ -25,11 +25,11 @@ $rainbow-1: #fa62fc;
 $rainbow-2: #be84e8;
 $rainbow-3: #79abd2;
 $rainbow-4: #38d0bd;
-$rainbow-5: #39ff14;
+$rainbow-5: #3df51a;
 
-$primary: #39ff14 !default;
+$primary: #3df51a !default;
 $primary-dark: #2bc90f !default;
-$success: #39ff14 !default;
+$success: #3df51a !default;
 $secondary: $gray-700;
 $danger: #b45be1;
 $warning: #d83aeb !default;
@@ -54,7 +54,7 @@ $popover-text-color: #ffffff !default;
 // Global
 
 .display-2 {
-    font-family: Saira, Helvetica, sans-serif;
+    font-family: var(--explorer-default-font), 'JetBrains Mono', monospace;
 }
 
 .text-rainbow {
@@ -81,7 +81,7 @@ $popover-text-color: #ffffff !default;
     background: #38d0bd;
 }
 .bg-rainbow-5 {
-    background: #39ff14;
+    background: #3df51a;
 }
 
 .text-rainbow-1 {
@@ -97,5 +97,5 @@ $popover-text-color: #ffffff !default;
     color: #38d0bd;
 }
 .text-rainbow-5 {
-    color: #39ff14;
+    color: #3df51a;
 }
