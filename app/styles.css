@@ -4,9 +4,9 @@
 :root {
     --accent: #3df51a;
     --card-border: #1e1e1e;
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --border: oklch(0.922 0 0);
+    --popover: #111;
+    --popover-foreground: #e8e8e8;
+    --border: #1e1e1e;
     
     /* Tailwind variables - compatibility only, values don't matter
      * Required because @tailwind base is skipped to avoid conflicts
@@ -51,14 +51,13 @@
         flex-direction: column;
         min-width: 0;
         word-wrap: break-word;
-        background-color: #1e2423;
+        background-color: var(--nara-surface, #111);
         background-clip: border-box;
-        border: 1px solid #282d2b;
+        border: 1px solid var(--nara-border, #1e1e1e);
         border-radius: var(--radius-terminal);
 
         margin-bottom: 1.5rem;
-        border-color: #111;
-        box-shadow: 0 0.75rem 1.5rem rgba(20, 24, 22, 0.5);
+        box-shadow: var(--nara-shadow, 0 24px 80px rgba(0, 0, 0, 0.45));
     }
     .e-card-body {
         flex: 1 1 auto;
@@ -146,6 +145,7 @@
     --nara-surface: #111;
     --nara-surface-strong: #111;
     --nara-surface-soft: #161616;
+    --nara-dim: #222;
     --nara-border: #1e1e1e;
     --nara-border-strong: rgba(57, 255, 20, 0.18);
     --nara-text: #e8e8e8;
@@ -173,6 +173,11 @@
     --accent-dim: rgba(57, 255, 20, 0.15);
     --accent-mid: rgba(57, 255, 20, 0.5);
     --accent-bright: rgba(57, 255, 20, 0.85);
+    /* Concept colors (from nara.build) */
+    --c-identity: #00cfff;
+    --c-aapp: #fb923c;
+    --c-pomi: #fbbf24;
+    --c-social: #a78bfa;
     /* Transition easings */
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
@@ -184,14 +189,15 @@ html {
 
 body {
     background:
-        radial-gradient(circle at top left, rgba(57, 255, 20, 0.08), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(0, 212, 170, 0.07), transparent 24%),
+        radial-gradient(circle at top left, rgba(57, 255, 20, 0.035), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(0, 212, 170, 0.025), transparent 24%),
         var(--nara-bg);
     color: var(--nara-text);
     font-family: var(--explorer-default-font), 'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Consolas', 'Courier New', monospace;
-    font-size: var(--md);
-    letter-spacing: -0.01em;
+    font-size: 13px;
+    letter-spacing: normal;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body::before {
@@ -217,7 +223,7 @@ body::after {
     width: min(28rem, 40vw);
     aspect-ratio: 1;
     border-radius: 999px;
-    background: radial-gradient(circle, rgba(57, 255, 20, 0.09), transparent 68%);
+    background: radial-gradient(circle, rgba(57, 255, 20, 0.04), transparent 68%);
     filter: blur(40px);
     pointer-events: none;
     z-index: 0;
@@ -226,6 +232,19 @@ body::after {
 body > * {
     position: relative;
     z-index: 1;
+}
+
+/* Paragraph text: nara.build uses 15px for readable body copy */
+p, .card-body > p, .alert p, .modal-body p {
+    font-size: var(--md);
+    line-height: 1.8;
+    color: var(--nara-muted);
+}
+
+/* Strong / bold inside paragraphs: white */
+p strong, p b {
+    color: var(--nara-text);
+    font-weight: 700;
 }
 
 a {
@@ -237,6 +256,31 @@ a {
     min-height: 100vh;
 }
 
+/* Container: match nara.build max-width (1200px) */
+.container {
+    max-width: 1200px;
+}
+
+/* Card body: tighter padding matching terminal feel */
+.card-body {
+    padding: 20px 24px;
+}
+
+/* Breadcrumbs / small text: consistent sizing */
+.breadcrumb, .breadcrumb-item, .breadcrumb-item a {
+    font-size: var(--sm);
+    color: var(--nara-muted);
+    letter-spacing: 0.04em;
+}
+
+.breadcrumb-item.active {
+    color: var(--nara-text);
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: var(--nara-border);
+}
+
 .navbar {
     position: sticky;
     top: 0;
@@ -246,7 +290,28 @@ a {
     padding-bottom: 0;
     background: rgba(12, 12, 12, 0.96) !important;
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--nara-border) !important;
+    border-bottom: none !important;
+}
+
+/* Rainbow gradient line below navbar — nara.build AgentX style */
+.navbar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 5%,
+        var(--c-social, #a78bfa) 15%,
+        var(--c-identity, #00cfff) 30%,
+        var(--c-success, #39ff14) 50%,
+        var(--c-pomi, #fbbf24) 70%,
+        var(--c-aapp, #fb923c) 85%,
+        transparent 95%
+    );
+    opacity: 0.25;
+    z-index: 1;
 }
 
 /* Logo: absolute left, matches nara.build nav padding (64px) */
@@ -269,13 +334,36 @@ a {
 
 .nav-social-icon {
     color: var(--nara-muted);
-    transition: color 0.2s;
+    transition: color 0.25s var(--ease-out), background 0.25s var(--ease-out), box-shadow 0.3s var(--ease-out), transform 0.25s var(--ease-out);
     display: flex;
     align-items: center;
+    padding: 8px;
+    margin: -8px;
+    border-radius: 4px;
+    min-width: 36px;
+    min-height: 36px;
+    justify-content: center;
 }
 
 .nav-social-icon:hover {
     color: var(--nara-accent);
+    background: rgba(57, 255, 20, 0.06);
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.08);
+    transform: translateY(-1px);
+}
+
+.nav-social-icon:active {
+    transform: translateY(0) scale(0.92);
+    box-shadow: none;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+/* Focus-visible: double-ring glow matching nara.build .nav-social:focus-visible */
+.nav-social-icon:focus-visible {
+    color: var(--nara-accent);
+    background: rgba(57, 255, 20, 0.06);
+    box-shadow: 0 0 0 2px var(--nara-accent), 0 0 12px rgba(57, 255, 20, 0.12);
+    outline: none !important;
 }
 
 /* Force navbar container to match content width & center.
@@ -323,6 +411,24 @@ a {
 .navbar .search-bar__control--is-focused {
     box-shadow: none !important;
     outline: none !important;
+    border: none !important;
+}
+
+/* Kill the bright green focus borders on ALL search bar states */
+.search-bar__control,
+.search-bar__control:hover,
+.search-bar__control:focus,
+.search-bar__control--is-focused,
+.search-bar__control--menu-is-open {
+    border-color: var(--nara-border) !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Focused search bar: subtle bottom border only, no glow */
+.search-bar__control--is-focused,
+.search-bar__control--menu-is-open {
+    border-color: rgba(57, 255, 20, 0.15) !important;
 }
 
 
@@ -348,16 +454,50 @@ a {
     align-items: center !important;
 }
 
+/* Nav links: position relative for ::after underline */
+.navbar .nav-link,
+.navbar-nav .nav-link {
+    position: relative !important;
+}
+
+/* ::after green underline — animates width on hover (matches nara.build .nav-links a::after) */
+.navbar .nav-link::after,
+.navbar-nav .nav-link::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -2px !important;
+    left: 0 !important;
+    width: 0 !important;
+    height: 1px !important;
+    background: var(--nara-accent) !important;
+    box-shadow: 0 0 4px rgba(57, 255, 20, 0.3) !important;
+    transition: width 0.3s var(--ease-out) !important;
+    display: block !important;
+}
+
 .navbar .nav-link:hover,
 .navbar-nav .nav-link:hover {
     color: #fff !important;
-    text-shadow: none !important;
+    background: rgba(57, 255, 20, 0.04) !important;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.06) !important;
+}
+
+.navbar .nav-link:hover::after,
+.navbar-nav .nav-link:hover::after {
+    width: 100% !important;
 }
 
 .navbar .nav-link.active,
 .navbar-nav .nav-link.active {
     color: var(--nara-accent) !important;
     font-weight: 700 !important;
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.2) !important;
+}
+
+.navbar .nav-link.active::after,
+.navbar-nav .nav-link.active::after {
+    width: 100% !important;
+    opacity: 0.5 !important;
 }
 
 /* Kill Dashkit active left-border indicator */
@@ -368,10 +508,32 @@ a {
 .navbar .navbar-toggler {
     border-color: var(--nara-border);
     background: rgba(255, 255, 255, 0.02);
+    padding: 6px 10px;
+    transition: border-color 0.25s var(--ease-out), background 0.25s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+
+/* Override Bootstrap's dark SVG hamburger icon → light muted lines for dark theme */
+.navbar .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(136,136,136,0.85)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    transition: opacity 0.2s var(--ease-out);
+}
+
+.navbar .navbar-toggler:hover {
+    border-color: rgba(57, 255, 20, 0.18);
+    background: rgba(57, 255, 20, 0.04);
+}
+
+.navbar .navbar-toggler:hover .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(61,245,26,0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
 }
 
 .navbar .navbar-toggler:focus {
     box-shadow: 0 0 0 0.2rem rgba(57, 255, 20, 0.18);
+}
+
+.navbar .navbar-toggler:active {
+    transform: scale(0.94);
+    transition: transform 0.1s;
 }
 
 .btn,
@@ -392,24 +554,76 @@ a {
 
 .card {
     overflow: hidden;
+    position: relative;
     transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        transform 0.3s var(--ease-out),
+        border-color 0.3s var(--ease-out),
+        box-shadow 0.35s var(--ease-out),
+        background 0.3s var(--ease-out);
+}
+
+/* Accent left bar (nara.build .card-base::before) */
+.card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--nara-accent);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-out);
+    z-index: 1;
+}
+
+/* Top shimmer line (nara.build .card-base::after) */
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(57, 255, 20, 0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out);
+    z-index: 1;
 }
 
 .card:hover {
     transform: translateY(-1px);
     background: var(--nara-surface-soft) !important;
-    box-shadow: 0 0 20px rgba(57, 255, 20, 0.04) !important;
+    box-shadow: 0 0 24px rgba(57, 255, 20, 0.06), inset 0 0 16px rgba(57, 255, 20, 0.02) !important;
+    border-color: rgba(57, 255, 20, 0.1) !important;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card:hover::after {
+    opacity: 1;
 }
 
 .card-header {
     background: var(--nara-surface) !important;
     border-bottom: 1px solid var(--nara-border) !important;
+    padding: 16px 20px;
 }
 
-.card-header-title,
+/* Card footer: match nara.build surface + border, align "Load More" / pagination areas */
+.card-footer {
+    background: var(--nara-surface) !important;
+    border-top: 1px solid var(--nara-border) !important;
+    padding: 12px 20px;
+}
+
+.card-footer .text-muted {
+    font-size: var(--xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
 .card h4,
 .card h5,
 .card .h4,
@@ -418,22 +632,19 @@ a {
     letter-spacing: 0.04em;
 }
 
+.card h3,
+.card .h3 {
+    font-weight: 700;
+    letter-spacing: normal;
+}
+
 .card-header-title {
-    font-size: 9px !important;
-    font-weight: 400 !important;
+    font-size: var(--xs) !important;
+    font-weight: 500 !important;
     letter-spacing: 0.15em !important;
     text-transform: uppercase;
     opacity: 0.5;
     color: var(--nara-accent) !important;
-}
-
-/* Page-level headings — match nara.build .page-title (only outside cards) */
-.nara-page-header h1 {
-    font-size: clamp(28px, 4vw, 48px);
-    font-weight: 800;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    margin-bottom: 16px;
 }
 
 /* Card-internal h1 (stat values) — large weight, normal spacing */
@@ -462,7 +673,18 @@ a {
     color: var(--nara-text);
     font-size: var(--sm);
     font-weight: 400;
-    padding: 0.65rem 1.25rem;
+    padding: 0.55rem 1rem;
+    line-height: 1.6;
+}
+
+/* Table headers: nara.build stat-label terminal style */
+.table th {
+    color: var(--nara-accent) !important;
+    font-size: var(--xs);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.6;
 }
 
 /* Left-side labels in stat tables: muted gray */
@@ -510,10 +732,44 @@ small,
     background: var(--nara-accent) !important;
     border-color: var(--nara-accent) !important;
     color: #000 !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Shine sweep on hover (nara.build .btn-p::after) */
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+    transform: rotate(45deg) translateX(-100%);
+    transition: none;
+    pointer-events: none;
+}
+
+.btn-primary:hover::after {
+    transform: rotate(45deg) translateX(100%);
+    transition: transform 0.6s;
 }
 .btn-primary:hover {
     box-shadow: 0 0 28px rgba(57, 255, 20, 0.45) !important;
     transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: translateY(1px) scale(0.97) !important;
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    transition: transform 0.1s, box-shadow 0.1s !important;
+}
+
+.btn-white:active,
+.btn-outline-secondary:active {
+    transform: translateY(1px) scale(0.97) !important;
+    box-shadow: 0 0 6px rgba(57, 255, 20, 0.06), inset 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+    transition: transform 0.1s, box-shadow 0.1s !important;
 }
 
 .btn-warning,
@@ -529,8 +785,9 @@ small,
 }
 
 .form-control:focus {
-    border-color: rgba(57, 255, 20, 0.18) !important;
+    border-color: rgba(57, 255, 20, 0.12) !important;
     box-shadow: none !important;
+    outline: none;
 }
 
 .search-bar__placeholder,
@@ -578,9 +835,64 @@ ul.log-messages {
     box-shadow: inset 0 0 0 1px rgba(57, 255, 20, 0.03);
 }
 
-.progress-bar,
-.badge.bg-success,
-.badge.bg-primary {
+/* Code blocks: match nara.build pre style (bg #080808, hover glow, top shimmer, cursor) */
+pre {
+    background: #080808 !important;
+    color: #ccc;
+    padding: 24px 28px;
+    font-size: 12px;
+    line-height: 1.9;
+    overflow-x: auto;
+    position: relative;
+    transition: border-color 0.3s var(--ease-out), box-shadow 0.35s var(--ease-out), background 0.3s var(--ease-out);
+}
+
+pre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(57, 255, 20, 0.25), transparent);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out);
+    z-index: 1;
+}
+
+@keyframes nara-cursor-blink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0; }
+}
+
+pre::after {
+    content: '_';
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    font-size: 11px;
+    color: var(--nara-accent);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-out);
+    pointer-events: none;
+    animation: nara-cursor-blink 1.2s steps(2, start) infinite;
+}
+
+pre:hover {
+    border-color: rgba(57, 255, 20, 0.12) !important;
+    background: #090909 !important;
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.04), inset 0 0 16px rgba(57, 255, 20, 0.01) !important;
+}
+
+pre:hover::before {
+    opacity: 1;
+}
+
+pre:hover::after {
+    opacity: 0.3;
+}
+
+.progress-bar {
     background-color: var(--nara-accent) !important;
     color: #040404 !important;
 }
@@ -590,12 +902,35 @@ hr {
     opacity: 1;
 }
 
+/* --- Mobile nav: slide-down animation matching nara.build --- */
 @media (max-width: 991px) {
-    .navbar-collapse {
-        margin-top: 1rem;
-        padding: 0.75rem 0;
-        border-top: 1px solid var(--nara-border);
+    .navbar {
+        height: auto !important;
+        min-height: 56px;
     }
+
+    .navbar-collapse {
+        margin-top: 0.5rem;
+        padding: 0.75rem 0 1rem;
+        border-top: 1px solid var(--nara-border);
+        animation: nara-nav-slide 0.3s var(--ease-out) both;
+    }
+
+    .navbar-nav {
+        gap: 0 !important;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 10px 0 !important;
+        min-height: 44px;
+        display: flex !important;
+        align-items: center;
+    }
+}
+
+@keyframes nara-nav-slide {
+    0% { opacity: 0; transform: translateY(-8px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 .nara-home {
@@ -711,8 +1046,8 @@ hr {
 
 .nara-hero__meta-label {
     color: var(--nara-accent);
-    font-size: 9px;
-    font-weight: 400;
+    font-size: var(--xs);
+    font-weight: 500;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     opacity: 0.5;
@@ -748,8 +1083,8 @@ hr {
 .nara-metric-card__label {
     margin-bottom: 8px;
     color: var(--nara-accent);
-    font-size: 9px;
-    font-weight: 400;
+    font-size: var(--xs);
+    font-weight: 500;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     opacity: 0.5;
@@ -771,10 +1106,36 @@ hr {
     font-variant-numeric: tabular-nums;
 }
 
+/* Stat value hover glow (nara.build .stat:hover .stat-val) */
+.nara-metric-card h1,
+.nara-metric-card .h1 {
+    transition: text-shadow 0.3s, color 0.3s;
+}
+
+.nara-metric-card:hover h1,
+.nara-metric-card:hover .h1 {
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.1), 0 0 24px rgba(255, 255, 255, 0.03);
+}
+
 .nara-metric-card em {
     color: var(--nara-accent);
     font-style: normal;
     font-size: 0.92em;
+    transition: text-shadow 0.3s;
+}
+
+.nara-metric-card:hover em {
+    text-shadow: 0 0 16px rgba(57, 255, 20, 0.45), 0 0 32px rgba(57, 255, 20, 0.15);
+}
+
+/* General content links: transition to accent green on hover (nara.build pattern) */
+.main-content a:not(.nav-link):not(.btn):not(.navbar-brand-nara):not(.nav-social-icon) {
+    transition: color 0.2s var(--ease-out), text-shadow 0.2s var(--ease-out);
+}
+
+.main-content a:not(.nav-link):not(.btn):not(.navbar-brand-nara):not(.nav-social-icon):hover {
+    color: var(--nara-accent) !important;
+    text-shadow: 0 0 8px rgba(57, 255, 20, 0.15);
 }
 
 .nara-metric-card h5 {
@@ -830,6 +1191,8 @@ hr {
     background: rgba(17, 17, 17, 0.94) !important;
     font-size: 12px !important;
     font-family: 'JetBrains Mono', monospace !important;
+    border-color: var(--nara-border) !important;
+    box-shadow: none !important;
 }
 
 .search-bar__menu {
@@ -880,6 +1243,10 @@ hr {
     .navbar-right-nara {
         right: 16px;
     }
+    /* Hide social icons on small mobile to prevent crowding — keep only cluster status */
+    .navbar-right-nara .nav-social-icon {
+        display: none !important;
+    }
 }
 
 @media (max-width: 767px) {
@@ -900,6 +1267,56 @@ hr {
 @media (max-width: 575px) {
     .nara-hero__meta {
         grid-template-columns: 1fr;
+    }
+}
+
+/* 360px: very small mobile (e.g. Galaxy S8, iPhone SE) */
+@media (max-width: 360px) {
+    .navbar-brand-nara {
+        left: 12px;
+    }
+    .navbar-right-nara {
+        right: 12px;
+        gap: 8px !important;
+    }
+
+    /* Reduce hero padding so content doesn't overflow */
+    .nara-hero__copy {
+        padding: 1rem;
+    }
+
+    .nara-hero__title {
+        font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+
+    .nara-hero__meta-card {
+        min-height: 6.5rem;
+        padding: 0.75rem;
+    }
+
+    .nara-metric-card .card-body {
+        padding: 16px 18px;
+    }
+
+    /* Ensure table cells don't force horizontal scroll */
+    .table td,
+    .table th {
+        padding: 0.5rem 0.75rem;
+        font-size: 11px;
+    }
+
+    /* Touch targets: ensure buttons/links are at least 44px tap area */
+    .btn,
+    .nav-link,
+    .navbar-toggler {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Navbar container: reduce padding to fit at 360px */
+    .navbar > .container {
+        padding-left: 8px !important;
+        padding-right: 100px !important;
     }
 }
 
@@ -992,27 +1409,23 @@ hr {
 .nara-home__grid .col-md-6:nth-child(1) > * { animation-delay: 0.14s; }
 .nara-home__grid .col-md-6:nth-child(2) > * { animation-delay: 0.2s; }
 
-/* --- Card header: live indicator dot pulse --- */
+/* --- Card header: nara.build "// " label prefix pattern --- */
 
 .card-header-title::before {
-    content: '';
-    display: inline-block;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--nara-accent);
-    margin-right: 8px;
-    vertical-align: middle;
-    animation: nara-pulse 2s ease-in-out infinite;
+    content: '// ';
+    color: var(--nara-accent);
+    opacity: 0.5;
+    font-size: var(--xs);
+    letter-spacing: 0.08em;
+    transition: opacity 0.3s var(--ease-out), text-shadow 0.3s var(--ease-out);
 }
 
-/* --- Card hover: nara.build-style --- */
-
-.card:hover {
-    transform: translateY(-1px);
-    background: var(--nara-surface-soft) !important;
-    box-shadow: 0 0 20px rgba(57, 255, 20, 0.04) !important;
+.card:hover .card-header-title::before {
+    opacity: 0.7;
+    text-shadow: 0 0 8px rgba(57, 255, 20, 0.15);
 }
+
+/* --- Card hover: consolidated (see main .card:hover above) --- */
 
 /* --- Metric card: subtle glow pulse on the whole card --- */
 
@@ -1026,7 +1439,22 @@ hr {
 .table tbody tr {
     transition: background 0.2s ease, border-color 0.2s ease;
     border-left: 2px solid transparent;
+    animation: nara-row-slide 0.35s var(--ease-out) both;
 }
+
+/* Stagger first 12 rows for initial load feel */
+.table tbody tr:nth-child(1)  { animation-delay: 0s; }
+.table tbody tr:nth-child(2)  { animation-delay: 0.03s; }
+.table tbody tr:nth-child(3)  { animation-delay: 0.06s; }
+.table tbody tr:nth-child(4)  { animation-delay: 0.09s; }
+.table tbody tr:nth-child(5)  { animation-delay: 0.12s; }
+.table tbody tr:nth-child(6)  { animation-delay: 0.15s; }
+.table tbody tr:nth-child(7)  { animation-delay: 0.18s; }
+.table tbody tr:nth-child(8)  { animation-delay: 0.21s; }
+.table tbody tr:nth-child(9)  { animation-delay: 0.24s; }
+.table tbody tr:nth-child(10) { animation-delay: 0.27s; }
+.table tbody tr:nth-child(11) { animation-delay: 0.3s; }
+.table tbody tr:nth-child(12) { animation-delay: 0.33s; }
 
 .table tbody tr:hover {
     background: rgba(57, 255, 20, 0.02);
@@ -1044,15 +1472,7 @@ hr {
     text-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
 }
 
-/* --- Metric card accent value: gentle glow --- */
-
-.nara-metric-card em {
-    transition: text-shadow 0.3s ease;
-}
-
-.nara-metric-card:hover em {
-    text-shadow: 0 0 24px rgba(57, 255, 20, 0.35);
-}
+/* --- Metric card accent value: glow (consolidated above) --- */
 
 /* --- TPS chart card: scan line + border breathe --- */
 
@@ -1100,6 +1520,32 @@ hr {
 
 .font-monospace {
     transition: color 0.3s ease;
+    font-variant-numeric: tabular-nums;
+}
+
+/* All tables: tabular nums for consistent column alignment */
+.table {
+    font-variant-numeric: tabular-nums;
+}
+
+/* --- Terminal glow on monospace hash/address links in tables --- */
+/* Matches nara.build stat-value hover: subtle green accent + glow for data feel */
+.table td a .font-monospace,
+.table td .font-monospace a,
+.table td a[href*="/address"],
+.table td a[href*="/tx/"],
+.table td a[href*="/block/"] {
+    transition: color 0.2s var(--ease-out), text-shadow 0.25s var(--ease-out), letter-spacing 0.3s var(--ease-out);
+}
+
+.table td a:hover .font-monospace,
+.table td .font-monospace a:hover,
+.table td a[href*="/address"]:hover,
+.table td a[href*="/tx/"]:hover,
+.table td a[href*="/block/"]:hover {
+    color: var(--nara-accent) !important;
+    text-shadow: 0 0 6px rgba(57, 255, 20, 0.2), 0 0 14px rgba(57, 255, 20, 0.06);
+    letter-spacing: 0.01em;
 }
 
 /* --- Refine HR separators in cards --- */
@@ -1110,7 +1556,7 @@ hr {
     margin: 0;
 }
 
-/* --- Badge refinements --- */
+/* --- Badge refinements (nara.build tier system) --- */
 
 .badge {
     font-size: var(--xs);
@@ -1119,6 +1565,194 @@ hr {
     padding: 3px 8px;
     border: 1px solid var(--nara-border);
     border-radius: var(--radius-terminal) !important;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: border-color 0.3s var(--ease-out), color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), background 0.3s var(--ease-out);
+}
+
+/* Tier: success / legend (green) */
+.badge.bg-success,
+.badge.bg-primary,
+.badge.nara-tier-legend {
+    color: var(--nara-accent) !important;
+    border-color: rgba(57, 255, 20, 0.3) !important;
+    background: rgba(57, 255, 20, 0.06) !important;
+    text-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
+}
+
+.badge.bg-success:hover,
+.badge.bg-primary:hover,
+.badge.nara-tier-legend:hover {
+    border-color: rgba(57, 255, 20, 0.5) !important;
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.15);
+    background: rgba(57, 255, 20, 0.1) !important;
+}
+
+/* Tier: warning / elite (gold) */
+.badge.bg-warning,
+.badge.nara-tier-elite {
+    color: #fbbf24 !important;
+    border-color: rgba(251, 191, 36, 0.3) !important;
+    background: rgba(251, 191, 36, 0.06) !important;
+    text-shadow: 0 0 8px rgba(251, 191, 36, 0.15);
+}
+
+.badge.bg-warning:hover,
+.badge.nara-tier-elite:hover {
+    border-color: rgba(251, 191, 36, 0.5) !important;
+    box-shadow: 0 0 12px rgba(251, 191, 36, 0.12);
+    background: rgba(251, 191, 36, 0.1) !important;
+}
+
+/* Tier: danger / error (keep red-ish, but use nara glow style) */
+.badge.bg-danger {
+    color: #f87171 !important;
+    border-color: rgba(248, 113, 113, 0.3) !important;
+    background: rgba(248, 113, 113, 0.06) !important;
+    text-shadow: 0 0 8px rgba(248, 113, 113, 0.15);
+}
+
+.badge.bg-danger:hover {
+    border-color: rgba(248, 113, 113, 0.5) !important;
+    box-shadow: 0 0 12px rgba(248, 113, 113, 0.12);
+    background: rgba(248, 113, 113, 0.1) !important;
+}
+
+/* Tier: info / identity (cyan) */
+.badge.bg-info,
+.badge.nara-tier-identity {
+    color: #00cfff !important;
+    border-color: rgba(0, 207, 255, 0.3) !important;
+    background: rgba(0, 207, 255, 0.06) !important;
+    text-shadow: 0 0 8px rgba(0, 207, 255, 0.15);
+}
+
+.badge.bg-info:hover,
+.badge.nara-tier-identity:hover {
+    border-color: rgba(0, 207, 255, 0.5) !important;
+    box-shadow: 0 0 12px rgba(0, 207, 255, 0.12);
+    background: rgba(0, 207, 255, 0.1) !important;
+}
+
+/* Tier: rising (purple) */
+.badge.nara-tier-rising {
+    color: #a78bfa !important;
+    border-color: rgba(167, 139, 250, 0.3) !important;
+    background: rgba(167, 139, 250, 0.06) !important;
+    text-shadow: 0 0 8px rgba(167, 139, 250, 0.15);
+}
+
+.badge.nara-tier-rising:hover {
+    border-color: rgba(167, 139, 250, 0.5) !important;
+    box-shadow: 0 0 12px rgba(167, 139, 250, 0.12);
+    background: rgba(167, 139, 250, 0.1) !important;
+}
+
+/* Tier: aapp (orange) */
+.badge.nara-tier-aapp {
+    color: #fb923c !important;
+    border-color: rgba(251, 146, 60, 0.3) !important;
+    background: rgba(251, 146, 60, 0.06) !important;
+    text-shadow: 0 0 8px rgba(251, 146, 60, 0.15);
+}
+
+.badge.nara-tier-aapp:hover {
+    border-color: rgba(251, 146, 60, 0.5) !important;
+    box-shadow: 0 0 12px rgba(251, 146, 60, 0.12);
+    background: rgba(251, 146, 60, 0.1) !important;
+}
+
+/* Tier: dark / neutral (muted gray — used for NFT metadata badges) */
+.badge.bg-dark,
+.badge.badge-pill.bg-dark {
+    color: var(--nara-muted) !important;
+    border-color: var(--nara-border) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    text-shadow: none;
+}
+
+.badge.bg-dark:hover,
+.badge.badge-pill.bg-dark:hover {
+    color: var(--nara-text) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Tier: secondary-soft (zero-balance, neutral state) */
+.badge.bg-secondary-soft {
+    color: var(--nara-muted) !important;
+    border-color: var(--nara-border) !important;
+    background: rgba(136, 136, 136, 0.06) !important;
+    text-shadow: none;
+}
+
+.badge.bg-secondary-soft:hover {
+    border-color: rgba(136, 136, 136, 0.25) !important;
+    background: rgba(136, 136, 136, 0.1) !important;
+}
+
+/* Tier: danger-soft (unverified state) */
+.badge.bg-danger-soft {
+    color: #f87171 !important;
+    border-color: rgba(248, 113, 113, 0.2) !important;
+    background: rgba(248, 113, 113, 0.04) !important;
+}
+
+/* Tier: success-soft (verified, valid, initialized) */
+.badge.bg-success-soft {
+    color: var(--nara-accent) !important;
+    border-color: rgba(57, 255, 20, 0.2) !important;
+    background: rgba(57, 255, 20, 0.06) !important;
+    text-shadow: 0 0 6px rgba(57, 255, 20, 0.15);
+}
+
+.badge.bg-success-soft:hover {
+    border-color: rgba(57, 255, 20, 0.4) !important;
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.1);
+    background: rgba(57, 255, 20, 0.1) !important;
+}
+
+/* Tier: info-soft (signer, fee payer, index badges) */
+.badge.bg-info-soft {
+    color: #00cfff !important;
+    border-color: rgba(0, 207, 255, 0.2) !important;
+    background: rgba(0, 207, 255, 0.06) !important;
+    text-shadow: 0 0 6px rgba(0, 207, 255, 0.12);
+}
+
+.badge.bg-info-soft:hover {
+    border-color: rgba(0, 207, 255, 0.4) !important;
+    box-shadow: 0 0 10px rgba(0, 207, 255, 0.1);
+    background: rgba(0, 207, 255, 0.1) !important;
+}
+
+/* Tier: warning-soft (invalid, unverified, program) */
+.badge.bg-warning-soft {
+    color: #fbbf24 !important;
+    border-color: rgba(251, 191, 36, 0.2) !important;
+    background: rgba(251, 191, 36, 0.06) !important;
+    text-shadow: 0 0 6px rgba(251, 191, 36, 0.12);
+}
+
+.badge.bg-warning-soft:hover {
+    border-color: rgba(251, 191, 36, 0.4) !important;
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.1);
+    background: rgba(251, 191, 36, 0.1) !important;
+}
+
+/* Tier: primary-soft (general accent context) */
+.badge.bg-primary-soft {
+    color: var(--nara-accent) !important;
+    border-color: rgba(57, 255, 20, 0.2) !important;
+    background: rgba(57, 255, 20, 0.06) !important;
+    text-shadow: 0 0 6px rgba(57, 255, 20, 0.15);
+}
+
+.badge.bg-primary-soft:hover {
+    border-color: rgba(57, 255, 20, 0.4) !important;
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.1);
+    background: rgba(57, 255, 20, 0.1) !important;
 }
 
 /* --- Tooltip refinement --- */
@@ -1129,11 +1763,32 @@ hr {
     transition: opacity 0.15s ease;
 }
 
+/* --- Data table scan line (nara.build terminal feel) --- */
+
+.table-responsive {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: visible;
+}
+
+.table-responsive::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: linear-gradient(transparent, rgba(57, 255, 20, 0.025), transparent);
+    animation: nara-scan 6s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
 /* --- Reduce motion for accessibility --- */
 
 @media (prefers-reduced-motion: reduce) {
     .nara-panel-card::after,
-    .col-md-6:nth-child(2) > .card::after {
+    .col-md-6:nth-child(2) > .card::after,
+    .table-responsive::after {
         animation: none;
     }
     .nara-metric-card,
@@ -1141,7 +1796,1389 @@ hr {
     .col-md-6 > .card {
         animation: none;
     }
-    .card-header-title::before {
+    .table tbody tr {
         animation: none;
+    }
+}
+
+/* ═══════════════════════════════════════════
+   PAGINATION — nara.build terminal theme
+   Used by history cards, verified programs, block lists
+   ═══════════════════════════════════════════ */
+
+.pagination {
+    gap: 4px;
+}
+
+.page-link {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid var(--nara-border) !important;
+    border-radius: var(--radius-terminal) !important;
+    color: var(--nara-muted) !important;
+    font-size: var(--sm);
+    font-family: var(--explorer-default-font), 'JetBrains Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 6px 12px;
+    transition: border-color 0.25s var(--ease-out), color 0.25s var(--ease-out), background 0.25s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+
+.page-link:hover {
+    background: rgba(57, 255, 20, 0.04) !important;
+    border-color: rgba(57, 255, 20, 0.18) !important;
+    color: var(--nara-text) !important;
+}
+
+.page-item.active .page-link {
+    background: rgba(57, 255, 20, 0.08) !important;
+    border-color: rgba(57, 255, 20, 0.35) !important;
+    color: var(--nara-accent) !important;
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.08);
+    text-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
+}
+
+.page-item.disabled .page-link {
+    background: rgba(255, 255, 255, 0.01) !important;
+    border-color: var(--nara-border) !important;
+    color: rgba(136, 136, 136, 0.3) !important;
+    cursor: not-allowed;
+}
+
+/* List pagination (Dashkit variant) */
+.list-pagination .page-link {
+    border-radius: var(--radius-terminal) !important;
+}
+
+/* ═══════════════════════════════════════════
+   MODAL CONTENT — nara.build theme
+   Used by ClusterModal, any Bootstrap modals
+   ═══════════════════════════════════════════ */
+
+.modal-content {
+    background: rgba(12, 12, 12, 0.98) !important;
+    border: 1px solid var(--nara-border) !important;
+    border-radius: var(--radius-terminal) !important;
+    color: var(--nara-text) !important;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), 0 0 1px rgba(57, 255, 20, 0.08) !important;
+    backdrop-filter: blur(16px);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--nara-border) !important;
+    color: var(--nara-text) !important;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--nara-border) !important;
+}
+
+/* ═══════════════════════════════════════════
+   OFFCANVAS / MODAL PANEL — nara.build theme
+   ═══════════════════════════════════════════ */
+
+.offcanvas {
+    background: rgba(12, 12, 12, 0.98) !important;
+    border-left: 1px solid var(--nara-border) !important;
+    backdrop-filter: blur(16px);
+    color: var(--nara-text) !important;
+    box-shadow: -12px 0 48px rgba(0, 0, 0, 0.5);
+}
+
+.offcanvas .modal-body {
+    background: transparent !important;
+    color: var(--nara-text);
+    padding: 2rem 1.5rem;
+}
+
+.offcanvas .modal-body h2 {
+    color: var(--nara-text);
+    font-size: var(--lg);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+/* Close button (×) in modal */
+.offcanvas .modal-body > span.c-pointer {
+    color: var(--nara-muted);
+    font-size: 1.5rem;
+    transition: color 0.2s var(--ease-out), text-shadow 0.2s var(--ease-out);
+    display: inline-block;
+    float: right;
+}
+
+.offcanvas .modal-body > span.c-pointer:hover {
+    color: var(--nara-accent);
+    text-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
+}
+
+/* Cluster toggle buttons in modal */
+.offcanvas .btn-group-toggle .btn {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid var(--nara-border) !important;
+    color: var(--nara-muted) !important;
+    font-size: var(--sm);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: border-color 0.25s var(--ease-out), color 0.25s var(--ease-out), background 0.25s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+
+.offcanvas .btn-group-toggle .btn:hover {
+    border-color: rgba(57, 255, 20, 0.18) !important;
+    color: var(--nara-text) !important;
+    background: rgba(57, 255, 20, 0.04) !important;
+}
+
+.offcanvas .btn-group-toggle .btn.border-primary,
+.offcanvas .btn-group-toggle .btn.text-primary {
+    border-color: rgba(57, 255, 20, 0.4) !important;
+    color: var(--nara-accent) !important;
+    background: rgba(57, 255, 20, 0.06) !important;
+    box-shadow: 0 0 16px rgba(57, 255, 20, 0.08);
+    text-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
+}
+
+/* Overlay backdrop */
+.modal-backdrop,
+.offcanvas-backdrop {
+    background: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(4px);
+}
+
+/* ═══════════════════════════════════════════
+   DROPDOWN MENU ITEMS — nara.build theme
+   ═══════════════════════════════════════════ */
+
+.dropdown-menu {
+    padding: 0.35rem 0 !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 1px rgba(57, 255, 20, 0.08) !important;
+    backdrop-filter: blur(12px);
+}
+
+/* Top shimmer line on dropdown (matches nara.build .nav-dropdown-menu::after) */
+.dropdown-menu::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(57, 255, 20, 0.25), transparent);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-out);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.dropdown-menu.show::after {
+    opacity: 1;
+}
+
+.dropdown-item {
+    color: var(--nara-text) !important;
+    font-size: var(--sm);
+    font-family: var(--explorer-default-font), 'JetBrains Mono', monospace;
+    padding: 0.5rem 1rem;
+    border-left: 2px solid transparent;
+    transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background: rgba(57, 255, 20, 0.06) !important;
+    color: var(--nara-text) !important;
+    border-left-color: var(--nara-accent);
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    background: rgba(57, 255, 20, 0.1) !important;
+    color: var(--nara-accent) !important;
+    border-left-color: var(--nara-accent);
+}
+
+.dropdown-divider {
+    border-color: var(--nara-border) !important;
+    opacity: 1;
+}
+
+.dropdown-header {
+    color: var(--nara-accent) !important;
+    font-size: var(--xs);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+/* ═══════════════════════════════════════════
+   INLINE CODE — differentiate from pre blocks
+   ═══════════════════════════════════════════ */
+
+/* Reset: inline code should NOT inherit pre's full treatment */
+:not(pre) > code {
+    display: inline;
+    padding: 0.15em 0.4em !important;
+    font-size: 0.9em;
+    background: rgba(57, 255, 20, 0.06) !important;
+    border: 1px solid rgba(57, 255, 20, 0.12) !important;
+    border-radius: 3px;
+    color: var(--nara-accent);
+    box-shadow: none !important;
+    white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════════
+   NAV TABS — nara.build terminal tab styling
+   Used on block, address, inspector, and IDL pages
+   ═══════════════════════════════════════════ */
+
+.nav-tabs {
+    border-bottom: 1px solid var(--nara-border) !important;
+    gap: 0;
+}
+
+.nav-tabs .nav-link {
+    color: var(--nara-muted) !important;
+    font-size: var(--sm) !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    font-family: var(--explorer-default-font), 'JetBrains Mono', monospace !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    padding: 10px 16px !important;
+    margin-bottom: -1px;
+    transition: color 0.25s var(--ease-out), border-color 0.25s var(--ease-out), background 0.25s var(--ease-out), text-shadow 0.25s var(--ease-out) !important;
+    position: relative;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--nara-text) !important;
+    background: rgba(57, 255, 20, 0.04) !important;
+    border-bottom-color: rgba(57, 255, 20, 0.3) !important;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.06);
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+    color: var(--nara-accent) !important;
+    background: transparent !important;
+    border-bottom: 2px solid var(--nara-accent) !important;
+    font-weight: 700 !important;
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+    box-shadow: 0 2px 8px rgba(57, 255, 20, 0.08);
+}
+
+/* Tab content: smooth transition */
+.tab-content > .tab-pane {
+    animation: nara-fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ═══════════════════════════════════════════
+   ALERTS — nara.build terminal theme
+   Used on feature gates, stake, flagged accounts
+   ═══════════════════════════════════════════ */
+
+.alert {
+    background: var(--nara-surface) !important;
+    border: 1px solid var(--nara-border) !important;
+    border-radius: var(--radius-terminal) !important;
+    color: var(--nara-text) !important;
+    font-size: var(--sm);
+    font-family: var(--explorer-default-font), 'JetBrains Mono', monospace;
+    padding: 16px 20px;
+    position: relative;
+    border-left: 3px solid var(--nara-border) !important;
+}
+
+.alert-warning {
+    border-left-color: #fbbf24 !important;
+    color: #fbbf24 !important;
+    background: rgba(251, 191, 36, 0.04) !important;
+    border-color: rgba(251, 191, 36, 0.18) !important;
+}
+
+.alert-danger,
+.alert-scam {
+    border-left-color: #f87171 !important;
+    color: #f87171 !important;
+    background: rgba(248, 113, 113, 0.04) !important;
+    border-color: rgba(248, 113, 113, 0.18) !important;
+}
+
+.alert-success {
+    border-left-color: var(--nara-accent) !important;
+    color: var(--nara-accent) !important;
+    background: rgba(57, 255, 20, 0.04) !important;
+    border-color: rgba(57, 255, 20, 0.18) !important;
+}
+
+.alert-info {
+    border-left-color: #00cfff !important;
+    color: #00cfff !important;
+    background: rgba(0, 207, 255, 0.04) !important;
+    border-color: rgba(0, 207, 255, 0.18) !important;
+}
+
+/* ═══════════════════════════════════════════
+   LABEL ACCENT BAR + SCROLLBAR + SELECTION
+   ═══════════════════════════════════════════ */
+
+/* .nara-label: add left border accent bar to match nara.build .label */
+.nara-label {
+    padding-left: 12px;
+    border-left: 2px solid rgba(57, 255, 20, 0.25);
+    transition: opacity 0.4s var(--ease-out), border-left-color 0.4s var(--ease-out), text-shadow 0.4s var(--ease-out);
+}
+
+/* Text selection: green accent */
+::selection {
+    background: rgba(57, 255, 20, 0.2);
+    color: var(--nara-text);
+}
+
+::-moz-selection {
+    background: rgba(57, 255, 20, 0.2);
+    color: var(--nara-text);
+}
+
+/* Custom scrollbar: dark theme matching nara.build surface */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--nara-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--nara-border);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(57, 255, 20, 0.25);
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--nara-border) var(--nara-bg);
+}
+
+/* Remove pseudo-elements from inline code (cursor blink, shimmer) */
+:not(pre) > code::before,
+:not(pre) > code::after {
+    display: none !important;
+}
+
+/* ═══════════════════════════════════════════
+   UTILITY CLASSES — nara.build design tokens
+   Used by toast, custom components, etc.
+   ═══════════════════════════════════════════ */
+
+.e-text-accent { color: var(--nara-accent) !important; }
+.e-text-destructive { color: #f87171 !important; }
+.e-text-foreground { color: var(--nara-text) !important; }
+.e-bg-accent-900 { background: rgba(57, 255, 20, 0.06) !important; }
+.e-bg-destructive { background: rgba(248, 113, 113, 0.06) !important; }
+.e-border-accent { border-color: rgba(57, 255, 20, 0.25) !important; }
+.e-border-destructive { border-color: rgba(248, 113, 113, 0.25) !important; }
+
+/* ═══════════════════════════════════════════
+   LIST GROUP — nara.build terminal theme
+   Used for account details, transaction details
+   ═══════════════════════════════════════════ */
+
+.list-group-item {
+    background: transparent !important;
+    border-color: var(--nara-border) !important;
+    color: var(--nara-text);
+    font-size: var(--sm);
+    padding: 12px 20px;
+    transition: background 0.2s var(--ease-out);
+}
+
+.list-group-item:hover {
+    background: rgba(57, 255, 20, 0.015) !important;
+}
+
+.list-group-item .text-muted {
+    font-size: var(--xs);
+    letter-spacing: 0.06em;
+}
+
+/* ═══════════════════════════════════════════
+   BOOTSTRAP TEXT UTILITY OVERRIDES
+   Map default Bootstrap colors to nara.build tokens
+   ═══════════════════════════════════════════ */
+
+.text-primary { color: var(--nara-accent) !important; }
+.text-success { color: var(--nara-accent) !important; }
+.text-info    { color: #00cfff !important; }          /* --c-identity */
+.text-warning { color: #fbbf24 !important; }          /* --c-pomi (gold) */
+.text-danger  { color: #f87171 !important; }
+.text-secondary { color: var(--nara-muted) !important; }
+
+/* ═══════════════════════════════════════════
+   SONNER TOAST — nara.build terminal theme
+   Overrides default Sonner styles to match
+   ═══════════════════════════════════════════ */
+
+[data-sonner-toaster] {
+    font-family: var(--explorer-default-font), 'JetBrains Mono', monospace !important;
+}
+
+[data-sonner-toast] {
+    background: rgba(10, 10, 10, 0.96) !important;
+    border: 1px solid var(--nara-border) !important;
+    border-radius: var(--radius-terminal) !important;
+    color: var(--nara-text) !important;
+    font-size: var(--sm) !important;
+    font-family: var(--explorer-default-font), 'JetBrains Mono', monospace !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 1px rgba(57, 255, 20, 0.08) !important;
+    backdrop-filter: blur(12px);
+    border-left: 2px solid var(--nara-border) !important;
+    transition: border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+
+[data-sonner-toast][data-type="success"] {
+    border-left-color: var(--nara-accent) !important;
+    background: rgba(57, 255, 20, 0.04) !important;
+}
+
+[data-sonner-toast][data-type="error"] {
+    border-left-color: #f87171 !important;
+    background: rgba(248, 113, 113, 0.04) !important;
+}
+
+[data-sonner-toast][data-type="info"] {
+    border-left-color: #00cfff !important;
+    background: rgba(0, 207, 255, 0.04) !important;
+}
+
+[data-sonner-toast] [data-title] {
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+[data-sonner-toast] [data-description] {
+    color: var(--nara-muted) !important;
+    font-size: var(--xs) !important;
+}
+
+[data-sonner-toast] [data-close-button] {
+    color: var(--nara-muted) !important;
+    background: transparent !important;
+    border: none !important;
+    transition: color 0.2s var(--ease-out);
+}
+
+[data-sonner-toast] [data-close-button]:hover {
+    color: var(--nara-text) !important;
+}
+
+/* ═══════════════════════════════════════════
+   TOS PAGE — nara.build typography alignment
+   ═══════════════════════════════════════════ */
+
+.e-text-gray-400 {
+    color: var(--nara-muted) !important;
+}
+
+.e-text-white {
+    color: var(--nara-text) !important;
+}
+
+.e-text-accent {
+    color: var(--nara-accent) !important;
+}
+
+/* ═══════════════════════════════════════════
+   FOCUS RING — nara.build accent for keyboard nav
+   ═══════════════════════════════════════════ */
+
+/* Global focus-visible ring: subtle, not distracting */
+:focus-visible {
+    outline: 1px solid rgba(57, 255, 20, 0.25) !important;
+    outline-offset: 2px !important;
+    box-shadow: none !important;
+}
+
+/* Remove default browser outline for mouse users */
+:focus:not(:focus-visible) {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Nav links: subtler focus ring (they have the underline treatment) */
+.navbar .nav-link:focus-visible,
+.nav-tabs .nav-link:focus-visible {
+    outline-offset: 4px !important;
+    box-shadow: none !important;
+}
+
+/* Buttons: subtle accent ring */
+.btn:focus-visible {
+    outline: 1px solid rgba(57, 255, 20, 0.2) !important;
+    outline-offset: 2px !important;
+    box-shadow: none !important;
+}
+
+/* Form inputs: match the green focus border already in use */
+.form-control:focus-visible {
+    outline: none !important;
+    border-color: rgba(57, 255, 20, 0.15) !important;
+    box-shadow: none !important;
+}
+
+/* Search bar: no focus-visible glow at all */
+.search-bar__control:focus-visible,
+.search-bar__control *:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* ═══════════════════════════════════════════
+   TOOLTIP — nara.build terminal theme
+   Used by InfoTooltip, TimestampToggle, TokenExtensionBadge, etc.
+   ═══════════════════════════════════════════ */
+
+.tooltip {
+    font-family: var(--explorer-default-font), 'JetBrains Mono', monospace;
+    font-size: var(--xs) !important;
+    letter-spacing: 0.04em;
+}
+
+.tooltip-inner {
+    background: rgba(10, 10, 10, 0.96) !important;
+    border: 1px solid var(--nara-border);
+    border-radius: var(--radius-terminal) !important;
+    color: var(--nara-text) !important;
+    padding: 6px 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 1px rgba(57, 255, 20, 0.06);
+    backdrop-filter: blur(12px);
+    max-width: 280px;
+    text-align: left;
+    line-height: 1.6;
+}
+
+.bs-tooltip-top .tooltip-arrow::before,
+.bs-tooltip-auto[data-popper-placement^="top"] .tooltip-arrow::before {
+    border-top-color: rgba(10, 10, 10, 0.96) !important;
+}
+
+.bs-tooltip-bottom .tooltip-arrow::before,
+.bs-tooltip-auto[data-popper-placement^="bottom"] .tooltip-arrow::before {
+    border-bottom-color: rgba(10, 10, 10, 0.96) !important;
+}
+
+.bs-tooltip-start .tooltip-arrow::before,
+.bs-tooltip-auto[data-popper-placement^="left"] .tooltip-arrow::before {
+    border-left-color: rgba(10, 10, 10, 0.96) !important;
+}
+
+.bs-tooltip-end .tooltip-arrow::before,
+.bs-tooltip-auto[data-popper-placement^="right"] .tooltip-arrow::before {
+    border-right-color: rgba(10, 10, 10, 0.96) !important;
+}
+
+/* ═══════════════════════════════════════════
+   POPOVER / TOOLTIP — nara.build dark theme
+   Used by InfoTooltip, TimestampToggle, etc.
+   ═══════════════════════════════════════════ */
+
+.popover {
+    background: rgba(10, 10, 10, 0.96) !important;
+    border: 1px solid var(--nara-border) !important;
+    border-radius: var(--radius-terminal) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 1px rgba(57, 255, 20, 0.08) !important;
+    backdrop-filter: blur(12px);
+    color: var(--nara-text) !important;
+    font-family: var(--explorer-default-font), 'JetBrains Mono', monospace;
+    font-size: var(--sm);
+}
+
+.popover-body {
+    color: var(--nara-text) !important;
+    padding: 0.65rem 0.85rem;
+    line-height: 1.7;
+}
+
+.popover-header {
+    background: transparent !important;
+    border-bottom: 1px solid var(--nara-border) !important;
+    color: var(--nara-accent) !important;
+    font-size: var(--xs);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* Arrow colors: match popover bg on all sides */
+.bs-popover-top > .popover-arrow::after,
+.bs-popover-auto[data-popper-placement^="top"] > .popover-arrow::after {
+    border-top-color: rgba(10, 10, 10, 0.96) !important;
+}
+
+.bs-popover-top > .popover-arrow::before,
+.bs-popover-auto[data-popper-placement^="top"] > .popover-arrow::before {
+    border-top-color: var(--nara-border) !important;
+}
+
+.bs-popover-bottom > .popover-arrow::after,
+.bs-popover-auto[data-popper-placement^="bottom"] > .popover-arrow::after {
+    border-bottom-color: rgba(10, 10, 10, 0.96) !important;
+}
+
+.bs-popover-bottom > .popover-arrow::before,
+.bs-popover-auto[data-popper-placement^="bottom"] > .popover-arrow::before {
+    border-bottom-color: var(--nara-border) !important;
+}
+
+.bs-popover-start > .popover-arrow::after,
+.bs-popover-auto[data-popper-placement^="left"] > .popover-arrow::after {
+    border-left-color: rgba(10, 10, 10, 0.96) !important;
+}
+
+.bs-popover-start > .popover-arrow::before,
+.bs-popover-auto[data-popper-placement^="left"] > .popover-arrow::before {
+    border-left-color: var(--nara-border) !important;
+}
+
+.bs-popover-end > .popover-arrow::after,
+.bs-popover-auto[data-popper-placement^="right"] > .popover-arrow::after {
+    border-right-color: rgba(10, 10, 10, 0.96) !important;
+}
+
+.bs-popover-end > .popover-arrow::before,
+.bs-popover-auto[data-popper-placement^="right"] > .popover-arrow::before {
+    border-right-color: var(--nara-border) !important;
+}
+
+/* Popover-container hover effect: subtle green glow on the help icon */
+.popover-container .fe-help-circle,
+.popover-container svg {
+    transition: color 0.2s var(--ease-out);
+}
+
+.popover-container:hover .fe-help-circle,
+.popover-container:hover svg {
+    color: var(--nara-accent);
+}
+
+/* ═══════════════════════════════════════════
+   ACCORDION — nara.build terminal theme
+   Used in IDL interactive, token extensions
+   ═══════════════════════════════════════════ */
+
+[data-slot="accordion-trigger"] {
+    color: var(--nara-text) !important;
+    font-family: var(--explorer-default-font), 'JetBrains Mono', monospace;
+    font-size: var(--sm);
+    cursor: pointer;
+    transition: background 0.25s var(--ease-out), color 0.25s var(--ease-out);
+    border-bottom: 1px solid var(--nara-border) !important;
+}
+
+[data-slot="accordion-trigger"]:hover {
+    background: rgba(57, 255, 20, 0.03) !important;
+}
+
+[data-slot="accordion-trigger"][data-state="open"] {
+    border-bottom-color: rgba(57, 255, 20, 0.18) !important;
+}
+
+/* Accordion content: fade-in animation */
+[data-radix-collapsible-content] {
+    animation: nara-fade-in 0.25s var(--ease-out) both;
+}
+
+/* ============================================================
+   NARA FOOTER
+   ============================================================ */
+.nara-footer {
+    position: relative;
+    margin-top: 64px;
+    padding: 40px 0 32px;
+    border-top: 1px solid transparent;
+    background: #0c0c0c;
+    background-clip: padding-box;
+}
+
+.nara-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #3df51a 30%, #00cfff 70%, transparent);
+    opacity: 0.45;
+}
+
+.nara-footer__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+.nara-footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nara-footer__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    margin-bottom: 8px;
+    transition: opacity 0.2s;
+}
+
+.nara-footer__logo:hover {
+    opacity: 0.8;
+}
+
+.nara-footer__logo-text {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.3em;
+    color: #e8e8e8;
+    font-family: var(--explorer-default-font), 'JetBrains Mono', monospace;
+}
+
+.nara-footer__copyright {
+    font-size: 12px;
+    color: #888;
+}
+
+.nara-footer__tagline {
+    font-size: 12px;
+    color: #888;
+    opacity: 0.35;
+    margin-top: 2px;
+}
+
+.nara-footer__cursor {
+    display: inline-block;
+    width: 6px;
+    height: 13px;
+    background: #3df51a;
+    margin-left: 3px;
+    vertical-align: text-bottom;
+    animation: nara-cursor-blink 1s steps(2) infinite;
+}
+
+@keyframes nara-cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.nara-footer__links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    padding-top: 6px;
+}
+
+.nara-footer__links a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #888;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.2s;
+    font-family: var(--explorer-default-font), 'JetBrains Mono', monospace;
+}
+
+.nara-footer__links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #3df51a;
+    transition: width 0.25s ease;
+}
+
+.nara-footer__links a:hover {
+    color: #3df51a;
+}
+
+.nara-footer__links a:hover::after {
+    width: 100%;
+}
+
+@media (max-width: 640px) {
+    .nara-footer__inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+
+    .nara-footer__links {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+}
+
+/* ╔═══════════════════════════════════════════════════════════════╗
+   ║  AGENTX-STYLE COLORFUL VISUAL SYSTEM                       ║
+   ║  Multi-color tags, animated glows, gradient text, scan      ║
+   ║  lines, pulsing indicators — matching nara.build 花里胡哨    ║
+   ╚═══════════════════════════════════════════════════════════════╝ */
+
+/* --- Concept color palette (from nara.build) --- */
+:root {
+    --c-success:  #39ff14;
+    --c-error:    #ff4444;
+    --c-identity: #00cfff;
+    --c-aapp:     #fb923c;
+    --c-pomi:     #fbbf24;
+    --c-social:   #a78bfa;
+    --c-neutral:  #7c889b;
+    --c-white:    #e8e8e8;
+}
+
+/* ── MULTI-COLOR BADGE SYSTEM ──
+   Different badge colors based on context — matching nara.build feed tags */
+
+/* Success / Finalized / Confirmed */
+.badge.bg-success,
+.badge.bg-success-soft,
+.badge.bg-primary,
+.badge.bg-primary-soft {
+    color: var(--c-success) !important;
+    border-color: rgba(57, 255, 20, 0.3) !important;
+    background: rgba(57, 255, 20, 0.06) !important;
+    text-shadow: 0 0 8px rgba(57, 255, 20, 0.25);
+    animation: badgePulseGreen 3s ease-in-out infinite;
+}
+
+/* Error / Failed */
+.badge.bg-danger,
+.badge.bg-danger-soft {
+    color: var(--c-error) !important;
+    border-color: rgba(255, 68, 68, 0.3) !important;
+    background: rgba(255, 68, 68, 0.06) !important;
+    text-shadow: 0 0 8px rgba(255, 68, 68, 0.2);
+    animation: badgePulseRed 3s ease-in-out infinite;
+}
+
+/* Warning / Pending */
+.badge.bg-warning,
+.badge.bg-warning-soft {
+    color: var(--c-pomi) !important;
+    border-color: rgba(251, 191, 36, 0.3) !important;
+    background: rgba(251, 191, 36, 0.06) !important;
+    text-shadow: 0 0 8px rgba(251, 191, 36, 0.2);
+    animation: badgePulseGold 3s ease-in-out infinite;
+}
+
+/* Info / Signer / Fee Payer — CYAN */
+.badge.bg-info,
+.badge.bg-info-soft {
+    color: var(--c-identity) !important;
+    border-color: rgba(0, 207, 255, 0.3) !important;
+    background: rgba(0, 207, 255, 0.06) !important;
+    text-shadow: 0 0 8px rgba(0, 207, 255, 0.2);
+    animation: badgePulseCyan 3s ease-in-out infinite;
+}
+
+/* ── Badge glow pulse keyframes (one per color) ── */
+
+@keyframes badgePulseGreen {
+    0%, 100% { box-shadow: 0 0 4px rgba(57, 255, 20, 0.08); }
+    50%      { box-shadow: 0 0 12px rgba(57, 255, 20, 0.2); }
+}
+@keyframes badgePulseRed {
+    0%, 100% { box-shadow: 0 0 4px rgba(255, 68, 68, 0.08); }
+    50%      { box-shadow: 0 0 12px rgba(255, 68, 68, 0.18); }
+}
+@keyframes badgePulseGold {
+    0%, 100% { box-shadow: 0 0 4px rgba(251, 191, 36, 0.08); }
+    50%      { box-shadow: 0 0 12px rgba(251, 191, 36, 0.18); }
+}
+@keyframes badgePulseCyan {
+    0%, 100% { box-shadow: 0 0 4px rgba(0, 207, 255, 0.08); }
+    50%      { box-shadow: 0 0 12px rgba(0, 207, 255, 0.18); }
+}
+@keyframes badgePulsePurple {
+    0%, 100% { box-shadow: 0 0 4px rgba(167, 139, 250, 0.08); }
+    50%      { box-shadow: 0 0 12px rgba(167, 139, 250, 0.18); }
+}
+@keyframes badgePulseOrange {
+    0%, 100% { box-shadow: 0 0 4px rgba(251, 146, 60, 0.08); }
+    50%      { box-shadow: 0 0 12px rgba(251, 146, 60, 0.18); }
+}
+
+/* ── TRANSACTION TYPE COLOR CODING ──
+   Color different transaction instruction names in tables */
+
+/* Vote / Consensus — purple */
+.table td a[href*="/tx/"] + .badge,
+.badge[data-type="vote"] {
+    color: var(--c-social) !important;
+    border-color: rgba(167, 139, 250, 0.3) !important;
+    background: rgba(167, 139, 250, 0.06) !important;
+    text-shadow: 0 0 6px rgba(167, 139, 250, 0.2);
+}
+
+/* ── COLORFUL STATUS DOTS ──
+   Replaces monotone green with context-aware color */
+
+.badge.bg-success::before,
+.badge.bg-primary::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--c-success);
+    margin-right: 6px;
+    box-shadow: 0 0 6px var(--c-success);
+    animation: dotPulse 2s ease-in-out infinite;
+    vertical-align: middle;
+}
+
+.badge.bg-danger::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--c-error);
+    margin-right: 6px;
+    box-shadow: 0 0 6px var(--c-error);
+    animation: dotPulseRed 2s ease-in-out infinite;
+    vertical-align: middle;
+}
+
+.badge.bg-warning::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--c-pomi);
+    margin-right: 6px;
+    box-shadow: 0 0 6px var(--c-pomi);
+    animation: dotPulseGold 2s ease-in-out infinite;
+    vertical-align: middle;
+}
+
+.badge.bg-info::before,
+.badge.bg-info-soft::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--c-identity);
+    margin-right: 6px;
+    box-shadow: 0 0 6px var(--c-identity);
+    animation: dotPulseCyan 2s ease-in-out infinite;
+    vertical-align: middle;
+}
+
+@keyframes dotPulse {
+    0%, 100% { box-shadow: 0 0 4px rgba(57, 255, 20, 0.4); opacity: 1; }
+    50%      { box-shadow: 0 0 10px rgba(57, 255, 20, 0.8); opacity: 0.7; }
+}
+@keyframes dotPulseRed {
+    0%, 100% { box-shadow: 0 0 4px rgba(255, 68, 68, 0.4); opacity: 1; }
+    50%      { box-shadow: 0 0 10px rgba(255, 68, 68, 0.8); opacity: 0.7; }
+}
+@keyframes dotPulseGold {
+    0%, 100% { box-shadow: 0 0 4px rgba(251, 191, 36, 0.4); opacity: 1; }
+    50%      { box-shadow: 0 0 10px rgba(251, 191, 36, 0.8); opacity: 0.7; }
+}
+@keyframes dotPulseCyan {
+    0%, 100% { box-shadow: 0 0 4px rgba(0, 207, 255, 0.4); opacity: 1; }
+    50%      { box-shadow: 0 0 10px rgba(0, 207, 255, 0.8); opacity: 0.7; }
+}
+
+/* ── STAT VALUE GLOW ANIMATION ──
+   Numbers glow and pulse like nara.build stat counters */
+
+.nara-metric-card h1,
+.nara-metric-card .h1,
+.nara-hero__meta-card strong {
+    animation: numGlow 3s ease-in-out infinite;
+}
+
+@keyframes numGlow {
+    0%, 100% { text-shadow: 0 0 8px rgba(57, 255, 20, 0.15); }
+    50%      { text-shadow: 0 0 20px rgba(57, 255, 20, 0.4); }
+}
+
+/* ── CARD ACCENT LINE SHIMMER ──
+   Top line shimmers on hover like nara.build cards */
+
+@keyframes accentShimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.card:hover::after {
+    opacity: 1;
+    background: linear-gradient(90deg, transparent, rgba(57, 255, 20, 0.4), transparent);
+    background-size: 200% 100%;
+    animation: accentShimmer 2s linear infinite;
+}
+
+/* ── CARD LEFT BAR: CONTEXT-AWARE COLORS ──
+   Cards with errors get red bar, success gets green, info gets cyan */
+
+.card:has(.badge.bg-danger)::before,
+.card:has(.alert-danger)::before {
+    background: var(--c-error);
+}
+
+.card:has(.badge.bg-warning)::before,
+.card:has(.alert-warning)::before {
+    background: var(--c-pomi);
+}
+
+.card:has(.badge.bg-info)::before,
+.card:has(.alert-info)::before {
+    background: var(--c-identity);
+}
+
+/* ── TABLE ROW HOVER: COLORED LEFT BORDER BY CONTEXT ──
+   When hovering rows that contain colored badges */
+
+.table tbody tr:has(.badge.bg-danger):hover {
+    border-left-color: rgba(255, 68, 68, 0.4);
+    background: rgba(255, 68, 68, 0.02);
+}
+
+.table tbody tr:has(.badge.bg-warning):hover {
+    border-left-color: rgba(251, 191, 36, 0.4);
+    background: rgba(251, 191, 36, 0.02);
+}
+
+.table tbody tr:has(.badge.bg-info):hover {
+    border-left-color: rgba(0, 207, 255, 0.4);
+    background: rgba(0, 207, 255, 0.02);
+}
+
+.table tbody tr:has(.badge.bg-success):hover {
+    border-left-color: rgba(57, 255, 20, 0.4);
+}
+
+/* ── PROGRESS BAR: GRADIENT INSTEAD OF FLAT ── */
+
+.progress-bar {
+    background: linear-gradient(90deg,
+        var(--c-success),
+        var(--c-identity) 50%,
+        var(--c-success)) !important;
+    background-size: 200% 100%;
+    animation: progressShimmer 3s ease-in-out infinite;
+}
+
+@keyframes progressShimmer {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ── CARD HOVER SCAN LINE ──
+   A scan line sweeps down cards on hover (nara.build probScan) */
+
+@keyframes cardScanDown {
+    0%   { top: -10%; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { top: 110%; opacity: 0; }
+}
+
+.card:hover {
+    overflow: hidden;
+}
+
+/* ── HERO SECTION: GRADIENT TEXT EFFECT ── */
+
+.nara-hero__title {
+    background: linear-gradient(135deg, var(--nara-text) 0%, var(--c-success) 60%, var(--c-identity) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ── NAVBAR ACTIVE LINK: GRADIENT UNDERLINE ── */
+
+.navbar .nav-link.active::after,
+.navbar-nav .nav-link.active::after {
+    background: linear-gradient(90deg, var(--c-success), var(--c-identity)) !important;
+    width: 100% !important;
+    opacity: 0.7 !important;
+    height: 2px !important;
+}
+
+/* ── TAB ACTIVE: GRADIENT BOTTOM BORDER ── */
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+    border-image: linear-gradient(90deg, var(--c-success), var(--c-identity)) 1 !important;
+    border-bottom-width: 2px !important;
+    border-bottom-style: solid !important;
+}
+
+/* ── ALERT COLORED DOT INDICATORS ── */
+
+.alert::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: dotPulse 2s ease-in-out infinite;
+}
+
+.alert {
+    padding-left: 32px !important;
+}
+
+.alert-warning::before {
+    background: var(--c-pomi);
+    box-shadow: 0 0 8px var(--c-pomi);
+    animation: dotPulseGold 2s ease-in-out infinite;
+}
+
+.alert-danger::before,
+.alert-scam::before {
+    background: var(--c-error);
+    box-shadow: 0 0 8px var(--c-error);
+    animation: dotPulseRed 2s ease-in-out infinite;
+}
+
+.alert-success::before {
+    background: var(--c-success);
+    box-shadow: 0 0 8px var(--c-success);
+}
+
+.alert-info::before {
+    background: var(--c-identity);
+    box-shadow: 0 0 8px var(--c-identity);
+    animation: dotPulseCyan 2s ease-in-out infinite;
+}
+
+/* ── COLORFUL HOVER ON ADDRESS / TX LINKS ──
+   Different link types glow different colors */
+
+.table td a[href*="/address"]:hover {
+    color: var(--c-identity) !important;
+    text-shadow: 0 0 8px rgba(0, 207, 255, 0.25);
+}
+
+.table td a[href*="/tx/"]:hover {
+    color: var(--c-aapp) !important;
+    text-shadow: 0 0 8px rgba(251, 146, 60, 0.25);
+}
+
+.table td a[href*="/block/"]:hover {
+    color: var(--c-pomi) !important;
+    text-shadow: 0 0 8px rgba(251, 191, 36, 0.25);
+}
+
+/* ── TOKEN AMOUNT COLORS ── */
+
+/* Positive values / balances: accent green */
+.text-primary,
+.text-success {
+    text-shadow: 0 0 6px rgba(57, 255, 20, 0.12);
+}
+
+/* ── GRADIENT TOP LINE ON FOOTER ── */
+
+.nara-footer::before {
+    background: linear-gradient(90deg,
+        transparent 5%,
+        var(--c-social) 15%,
+        var(--c-identity) 30%,
+        var(--c-success) 50%,
+        var(--c-pomi) 70%,
+        var(--c-aapp) 85%,
+        transparent 95%
+    );
+    opacity: 0.35;
+    height: 2px;
+}
+
+/* ── SPINNER: MULTI-COLOR GRADIENT ── */
+
+.spinner-grow,
+.spinner-border {
+    border-color: var(--c-identity) !important;
+    border-right-color: transparent !important;
+}
+
+/* ── CLUSTER STATUS DOT ── */
+
+.nara-hero__copy .dot,
+.navbar .dot {
+    animation: dotPulse 2s ease-in-out infinite;
+}
+
+/* ── ICON FLOAT ON METRIC CARDS (NARA.BUILD STYLE) ── */
+
+.nara-metric-card .card-body::after {
+    animation: iconFloat 4s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0); filter: blur(10px); opacity: 0.7; }
+    50%      { transform: translateY(-6px); filter: blur(12px); opacity: 1; }
+}
+
+/* ── HOVER GLOW INTENSIFY ON METRIC VALUES ── */
+
+.nara-metric-card:hover h1,
+.nara-metric-card:hover .h1 {
+    text-shadow: 0 0 16px rgba(57, 255, 20, 0.45), 0 0 32px rgba(57, 255, 20, 0.15) !important;
+    transition: text-shadow 0.3s;
+}
+
+.nara-metric-card:hover em {
+    text-shadow: 0 0 24px rgba(57, 255, 20, 0.6), 0 0 48px rgba(57, 255, 20, 0.2) !important;
+}
+
+/* ── CARD HEADER "// " PREFIX: GLOW ON HOVER ── */
+
+.card:hover .card-header-title {
+    opacity: 0.7;
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+}
+
+.card:hover .card-header-title::before {
+    opacity: 0.9;
+    text-shadow: 0 0 12px rgba(57, 255, 20, 0.35);
+}
+
+/* ── TOKEN EXTENSION BADGES: ORANGE ── */
+
+.badge[class*="token-extension"],
+.badge.nara-tier-aapp {
+    color: var(--c-aapp) !important;
+    border-color: rgba(251, 146, 60, 0.3) !important;
+    background: rgba(251, 146, 60, 0.06) !important;
+    text-shadow: 0 0 6px rgba(251, 146, 60, 0.2);
+    animation: badgePulseOrange 3s ease-in-out infinite;
+}
+
+.badge[class*="token-extension"]::before,
+.badge.nara-tier-aapp::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--c-aapp);
+    margin-right: 6px;
+    box-shadow: 0 0 6px var(--c-aapp);
+    vertical-align: middle;
+}
+
+/* ── PROGRAM ACCOUNT BADGE: PURPLE ── */
+
+.badge.nara-tier-rising {
+    animation: badgePulsePurple 3s ease-in-out infinite;
+}
+
+.badge.nara-tier-rising::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--c-social);
+    margin-right: 6px;
+    box-shadow: 0 0 6px var(--c-social);
+    vertical-align: middle;
+}
+
+/* ── ACCOUNT TYPE INDICATOR COLORS ──
+   Color-code the account type badge in address pages */
+
+/* Executable / Program accounts → purple */
+.badge.bg-dark {
+    color: var(--c-neutral) !important;
+}
+
+/* ── TOOLTIP: COLORED ACCENT BAR ── */
+
+.tooltip-inner {
+    border-left: 2px solid var(--c-identity);
+}
+
+/* ── TOAST: COLORED GLOW ── */
+
+[data-sonner-toast][data-type="success"] {
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.08), 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-sonner-toast][data-type="error"] {
+    box-shadow: 0 0 20px rgba(255, 68, 68, 0.08), 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-sonner-toast][data-type="info"] {
+    box-shadow: 0 0 20px rgba(0, 207, 255, 0.08), 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ── DROPDOWN HOVER: COLORED ACCENT BAR ── */
+
+.dropdown-item:nth-child(odd):hover {
+    border-left-color: var(--c-identity);
+}
+
+.dropdown-item:nth-child(even):hover {
+    border-left-color: var(--c-pomi);
+}
+
+/* ── CLUSTER STATUS BUTTON GLOW ── */
+
+.btn.btn-white:has(.fe-check-circle),
+.btn.btn-white:has(.text-success) {
+    border-color: rgba(57, 255, 20, 0.15) !important;
+    box-shadow: 0 0 8px rgba(57, 255, 20, 0.06);
+}
+
+/* ── PREFERS-REDUCED-MOTION: DISABLE FLASHY ── */
+
+@media (prefers-reduced-motion: reduce) {
+    .badge.bg-success, .badge.bg-danger, .badge.bg-warning, .badge.bg-info,
+    .badge.bg-success-soft, .badge.bg-danger-soft, .badge.bg-warning-soft, .badge.bg-info-soft,
+    .badge.bg-primary, .badge.bg-primary-soft,
+    .badge[class*="token-extension"], .badge.nara-tier-aapp, .badge.nara-tier-rising {
+        animation: none;
+    }
+    .badge::before, .alert::before {
+        animation: none;
+    }
+    .nara-metric-card h1, .nara-hero__meta-card strong {
+        animation: none;
+    }
+    .progress-bar {
+        animation: none;
+        background: var(--c-success) !important;
+    }
+    .nara-hero__title {
+        -webkit-text-fill-color: unset;
+        background: none;
+        color: var(--nara-text);
     }
 }

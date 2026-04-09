@@ -95,7 +95,7 @@ export function SolanaAttestationDetailsCard({
             break;
     }
     return (
-        <InstructionCard title={`Solana Attestation: ${title}`} {...{ childIndex, index, innerCards, ix, result }}>
+        <InstructionCard title={`Nara Attestation: ${title}`} {...{ childIndex, index, innerCards, ix, result }}>
             <tr>
                 <td>Program</td>
                 <td className="text-lg-end" colSpan={2}>

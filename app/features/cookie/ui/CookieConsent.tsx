@@ -6,11 +6,11 @@ import { cn } from '@/app/components/shared/utils';
 
 import { getCookie, setCookie } from '../lib/cookie';
 
-export const COOKIE_CONSENT_NAME = 'solana_cookie_consent';
-export const COOKIE_COUNTRY_NAME = 'solana_country';
+export const COOKIE_CONSENT_NAME = 'nara_cookie_consent';
+export const COOKIE_COUNTRY_NAME = 'nara_country';
 export const COOKIE_CONSENT_CHANGE_EVENT = 'cookie-consent-change';
 const COOKIE_MAX_AGE = 15778476; // 6 months in seconds
-const PRIVACY_POLICY_URL = 'https://solana.com/privacy-policy#collection-of-information';
+const PRIVACY_POLICY_URL = 'https://nara.build/privacy-policy#collection-of-information';
 
 export enum EConsentStatus {
     Granted = 'granted',

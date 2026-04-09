@@ -30,11 +30,11 @@ export enum PROGRAM_NAMES {
     PROGRAM_METADATA = 'Program Metadata Program',
 
     // foundation programs
-    SAS_PROGRAM = 'Solana Attestation Service Program',
+    SAS_PROGRAM = 'Nara Attestation Service Program',
 
     // other
     ACUMEN = 'Acumen Program',
-    BREAK_SOLANA = 'Break Solana Program',
+    BREAK_NARA = 'Break Nara Program',
     CHAINLINK_DATA_STREAMS_VERIFIER = 'Chainlink Data Streams Verifier Program',
     CHAINLINK_ORACLE = 'Chainlink OCR2 Oracle Program',
     CHAINLINK_STORE = 'Chainlink Store Program',
@@ -79,7 +79,7 @@ export enum PROGRAM_NAMES {
     SERUM_SWAP = 'Serum Swap Program',
     SERUM_POOL = 'Serum Pool',
     SOLEND = 'Solend Program',
-    SOLIDO = 'Lido for Solana Program',
+    SOLIDO = 'Lido Program',
     STEP_SWAP = 'Step Finance Swap Program',
     SWIM_SWAP = 'Swim Swap Program',
     SWITCHBOARD = 'Switchboard Oracle Program',
@@ -207,7 +207,7 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
     },
     BrEAK7zGZ6dM71zUDACDqJnekihmwF15noTddWTsknjC: {
         deployments: LIVE_CLUSTERS,
-        name: PROGRAM_NAMES.BREAK_SOLANA,
+        name: PROGRAM_NAMES.BREAK_NARA,
     },
     // other
     C64kTdg1Hzv5KoQmZrQRcm2Qz7PkxtFBgw7EpFhvYn8W: {

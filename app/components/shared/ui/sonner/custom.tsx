@@ -40,9 +40,16 @@ export function CustomToast(props: CustomToastProps) {
             aria-labelledby={titleId}
             aria-describedby={descriptionId}
             className={cn(
-                'e-w-full e-rounded-lg e-border e-border-neutral-950 e-bg-neutral-800 e-text-white',
+                'e-w-full e-rounded-lg e-border e-text-white',
                 'md:e-max-w-80'
             )}
+            style={{
+                background: 'rgba(10, 10, 10, 0.96)',
+                borderColor: 'var(--nara-border, #1e1e1e)',
+                backdropFilter: 'blur(12px)',
+                boxShadow: '0 12px 40px rgba(0,0,0,0.5), 0 0 1px rgba(57,255,20,0.08)',
+                borderLeft: `2px solid ${type === 'success' ? '#3df51a' : type === 'error' ? '#f87171' : '#00cfff'}`,
+            }}
         >
             <div className="e-relative e-flex e-flex-1 e-items-start e-gap-2 e-px-3 e-py-2">
                 <div className="e-text-xs" aria-hidden="true">

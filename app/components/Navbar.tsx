@@ -41,7 +41,7 @@ export function Navbar({ children }: INavbarProps) {
                 </div>
 
                 <div className={`collapse navbar-collapse flex-grow-0 ${navOpened ? 'show' : ''}`}>
-                    <ul className="navbar-nav ms-auto" style={{ gap: '0.25rem' }}>
+                    <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
                             <Link
                                 className={`nav-link${selectedLayoutSegment === 'feature-gates' ? ' active' : ''}`}

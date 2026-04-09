@@ -4,7 +4,7 @@
  * Utility functions for managing wallet address nicknames in localStorage
  */
 
-const STORAGE_KEY = 'solana-explorer-nicknames';
+const STORAGE_KEY = 'nara-explorer-nicknames';
 export const MAX_NICKNAME_LENGTH = 32;
 
 export const getNickname = (address: string): string | null => {

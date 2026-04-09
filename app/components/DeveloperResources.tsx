@@ -8,8 +8,8 @@ export function DeveloperResources() {
                     <div className="me-4">Kickstart your development journey on Nara</div>
                     <div>
                         Find more on{' '}
-                        <a href="https://solana.com/developers" target="_blank" rel="noreferrer">
-                            solana.com/developers
+                        <a href="https://nara.build/docs" target="_blank" rel="noreferrer">
+                            nara.build/docs
                         </a>
                     </div>
                 </div>
@@ -17,27 +17,26 @@ export function DeveloperResources() {
                     <ResourceCard
                         title="Setup Your Nara Environment"
                         description="Get started in 5 minutes or less!"
-                        image="https://solana.com/opengraph/developers/docs/intro/installation"
-                        link="https://solana.com/docs/intro/installation"
+                        image="/nara-dev-setup.png"
+                        link="https://nara.build/docs"
                     />
                     <ResourceCard
                         title="Quick Start Guide"
                         description="Hands-on guide to the core concepts for building on Nara"
-                        image="https://solana.com/_next/image?url=%2Fassets%2Fdocs%2Fintro%2Fquickstart%2Fpg-not-connected.png&w=1920&q=75"
-                        link="https://solana.com/docs/intro/quick-start"
+                        image="/nara-quickstart.png"
+                        link="https://nara.build/docs"
                     />
                     <ResourceCard
                         title="Nara Developer Bootcamp"
-                        description="11 hours of video lessons on Nara Development"
-                        image="https://i.ytimg.com/vi/amAq-WHAFs8/maxresdefault.jpg"
-                        link="https://www.youtube.com/watch?v=amAq-WHAFs8"
+                        description="Learn to build aApps on the agent-native Layer 1"
+                        image="/nara-bootcamp.png"
+                        link="https://nara.build/docs"
                     />
                     <ResourceCard
-                        title="60 Days of Nara"
-                        description="A course designed for EVM developers to learn Nara"
-                        image="https://www.rareskills.io/wp-content/uploads/2024/08/og-image-rareskills.png"
-                        imageBackground="white"
-                        link="https://www.rareskills.io/solana-tutorial"
+                        title="Build Your First aApp"
+                        description="A guide for developers to build autonomous agent applications"
+                        image="/nara-aapp.png"
+                        link="https://nara.build/docs"
                     />
                 </div>
             </div>

@@ -22,7 +22,7 @@ export default function TermsOfServicePage() {
                 <p className="e-mb-8 e-text-gray-400">
                     Please refer to our Privacy Policy, available at{' '}
                     <a
-                        href="https://solana.com/privacy-policy"
+                        href="https://nara.build/privacy-policy"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="e-text-accent e-underline hover:e-text-accent-600"
@@ -40,27 +40,27 @@ export default function TermsOfServicePage() {
                         <strong>Terms</strong>&quot;) is a binding contract between you, an individual user or site
                         visitor, whether personally or on behalf of an entity (&quot;<strong>user</strong>,&quot; &quot;
                         <strong>you</strong>,&quot; &quot;
-                        <strong>your</strong>&quot;) and the Solana Foundation (the &quot;<strong>Foundation</strong>
+                        <strong>your</strong>&quot;) and the Nara Network Foundation (the &quot;<strong>Foundation</strong>
                         ,&quot; &quot;
                         <strong>we</strong>,&quot; &quot;<strong>us</strong>&quot; or &quot;<strong>our</strong>&quot;)
                         concerning use of the Foundation&apos;s services (the &quot;<strong>Service</strong>&quot;),
-                        including the www.solana.com website as well as any other media form, media channel, or mobile
+                        including the www.nara.build website as well as any other media form, media channel, or mobile
                         website related, linked, or otherwise connected thereto (collectively, the &quot;
                         <strong>Site</strong>&quot;). Currently, the Foundation maintains and operates{' '}
                         <a
-                            href="https://www.solana.com"
+                            href="https://www.nara.build"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="e-text-accent e-underline hover:e-text-accent-600"
                         >
-                            www.solana.com
+                            www.nara.build
                         </a>{' '}
-                        as a portal for news, information, and updates about the Solana protocol or blockchain (the
-                        &quot;Solana Network&quot;) and the Solana ecosystem. For the avoidance of doubt, the Foundation
-                        does not control the Solana Network and cannot control activity and data on the Solana Network,
+                        as a portal for news, information, and updates about the Nara protocol or blockchain (the
+                        &quot;Nara Network&quot;) and the Nara ecosystem. For the avoidance of doubt, the Foundation
+                        does not control the Nara Network and cannot control activity and data on the Nara Network,
                         the activities of persons who develop and use applications on the Network, the validation of
-                        transactions on the Solana Network, or use of the Solana Network. Solana The Network is an
-                        open-source protocol that is maintained and processed by Solana Network validators across the
+                        transactions on the Nara Network, or use of the Nara Network. The Network is an
+                        open-source protocol that is maintained and processed by network validators across the
                         globe.
                     </p>
                     <p className="e-mb-4 e-text-gray-400">
@@ -262,14 +262,14 @@ export default function TermsOfServicePage() {
                 <section className="e-mb-8">
                     <h2 className="e-mb-4 e-text-2xl e-font-bold e-text-white">TRADEMARKS</h2>
                     <p className="e-mb-4 e-text-gray-400">
-                        &quot;Solana&quot; and our logos, our product or service names, our slogans and the look and
+                        &quot;Nara&quot; and our logos, our product or service names, our slogans and the look and
                         feel of the Service are trademarks of the Foundation and may not be copied, imitated or used, in
                         whole or in part, without our prior written permission, which may be obtained by emailing{' '}
                         <a
-                            href="mailto:operations@solana.foundation"
+                            href="mailto:operations@nara.build"
                             className="e-text-accent e-underline hover:e-text-accent-600"
                         >
-                            operations@solana.foundation
+                            operations@nara.build
                         </a>
                         . All other trademarks, registered trademarks, product names and company names or logos
                         mentioned on the Service are the property of their respective owners. Reference to any products,
@@ -330,17 +330,17 @@ export default function TermsOfServicePage() {
                     </p>
                     <div className="e-mb-4 e-ml-4 e-text-gray-400">
                         <p className="e-mb-2">
-                            <strong>Solana Foundation</strong>
+                            <strong>Nara Network Foundation</strong>
                         </p>
                         <p className="e-mb-2">Attn: Copyright Agent</p>
                         <p className="e-mb-2">16 Dammstrasse, 6300 Zug Switzerland</p>
                         <p className="e-mb-2">
                             Email:{' '}
                             <a
-                                href="mailto:dmcaagent@solana.org"
+                                href="mailto:dmcaagent@nara.build"
                                 className="e-text-accent e-underline hover:e-text-accent-600"
                             >
-                                dmcaagent@solana.org
+                                dmcaagent@nara.build
                             </a>
                         </p>
                         <p className="e-mb-2">+41 41 562 73 63</p>
@@ -412,10 +412,10 @@ export default function TermsOfServicePage() {
                         agree to first contact the Foundation and attempt to resolve the claim informally by sending a
                         written notice of your claim (&quot;<strong>Notice</strong>&quot;) to the Foundation by email at{' '}
                         <a
-                            href="mailto:operations@solana.foundation"
+                            href="mailto:operations@nara.build"
                             className="e-text-accent e-underline hover:e-text-accent-600"
                         >
-                            operations@solana.foundation
+                            operations@nara.build
                         </a>{' '}
                         or by certified mail addressed to Dammstrasse 16, 6300 Zug, Switzerland. The Notice must (a)
                         include your name, residence address, email address, and telephone number; (b) describe the
@@ -653,10 +653,10 @@ export default function TermsOfServicePage() {
                     <p className="e-mb-4 e-text-gray-400">
                         You may withdraw your consent to receive Communications under this EULA by contacting us at{' '}
                         <a
-                            href="mailto:operations@solana.foundation"
+                            href="mailto:operations@nara.build"
                             className="e-text-accent e-underline hover:e-text-accent-600"
                         >
-                            operations@solana.foundation
+                            operations@nara.build
                         </a>
                         . We will process your request to withdraw your consent to receive electronic Communications in
                         a reasonable time. After we process your request, your access and use of the Service will
@@ -666,10 +666,10 @@ export default function TermsOfServicePage() {
                     <p className="e-mb-4 e-text-gray-400">
                         You may request that we mail a paper copy of any electronic Communication by contacting us at{' '}
                         <a
-                            href="mailto:operations@solana.foundation"
+                            href="mailto:operations@nara.build"
                             className="e-text-accent e-underline hover:e-text-accent-600"
                         >
-                            operations@solana.foundation
+                            operations@nara.build
                         </a>
                         . We may charge you fees associated with processing and mailing your request. We will send a
                         copy of the Communication to you within a reasonable timeframe.
@@ -719,10 +719,10 @@ export default function TermsOfServicePage() {
                         In order to resolve a complaint regarding the Site or to receive further information regarding
                         use of the Service, please contact us at:{' '}
                         <a
-                            href="mailto:operations@solana.foundation"
+                            href="mailto:operations@nara.build"
                             className="e-text-accent e-underline hover:e-text-accent-600"
                         >
-                            operations@solana.foundation
+                            operations@nara.build
                         </a>
                         .
                     </p>

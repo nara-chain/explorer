@@ -5,31 +5,32 @@
 
 // Example of a variable override to change Dashkit's background color
 // Remove the "//" to comment it in and see it in action!
-$body-bg: #161b19 !default;
+$body-bg: #0c0c0c !default;           // nara.build --bg (was #161b19 green-tinted)
 
 $black: #232323;
 $white: #fff !default;
-$gray-600: #86b8b6;
-$gray-600-dark: #343a37 !default;
-$gray-700-dark: #282d2b !default;
-$gray-800-dark: #1e2423 !default;
-$black-dark: #141816 !default;
-$input-placeholder-color: #ccc !default;
+$gray-600: #888;                       // nara.build --muted (was #86b8b6 teal)
+$gray-600-dark: #1e1e1e !default;      // nara.build --border (was #343a37 green-tinted)
+$gray-700-dark: #1e1e1e !default;      // nara.build --border (was #282d2b green-tinted)
+$gray-800-dark: #111 !default;         // nara.build --surface (was #1e2423 green-tinted)
+$black-dark: #0c0c0c !default;         // nara.build --bg (was #141816 green-tinted)
+$input-placeholder-color: #888 !default; // align with --muted (was #ccc)
 
 $primary: #3df51a !default;
 $success: #3df51a !default;
 $warning: #fa62fc !default;
-$card-border-color: $gray-700-dark !default;
-$card-outline-color: #111 !default;
+$card-border-color: #1e1e1e !default;  // nara.build --border
+$card-outline-color: #1e1e1e !default; // aligned (was #111)
 
-// Typography — align with nara.build (JetBrains Mono 13px / 400)
-$font-size-base: 0.8125rem !default;        // 13px (nara.build body)
-$font-size-sm: 0.6875rem !default;          // 11px
-$font-size-lg: 0.9375rem !default;          // 15px
+// Typography — align with nara.build (JetBrains Mono)
+// Base: 13px for data UI; paragraphs/body text get 15px via CSS
+$font-size-base: 0.8125rem !default;        // 13px
+$font-size-sm: 0.75rem !default;            // 12px (--sm token)
+$font-size-lg: 0.9375rem !default;          // 15px (--md token)
 
-$font-weight-bold: 500 !default;
-$headings-font-weight: 400 !default;
-$display-font-weight: 400 !default;
+$font-weight-bold: 700 !default;       // nara.build uses 700 for bold (was 500)
+$headings-font-weight: 800 !default;   // nara.build h1/h2 weight (was 400)
+$display-font-weight: 800 !default;    // nara.build display weight (was 400)
 
 $headings-letter-spacing: -0.02em !default;
 $display-letter-spacing: -0.02em !default;
@@ -48,6 +49,9 @@ $nav-link-padding-y: 0.35rem !default;       // tighter nav → ~56px
 
 $input-bg: transparent !default;
 $input-border-color: $gray-600-dark !default;
+$input-focus-border-color: rgba(57, 255, 20, 0.12) !default;
+$input-focus-box-shadow: none !default;
+$input-btn-focus-box-shadow: none !default;
 $input-group-addon-color: $white !default;
 
 $theme-colors: (

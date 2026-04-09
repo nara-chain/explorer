@@ -125,7 +125,7 @@ export function SolanaAttestationServiceCard({ account }: { account: Account }) 
             break;
     }
 
-    let title = 'Solana Attestation Service';
+    let title = 'Nara Attestation Service';
     if (decoded) {
         title = `${title}: ${decoded.type.charAt(0).toUpperCase() + decoded.type.slice(1)}`;
     }

@@ -1,8 +1,8 @@
 import { ParsedTokenExtension } from '@/app/components/account/types';
 import { TokenExtensionType } from '@/app/validators/accounts/token-extension';
 
-function populateSolanaDevelopersLink(component: string) {
-    return `https://solana.com/developers/guides/token-extensions/${component}`;
+function populateNaraDevelopersLink(component: string) {
+    return `https://nara.build/docs/token-extensions/${component}`;
 }
 
 export function populatePartialParsedTokenExtension(
@@ -18,7 +18,7 @@ export function populatePartialParsedTokenExtension(
                 "Every transfer sets aside a fee in the recipient's Token Account that can only be withdrawn by the Withdraw Authority";
             return {
                 description,
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('transfer-fee')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('transfer-fee')),
                 name: 'Transfer Fee Amount',
                 status: 'active',
                 tooltip: description,
@@ -28,7 +28,7 @@ export function populatePartialParsedTokenExtension(
             const description = 'Allows a designated Close Authority to close the mint account if the supply is 0';
             return {
                 description,
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('mint-close-authority')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('mint-close-authority')),
                 name: 'Mint Close Authority',
                 status: 'active',
                 tooltip: description,
@@ -38,7 +38,7 @@ export function populatePartialParsedTokenExtension(
             const description = 'Enables the authority to make new token accounts as frozen by default upon creation';
             return {
                 description,
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('default-account-state')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('default-account-state')),
                 name: 'Default Account State',
                 status: 'active',
                 tooltip: description,
@@ -48,7 +48,7 @@ export function populatePartialParsedTokenExtension(
             const description = 'Prevents the owner from being changed';
             return {
                 description,
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('immutable-owner')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('immutable-owner')),
                 name: 'Immutable Owner',
                 status: 'active',
                 tooltip: description,
@@ -58,7 +58,7 @@ export function populatePartialParsedTokenExtension(
             const description = 'Requires all incoming transfers to a token account include a memo';
             return {
                 description,
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('required-memo')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('required-memo')),
                 name: 'Required Memo',
                 status: 'active',
                 tooltip: description,
@@ -66,14 +66,14 @@ export function populatePartialParsedTokenExtension(
         }
         case 'nonTransferable': {
             return {
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('non-transferable-token')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('non-transferable-token')),
                 name: 'Non-Transferable Token',
                 status: 'active',
             };
         }
         case 'nonTransferableAccount': {
             return {
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('non-transferable-token')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('non-transferable-token')),
                 name: 'Non-Transferable Token Account',
                 status: 'active',
             };
@@ -82,7 +82,7 @@ export function populatePartialParsedTokenExtension(
             const description = 'Prohibits certain actions inside cross-program invocations';
             return {
                 description,
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('cpi-guard')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('cpi-guard')),
                 name: 'CPI Guard',
                 status: 'active',
                 tooltip: description,
@@ -93,7 +93,7 @@ export function populatePartialParsedTokenExtension(
                 'Delegates permanent authority to a specific address that can transfer or burn tokens from any account holding this token';
             return {
                 description,
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('permanent-delegate')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('permanent-delegate')),
                 name: 'Permanent Delegate',
                 status: 'active',
                 tooltip: description,
@@ -103,7 +103,7 @@ export function populatePartialParsedTokenExtension(
             const description = 'Allow the token program to execute custom instruction logic on every token transfer';
             return {
                 description,
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('transfer-hook')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('transfer-hook')),
                 name: 'Transfer Hook',
                 status: 'active',
                 tooltip: description,
@@ -112,7 +112,7 @@ export function populatePartialParsedTokenExtension(
         case 'transferHookAccount': {
             return {
                 description: "This is only set to 'transferring' inside the transferHook CPI",
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('transfer-hook')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('transfer-hook')),
                 name: 'Transfer Hook Account Info',
                 status: 'active',
             };
@@ -121,7 +121,7 @@ export function populatePartialParsedTokenExtension(
             const description = 'Describes the location of the token metadata';
             return {
                 description,
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('metadata-pointer')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('metadata-pointer')),
                 name: 'Metadata Pointer',
                 status: 'active',
                 tooltip: description,
@@ -129,14 +129,14 @@ export function populatePartialParsedTokenExtension(
         }
         case 'groupPointer': {
             return {
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('group-member')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('group-member')),
                 name: 'Group Pointer',
                 status: 'active',
             };
         }
         case 'groupMemberPointer': {
             return {
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('group-member')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('group-member')),
                 name: 'Group Member Pointer',
                 status: 'active',
             };
@@ -145,7 +145,7 @@ export function populatePartialParsedTokenExtension(
             const description = 'Token amount is only able to be unencrypted by the token holder or auditor key';
             return {
                 description,
-                externalLinks: populateExternalLinks('https://spl.solana.com/confidential-token/quickstart'),
+                externalLinks: populateExternalLinks('https://nara.build/docs/confidential-token'),
                 name: 'Confidential Transfer Token Info',
                 status: 'active',
                 tooltip: description,
@@ -153,14 +153,14 @@ export function populatePartialParsedTokenExtension(
         }
         case 'confidentialTransferFeeConfig': {
             return {
-                externalLinks: populateExternalLinks('https://spl.solana.com/confidential-token/quickstart'),
+                externalLinks: populateExternalLinks('https://nara.build/docs/confidential-token'),
                 name: 'Confidential Transfer Fee Config',
                 status: 'active',
             };
         }
         case 'confidentialTransferFeeAmount': {
             return {
-                externalLinks: populateExternalLinks('https://spl.solana.com/confidential-token/quickstart'),
+                externalLinks: populateExternalLinks('https://nara.build/docs/confidential-token'),
                 name: 'Confidential Transfer Fee Amount',
                 status: 'active',
             };
@@ -170,7 +170,7 @@ export function populatePartialParsedTokenExtension(
                 'Allow token holders to opt-in to encrypted balances that are accessible only to them and the auditor';
             return {
                 description,
-                externalLinks: populateExternalLinks('https://spl.solana.com/confidential-token/quickstart'),
+                externalLinks: populateExternalLinks('https://nara.build/docs/confidential-token'),
                 name: 'Confidential Transfer',
                 status: 'active',
                 tooltip: description,
@@ -180,7 +180,7 @@ export function populatePartialParsedTokenExtension(
             const description = 'Allows the token balance to be displayed with accumulated interest';
             return {
                 description,
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('interest-bearing-token')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('interest-bearing-token')),
                 name: 'Interest Bearing Token Configuration',
                 status: 'active',
                 tooltip: description,
@@ -191,7 +191,7 @@ export function populatePartialParsedTokenExtension(
                 'Allows a fee to be set aside on every transfer that can only be withdrawn by the Withdraw Authority';
             return {
                 description,
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('transfer-fee')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('transfer-fee')),
                 name: 'Transfer Fee',
                 status: 'active',
                 tooltip: description,
@@ -215,7 +215,7 @@ export function populatePartialParsedTokenExtension(
             const description = 'Allows metadata to be written directly to the mint account';
             return {
                 description,
-                externalLinks: populateExternalLinks(populateSolanaDevelopersLink('metadata-pointer')),
+                externalLinks: populateExternalLinks(populateNaraDevelopersLink('metadata-pointer')),
                 name: 'Token Metadata',
                 status: 'active',
                 tooltip: description,
@@ -226,7 +226,7 @@ export function populatePartialParsedTokenExtension(
                 'Allows the token program to scale the UI amount of the token by an updatable multiplier';
             return {
                 description,
-                externalLinks: [{ label: 'Docs', url: 'https://solana.com/docs/tokens/extensions/scaled-ui-amount' }],
+                externalLinks: [{ label: 'Docs', url: 'https://nara.build/docs/token-extensions/scaled-ui-amount' }],
                 name: 'Scaled UI Amount',
                 status: 'active',
                 tooltip: description,

@@ -2,7 +2,7 @@
 
 import { useCluster, useClusterModal } from '@providers/cluster';
 import { Cluster, ClusterStatus } from '@utils/cluster';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 function getCustomUrlClusterName(customUrl: string) {
     try {
@@ -26,7 +26,7 @@ const containerStyle: React.CSSProperties = {
     gap: '8px',
     letterSpacing: 'normal',
     textDecoration: 'none',
-    transition: 'color 0.2s',
+    transition: 'color 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
 };
 
 const dotStyle = (color: string): React.CSSProperties => ({
@@ -42,14 +42,26 @@ const dotStyle = (color: string): React.CSSProperties => ({
 export const ClusterStatusButton = () => {
     const { status, cluster, name, customUrl } = useCluster();
     const [, setShow] = useClusterModal();
+    const [hovered, setHovered] = useState(false);
 
     const onClickHandler = useCallback(() => setShow(true), [setShow]);
     const statusName = cluster !== Cluster.Custom ? `${name}` : getCustomUrlClusterName(customUrl);
 
+    const hoverStyle: React.CSSProperties = {
+        ...containerStyle,
+        ...(hovered ? { color: '#e8e8e8' } : {}),
+    };
+
+    const handlers = {
+        onClick: onClickHandler,
+        onMouseEnter: () => setHovered(true),
+        onMouseLeave: () => setHovered(false),
+    };
+
     switch (status) {
         case ClusterStatus.Connected:
             return (
-                <span style={containerStyle} onClick={onClickHandler}>
+                <span style={hoverStyle} {...handlers}>
                     <span style={dotStyle('#3df51a')} />
                     {statusName}
                 </span>
@@ -57,15 +69,15 @@ export const ClusterStatusButton = () => {
 
         case ClusterStatus.Connecting:
             return (
-                <span style={containerStyle} onClick={onClickHandler}>
-                    <span style={dotStyle('#fa62fc')} />
+                <span style={hoverStyle} {...handlers}>
+                    <span style={dotStyle('#fbbf24')} />
                     {statusName}
                 </span>
             );
 
         case ClusterStatus.Failure:
             return (
-                <span style={containerStyle} onClick={onClickHandler}>
+                <span style={hoverStyle} {...handlers}>
                     <span style={dotStyle('#ff4444')} />
                     {statusName}
                 </span>

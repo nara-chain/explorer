@@ -32,7 +32,7 @@ export function VerifiedBuildCard({ data, pubkey }: { data: UpgradeableLoaderAcc
             <div className="card">
                 <div className="card-body text-center">
                     Verified build information not yet uploaded by the program authority. For more information, see the{' '}
-                    <Link href="https://solana.com/developers/guides/advanced/verified-builds" target="_blank">
+                    <Link href="https://nara.build/docs/verified-builds" target="_blank">
                         Verified Build Guide
                     </Link>
                     .<br />
@@ -65,7 +65,7 @@ export function VerifiedBuildCard({ data, pubkey }: { data: UpgradeableLoaderAcc
                 A verified build badge indicates that this program was built from source code that is publicly
                 available, but does not imply that this program has been audited. For more details, refer to the{' '}
                 <a
-                    href="https://solana.com/developers/guides/advanced/verified-builds"
+                    href="https://nara.build/docs/verified-builds"
                     target="_blank"
                     rel="noopener noreferrer"
                 >

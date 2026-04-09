@@ -45,7 +45,7 @@ export function clusterName(cluster: Cluster): string {
 }
 
 export const MAINNET_BETA_URL = 'https://mainnet-api.nara.build';
-export const TESTNET_URL = 'https://api.testnet.solana.com';
+export const TESTNET_URL = 'https://testnet-api.nara.build';
 export const DEVNET_URL = 'https://devnet-api.nara.build';
 export const SIMD296_URL = 'https://simd-0296.surfnet.dev:8899';
 

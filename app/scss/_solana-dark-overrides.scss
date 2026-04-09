@@ -33,7 +33,16 @@ ul.log-messages {
 .search-bar__control {
     background-color: $gray-800-dark !important;
     border-color: $card-outline-color !important;
-    box-shadow: $card-box-shadow !important;
+    box-shadow: none !important;
+
+    &:hover,
+    &:focus,
+    &--is-focused,
+    &--menu-is-open {
+        border-color: $card-outline-color !important;
+        box-shadow: none !important;
+        outline: none !important;
+    }
 
     .search-bar__input {
         color: $white !important;
@@ -67,23 +76,29 @@ ul.log-messages {
 
 // Card header titles: nara.build stat-label style
 .card-header-title {
-    font-size: 9px;
-    font-weight: 400;
+    font-size: 10px;
+    font-weight: 500;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     opacity: 0.5;
     color: #3df51a;
 }
 
-// Card-internal headings — keep light weight (data display)
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
-    font-weight: 400;
+// Page-level headings — match nara.build (800 for h1/h2)
+h1, .h1, h2, .h2 {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+// h3: nara.build uses 700 for section subheads
+h3, .h3 {
+    font-weight: 700;
     letter-spacing: normal;
 }
 
-// Large stat values (h1 inside cards)
-h1, .h1 {
-    font-weight: 800;
+// Card-internal smaller headings — lighter weight (data display)
+h4, .h4, h5, .h5, h6, .h6 {
+    font-weight: 400;
     letter-spacing: normal;
 }
 

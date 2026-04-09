@@ -3,6 +3,7 @@ import './styles.css';
 
 import { ClusterModal } from '@components/ClusterModal';
 import { ClusterStatusButton } from '@components/ClusterStatusButton';
+import { Footer } from '@components/Footer';
 import { MessageBanner } from '@components/MessageBanner';
 import { Navbar } from '@components/Navbar';
 import { ClusterProvider } from '@providers/cluster';
@@ -20,6 +21,10 @@ import { CookieConsent } from '@/app/features/cookie';
 import { VisibilityProvider } from '@/app/shared/lib/visibility';
 
 import { botIdProtectedRoutes } from '../middleware';
+
+const NeuralCanvas = dynamic(() => import('@components/NeuralCanvas').then(m => ({ default: m.NeuralCanvas })), {
+    ssr: false,
+});
 
 const SearchBar = dynamic(() => import('@components/SearchBar'), {
     ssr: false,
@@ -56,6 +61,7 @@ export default function RootLayout({ analytics, children }: { analytics: React.R
                 />
             </head>
             <body>
+                <NeuralCanvas />
                 <ScrollAnchorProvider>
                     <ClusterProvider>
                         <VisibilityProvider>
@@ -74,6 +80,7 @@ export default function RootLayout({ analytics, children }: { analytics: React.R
                                     </div>
                                     {children}
                                 </div>
+                                <Footer />
                                 <Toaster position="bottom-center" toastOptions={{ duration: 5_000 }} />
                             </TokenInfoBatchProvider>
                         </VisibilityProvider>
