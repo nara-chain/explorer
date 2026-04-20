@@ -58,6 +58,24 @@ async function makeUtlClient(
     return new Client(config);
 }
 
+type TokenInfoOverride = {
+    name: string;
+    symbol: string;
+    logoURI: string;
+    decimals: number;
+    verified: boolean;
+};
+
+const TOKEN_INFO_OVERRIDES: Record<string, TokenInfoOverride> = {
+    So11111111111111111111111111111111111111112: {
+        decimals: 9,
+        logoURI: '/favicon-v3.svg',
+        name: 'NARA Wrapped SOL',
+        symbol: 'NARA-wNARA',
+        verified: true,
+    },
+};
+
 export function getTokenInfoSwrKey(address: string, cluster: Cluster, genesisHash?: string) {
     return ['get-token-info', address, cluster, genesisHash];
 }
@@ -80,6 +98,19 @@ export async function getTokenInfoWithoutOnChainFallback(
 ): Promise<Token | undefined> {
     const chainId = getChainId(cluster, genesisHash);
     if (!chainId) return undefined;
+
+    const override = TOKEN_INFO_OVERRIDES[address.toBase58()];
+    if (override) {
+        return {
+            address: address.toBase58(),
+            chainId,
+            decimals: override.decimals,
+            logoURI: override.logoURI,
+            name: override.name,
+            symbol: override.symbol,
+            verified: override.verified,
+        } as Token;
+    }
 
     try {
         const response = await fetch('/api/token-info', {
@@ -154,6 +185,20 @@ export async function getFullTokenInfo(
     }
     const chainId = getChainId(cluster, genesisHash);
     if (!chainId) return undefined;
+
+    const override = TOKEN_INFO_OVERRIDES[address.toBase58()];
+    if (override) {
+        return {
+            address: address.toBase58(),
+            chainId,
+            decimals: override.decimals,
+            logoURI: override.logoURI,
+            name: override.name,
+            symbol: override.symbol,
+            tags: [],
+            verified: override.verified,
+        };
+    }
 
     const [legacyCdnTokenInfo, sdkTokenInfo] = await Promise.all([
         getFullLegacyTokenInfoUsingCdn(address, chainId),
