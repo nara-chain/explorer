@@ -367,15 +367,16 @@ a {
 }
 
 /* Force navbar container to match content width & center.
-   Left padding 12px matches the content .container below so search bar left edge aligns with cards.
+   Left padding auto-grows on narrow viewports to clear the absolutely-positioned logo,
+   collapses to 12px on wide viewports so the search bar aligns with cards below.
    Right padding larger to clear the absolutely-positioned right-side (GitHub + Devnet). */
 .navbar > .container {
     min-width: 0 !important;
     max-width: 1140px !important;
     margin-left: auto !important;
     margin-right: auto !important;
-    padding-left: 12px !important;
-    padding-right: 160px !important;
+    padding-left: max(12px, calc(176px - (100vw - 1140px) / 2)) !important;
+    padding-right: max(160px, calc(308px + (1140px - 100vw) / 2)) !important;
 }
 
 /* Search bar wrapper: matches first card column width below.
@@ -384,6 +385,7 @@ a {
     max-width: 546px;
     padding-left: 0 !important;
     padding-right: 0 !important;
+    margin-right: 32px !important;
 }
 
 .navbar .search-bar__control {
