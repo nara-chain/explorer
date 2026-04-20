@@ -101,6 +101,21 @@ export enum PROGRAM_NAMES {
 
     // Lighthouse
     LIGHTHOUSE_PROGRAM = 'Lighthouse Program',
+
+    // Hyperlane (Nara <-> Solana bridge)
+    HYPERLANE_NOOP = 'SPL Noop Program',
+    HYPERLANE_MAILBOX_NARA = 'Hyperlane Mailbox (Nara)',
+    HYPERLANE_MAILBOX_SOLANA = 'Hyperlane Mailbox (Solana)',
+    HYPERLANE_WARP_USDC_NARA = 'Hyperlane Warp Route: USDC (Hyperlane)',
+    HYPERLANE_WARP_USDT_NARA = 'Hyperlane Warp Route: USDT (Hyperlane)',
+    HYPERLANE_WARP_SOL_NARA = 'Hyperlane Warp Route: SOL (Hyperlane)',
+    HYPERLANE_WARP_USDC_SOLANA = 'Hyperlane Warp Route: USDC (Solana Collateral)',
+    HYPERLANE_WARP_USDT_SOLANA = 'Hyperlane Warp Route: USDT (Solana Collateral)',
+    HYPERLANE_WARP_SOL_SOLANA = 'Hyperlane Warp Route: SOL (Solana Native)',
+    HYPERLANE_MULTISIG_ISM_NARA = 'Hyperlane Multisig ISM (Nara)',
+    HYPERLANE_MULTISIG_ISM_SOLANA = 'Hyperlane Multisig ISM (Solana)',
+    HYPERLANE_VALIDATOR_ANNOUNCE_NARA = 'Hyperlane Validator Announce (Nara)',
+    HYPERLANE_IGP_NARA = 'Hyperlane Interchain Gas Paymaster (Nara)',
 }
 
 const ALL_CLUSTERS = [Cluster.Custom, Cluster.Devnet, Cluster.Testnet, Cluster.MainnetBeta];
@@ -139,6 +154,14 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.RAYDIUM_LP_2,
     },
+    '2XenrKdmacQqSn3VAF9nbZNfhbe6YR2Way1WJmSL5Yrj': {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.HYPERLANE_MULTISIG_ISM_NARA,
+    },
+    '2q5HJaaagMxBM7GD5yR55xHN4tDZMh1gYraG1Y4wbry6': {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.HYPERLANE_WARP_USDT_NARA,
+    },
     '2rHhojZ7hpu1zA91nvZmT8TqWWvMcKmmNBCr2mKTtMq4': {
         deployments: [Cluster.Devnet],
         name: PROGRAM_NAMES.WORMHOLE_NFT,
@@ -151,6 +174,14 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         deployments: [Cluster.Devnet],
         name: PROGRAM_NAMES.WORMHOLE_CORE,
     },
+    '46MmAWwKRAt9uvn7m44NXbVq2DCWBQE2r1TDw25nyXrt': {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.HYPERLANE_WARP_SOL_SOLANA,
+    },
+    '4GcZJTa8s9vxtTz97Vj1RrwKMqPkT3DiiJkvUQDwsuZP': {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.HYPERLANE_WARP_USDC_SOLANA,
+    },
     '5ZfZAwP2m93waazg8DkrrVmsupeiPEvaEHowiUP7UAbJ': {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.SOLANART_GO,
@@ -162,6 +193,14 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
     '675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8': {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.RAYDIUM_AMM,
+    },
+    '6ExBzNNba9vAKMZyXfwE9CsTJmKsXPpdaQC4HxeUUQEJ': {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.HYPERLANE_MULTISIG_ISM_SOLANA,
+    },
+    '6bKmjEMbjcJUnqAiNw7AXuMvUALzw5XRKiV9dBsterxg': {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.HYPERLANE_WARP_SOL_NARA,
     },
     '7sPptkymzvayoSbLXzBsXEF8TSf3typNnAWkrKrDizNb': {
         deployments: [Cluster.MainnetBeta],
@@ -201,9 +240,17 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         deployments: ALL_CLUSTERS,
         name: PROGRAM_NAMES.ADDRESS_LOOKUP_TABLE,
     },
+    BC2j6WrdPs9xhU9CfBwJsYSnJrGq5Tcm4SEen9ENv7go: {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.HYPERLANE_WARP_USDC_NARA,
+    },
     BJ3jrUzddfuSrZHXSCxMUUQsjKEyLmuuyZebkcaFp2fg: {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.SERUM_1,
+    },
+    BKcYMcQgpBHnrkSs1aMB4hzNwvdKf2DuKWFL59dV6j1o: {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.HYPERLANE_VALIDATOR_ANNOUNCE_NARA,
     },
     BrEAK7zGZ6dM71zUDACDqJnekihmwF15noTddWTsknjC: {
         deployments: LIVE_CLUSTERS,
@@ -242,6 +289,10 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         deployments: [Cluster.Devnet, Cluster.MainnetBeta],
         name: PROGRAM_NAMES.SABER_ROUTER,
     },
+    DCTt9H3pwwU89qC3Z4voYNThZypV68AwhYNzMNBxWXoy: {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.HYPERLANE_WARP_USDT_SOLANA,
+    },
     DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH: {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.DFLOW_AGGREGATOR_4,
@@ -249,6 +300,10 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
     DZnkkTmCiFWfYTfT41X3Rd1kDgozqzxWaHqsw6W4x2oe: {
         deployments: [Cluster.Devnet],
         name: PROGRAM_NAMES.WORMHOLE_TOKEN,
+    },
+    Db1U66V3Kn9B8XgQu5tGcPUYcmH4ZS8Vi4zLXfVJrJEa: {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.HYPERLANE_IGP_NARA,
     },
     DjVE6JNiYqPL2QXyCUUh8rNjHrbz9hXHNYt99MQ59qw1: {
         deployments: [Cluster.MainnetBeta],
@@ -262,6 +317,10 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.SWITCHBOARD,
     },
+    E588QtVUvresuXq2KoNEwAmoifCzYGpRBdHByN9KQMbi: {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.HYPERLANE_MAILBOX_SOLANA,
+    },
     EUqojwWA2rd19FZrzeBncJsm38Jm1hEhE3zsmX3bRc2o: {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.SERUM_2,
@@ -273,6 +332,10 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
     EhhTKczWMGQt46ynNeRX1WfeagwwJd7ufHvCDjRxjo5Q: {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.RAYDIUM_STAKING,
+    },
+    EjtLD3MCBJregFKAce2pQqPtSnnmBWK5oAZ3wBifHnaH: {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.HYPERLANE_MAILBOX_NARA,
     },
     Feat1YXHhH6t1juaWF74WLcfv4XoNocjXA6sPWHNgAse: {
         deployments: ALL_CLUSTERS,
@@ -462,6 +525,10 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         deployments: LIVE_CLUSTERS,
         name: PROGRAM_NAMES.NAME,
     },
+    noopb9bkMVfRPU8AsbpTUg8AQkHtKwMYZiFUjNRtMmV: {
+        deployments: ALL_CLUSTERS,
+        name: PROGRAM_NAMES.HYPERLANE_NOOP,
+    },
     oreV2ZymfyeXgNgBdqMkumTqqAprVqgBWQfoYkrtKWQ: {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.ORE,
@@ -491,6 +558,21 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
 export const SPECIAL_IDS: { [key: string]: string } = {
     '1nc1nerator11111111111111111111111111111111': 'Incinerator',
     Sysvar1111111111111111111111111111111111111: 'SYSVAR',
+};
+
+/**
+ * Static labels for well-known SPL token mints. Resolved synchronously inside
+ * `addressLabel`, so any `<Address>` rendering — instruction details, account
+ * pickers, transfer rows — picks them up without needing async token-info fetch.
+ */
+export const KNOWN_TOKEN_MINTS: { [key: string]: string } = {
+    // Hyperlane bridge — Nara synthetic mints (Token-2022)
+    '7fKh7DqPZmsYPHdGvt9Qw2rZkSEGp9F5dBa3XuuuhavU': 'SOL (Hyperlane)',
+    '8P7UGWjq86N3WUmwEgKeGHJZLcoMJqr5jnRUmeBN7YwR': 'USDC (Hyperlane)',
+    '8yQSyqC85A9Vcqz8gTU2Bk5Y63bnC5378sgx1biTKsjd': 'USDT (Hyperlane)',
+    // Hyperlane bridge — Solana origin mints (locked as collateral)
+    EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v: 'USDC',
+    Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB: 'USDT',
 };
 
 export const SYSVAR_IDS: { [key: string]: string } = {

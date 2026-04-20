@@ -9,7 +9,7 @@ import { Cluster } from '@utils/cluster';
 import { SerumMarketRegistry } from '@utils/serumMarketRegistry';
 import bs58 from 'bs58';
 
-import { LOADER_IDS, PROGRAM_INFO_BY_ID, SPECIAL_IDS, SYSVAR_IDS } from './programs';
+import { KNOWN_TOKEN_MINTS, LOADER_IDS, PROGRAM_INFO_BY_ID, SPECIAL_IDS, SYSVAR_IDS } from './programs';
 
 export type TokenLabelInfo = {
     name?: string;
@@ -44,6 +44,7 @@ export function addressLabel(address: string, cluster: Cluster, tokenInfo?: Toke
         programLabel(address, cluster) ||
         SYSVAR_IDS[address] ||
         SPECIAL_IDS[address] ||
+        KNOWN_TOKEN_MINTS[address] ||
         tokenLabel_(tokenInfo) ||
         SerumMarketRegistry.get(address, cluster)
     );

@@ -46,6 +46,16 @@ import { useProgramMetadataIdl } from '@/app/entities/program-metadata';
 import AnchorDetailsCard from '../instruction/AnchorDetailsCard';
 import { Ed25519DetailsCard } from '../instruction/ed25519/Ed25519DetailsCard';
 import { isEd25519Instruction } from '../instruction/ed25519/types';
+import { HyperlaneInfraDetailsCard } from '../instruction/hyperlane/HyperlaneInfraDetailsCard';
+import { HyperlaneMailboxDetailsCard } from '../instruction/hyperlane/HyperlaneMailboxDetailsCard';
+import { HyperlaneNoopDetailsCard } from '../instruction/hyperlane/HyperlaneNoopDetailsCard';
+import { HyperlaneWarpDetailsCard } from '../instruction/hyperlane/HyperlaneWarpDetailsCard';
+import {
+    isHyperlaneInfraInstruction,
+    isHyperlaneMailboxInstruction,
+    isHyperlaneNoopInstruction,
+    isHyperlaneWarpInstruction,
+} from '../instruction/hyperlane/types';
 import { LighthouseDetailsCard } from '../instruction/lighthouse/LighthouseDetailsCard';
 import { isLighthouseInstruction } from '../instruction/lighthouse/types';
 import { isMangoInstruction } from '../instruction/mango/types';
@@ -251,6 +261,14 @@ function InstructionCard({
         return <ComputeBudgetDetailsCard key={key} {...props} />;
     } else if (isLighthouseInstruction(transactionIx)) {
         return <LighthouseDetailsCard key={key} {...props} />;
+    } else if (isHyperlaneWarpInstruction(transactionIx)) {
+        return <HyperlaneWarpDetailsCard key={key} {...props} />;
+    } else if (isHyperlaneMailboxInstruction(transactionIx)) {
+        return <HyperlaneMailboxDetailsCard key={key} {...props} />;
+    } else if (isHyperlaneInfraInstruction(transactionIx)) {
+        return <HyperlaneInfraDetailsCard key={key} {...props} />;
+    } else if (isHyperlaneNoopInstruction(transactionIx)) {
+        return <HyperlaneNoopDetailsCard key={key} {...props} />;
     } else if (isSolanaAttestationInstruction(transactionIx)) {
         return (
             <ErrorBoundary fallback={<UnknownDetailsCard {...props} />} key={key}>

@@ -1768,7 +1768,7 @@ hr {
 
 .table-responsive {
     position: relative;
-    overflow-x: auto;
+    overflow-x: visible;
     overflow-y: visible;
 }
 
