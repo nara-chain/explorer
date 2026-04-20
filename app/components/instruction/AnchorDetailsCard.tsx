@@ -1,6 +1,7 @@
 import { Address } from '@components/common/Address';
 import { BorshEventCoder, BorshInstructionCoder, Idl, Instruction, Program } from '@coral-xyz/anchor';
 import { IdlEvent, IdlField, IdlInstruction, IdlTypeDefTyStruct } from '@coral-xyz/anchor/dist/cjs/idl';
+import { useCluster } from '@providers/cluster';
 import { useTransactionDetails } from '@providers/transactions';
 import { SignatureResult, TransactionInstruction } from '@solana/web3.js';
 import {
@@ -15,11 +16,15 @@ import {
 } from '@utils/anchor';
 import { camelToTitleCase } from '@utils/index';
 import { extractEventsFromLogs } from '@utils/program-logs';
+import { programLabel } from '@utils/tx';
 import { useMemo, useState } from 'react';
 import { ChevronDown, ChevronUp, CornerDownRight } from 'react-feather';
 
 import { InstructionCard } from './InstructionCard';
 import { ProgramEventsCard } from './ProgramEventsCard';
+
+// eslint-disable-next-line no-restricted-syntax -- strip trailing " Program" suffix from registered labels
+const stripProgramSuffix = (name: string): string => name.replace(/ Program$/i, '');
 
 export default function AnchorDetailsCard(props: {
     ix: TransactionInstruction;
@@ -31,10 +36,21 @@ export default function AnchorDetailsCard(props: {
     anchorProgram: Program<Idl>;
 }) {
     const { ix, anchorProgram, signature, index } = props;
-    const programName = getAnchorProgramName(anchorProgram) ?? 'Unknown Program';
+    const { cluster } = useCluster();
+    // Prefer the registered label from PROGRAM_INFO_BY_ID over the IDL's
+    // metadata.name — gives us nicer display names like "Meteora DLMM" instead
+    // of the raw on-chain "Lb Clmm". Falls back to IDL metadata when the
+    // program isn't in our registry.
+    const registeredLabel = programLabel(ix.programId.toBase58(), cluster);
+    const programName = registeredLabel
+        ? stripProgramSuffix(registeredLabel)
+        : camelToTitleCase(getAnchorProgramName(anchorProgram) ?? 'Unknown Program');
 
-    const ixName = getAnchorNameForInstruction(ix, anchorProgram) ?? 'Unknown Instruction';
-    const cardTitle = `${camelToTitleCase(programName)}: ${camelToTitleCase(ixName)}`;
+    const resolvedIxName = getAnchorNameForInstruction(ix, anchorProgram);
+    const ixName =
+        resolvedIxName ??
+        `Unknown Instruction (disc 0x${Buffer.from(ix.data).subarray(0, 8).toString('hex')})`;
+    const cardTitle = `${programName}: ${resolvedIxName ? camelToTitleCase(ixName) : ixName}`;
 
     // Extract events from transaction logs
     const details = useTransactionDetails(signature);
@@ -85,16 +101,20 @@ function AnchorDetails({ ix, anchorProgram }: { ix: TransactionInstruction; anch
                 }
                 const ixEventDef = anchorProgram.idl.events?.find(
                     ixDef => ixDef.name === decodedIxData?.name
-                ) as IdlEvent;
+                ) as IdlEvent | undefined;
 
-                const ixEventFields = anchorProgram.idl.types?.find((type: any) => type.name === ixEventDef.name);
+                if (ixEventDef) {
+                    const ixEventFields = anchorProgram.idl.types?.find(
+                        (type: any) => type.name === ixEventDef.name
+                    );
 
-                // Remap the event definition to an instruction definition by force casting to struct fields
-                ixDef = {
-                    ...ixEventDef,
-                    accounts: [],
-                    args: ((ixEventFields?.type as IdlTypeDefTyStruct).fields as IdlField[]) ?? [],
-                };
+                    // Remap the event definition to an instruction definition by force casting to struct fields
+                    ixDef = {
+                        ...ixEventDef,
+                        accounts: [],
+                        args: ((ixEventFields?.type as IdlTypeDefTyStruct)?.fields as IdlField[]) ?? [],
+                    };
+                }
 
                 // Self-CPI instructions have 1 account called the eventAuthority
                 // https://github.com/coral-xyz/anchor/blob/04985802587c693091f836e0083e4412148c0ca6/lang/attribute/event/src/lib.rs#L165

@@ -7,8 +7,8 @@ import { useAnchorProgram } from '@entities/idl';
 import { PublicKey, TransactionInstruction } from '@solana/web3.js';
 import { Cluster } from '@utils/cluster';
 import { camelToTitleCase, numberWithSeparator, snakeToTitleCase } from '@utils/index';
-import React, { Fragment, ReactNode, useState } from 'react';
-import { ChevronDown, ChevronUp, CornerDownRight } from 'react-feather';
+import React, { Fragment, ReactNode } from 'react';
+import { CornerDownRight } from 'react-feather';
 
 const ANCHOR_SELF_CPI_TAG = Buffer.from('1d9acb512ea545e4', 'hex').reverse();
 const ANCHOR_SELF_CPI_NAME = 'Anchor Self Invocation';
@@ -630,7 +630,6 @@ export function ExpandableRow({
     nestingLevel: number;
     children: React.ReactNode;
 }) {
-    const [expanded, setExpanded] = useState(false);
     return (
         <>
             <tr className="table-group-header">
@@ -641,23 +640,9 @@ export function ExpandableRow({
                     </div>
                 </td>
                 <td>{fieldType}</td>
-                <td className="text-lg-end" onClick={() => setExpanded(current => !current)}>
-                    <div className="c-pointer">
-                        {expanded ? (
-                            <>
-                                <span className="text-info me-2">Collapse</span>
-                                <ChevronUp size={15} />
-                            </>
-                        ) : (
-                            <>
-                                <span className="text-info me-2">Expand</span>
-                                <ChevronDown size={15} />
-                            </>
-                        )}
-                    </div>
-                </td>
+                <td />
             </tr>
-            {expanded && <>{children}</>}
+            {children}
         </>
     );
 }

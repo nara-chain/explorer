@@ -102,6 +102,11 @@ export enum PROGRAM_NAMES {
     // Lighthouse
     LIGHTHOUSE_PROGRAM = 'Lighthouse Program',
 
+    // Meteora
+    METEORA_DLMM = 'Meteora DLMM Program',
+    METEORA_DAMM_V2 = 'Meteora DAMM v2 Program',
+    METEORA_DBC = 'Meteora Dynamic Bonding Curve Program',
+
     // Hyperlane (Nara <-> Solana bridge)
     HYPERLANE_NOOP = 'SPL Noop Program',
     HYPERLANE_MAILBOX_NARA = 'Hyperlane Mailbox (Nara)',
@@ -369,6 +374,10 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.LIGHTHOUSE_PROGRAM,
     },
+    LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo: {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.METEORA_DLMM,
+    },
     LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi: {
         deployments: LIVE_CLUSTERS,
         name: PROGRAM_NAMES.LENDING,
@@ -508,6 +517,14 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
     compr6CUsB5m2jS4Y3831ztGSTnDpnKJTKS95d64XVq: {
         deployments: [Cluster.MainnetBeta, Cluster.Devnet],
         name: PROGRAM_NAMES.ZK_ACCOUNT_COMPRESSION_PROGRAM,
+    },
+    cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG: {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.METEORA_DAMM_V2,
+    },
+    dbcij3LWUppWqq96dh6gJWwBifmcGfLSB5D4DuSMaqN: {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.METEORA_DBC,
     },
     gSbePebfvPy7tRqimPoVecS2UsBvYv46ynrzWocc92s: {
         deployments: [Cluster.Devnet],

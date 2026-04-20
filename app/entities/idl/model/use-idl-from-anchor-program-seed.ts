@@ -4,6 +4,7 @@ import { AnchorProvider, Idl, Program } from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { Connection, Keypair, PublicKey } from '@solana/web3.js';
 
+import { getLocalAnchorIdl } from '@/app/utils/anchor-idl-registry';
 import { Cluster } from '@/app/utils/cluster';
 
 const cachedAnchorProgramPromises: Record<
@@ -16,6 +17,12 @@ export function getProvider(url: string) {
 }
 
 export function useIdlFromAnchorProgramSeed(programAddress: string, url: string, cluster?: Cluster): Idl | null {
+    // Static registry takes precedence: avoids a network round trip and works
+    // even when the on-chain IDL is unavailable (e.g. Meteora programs viewed
+    // from the Nara cluster).
+    const localIdl = getLocalAnchorIdl(programAddress);
+    if (localIdl) return localIdl;
+
     const key = `${programAddress}-${url}`;
     const cacheEntry = cachedAnchorProgramPromises[key];
 
