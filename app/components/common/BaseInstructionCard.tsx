@@ -10,6 +10,7 @@ import { BaseRawParsedDetails } from './BaseRawParsedDetails';
 
 type InstructionProps = {
     title: string;
+    subtitle?: React.ReactNode;
     children?: React.ReactNode;
     result: SignatureResult;
     index: number;
@@ -26,6 +27,7 @@ type InstructionProps = {
 
 export function BaseInstructionCard({
     title,
+    subtitle,
     children,
     result,
     index,
@@ -53,13 +55,16 @@ export function BaseInstructionCard({
     return (
         <div className="card" ref={scrollAnchorRef}>
             <div className="card-header">
-                <h3 className="card-header-title mb-0 d-flex align-items-center">
-                    <span className={`badge bg-${resultClass}-soft me-2`}>
-                        #{index + 1}
-                        {childIndex !== undefined ? `.${childIndex + 1}` : ''}
-                    </span>
-                    {title}
-                </h3>
+                <div className="d-flex flex-column" style={{ minWidth: 0 }}>
+                    <h3 className="card-header-title mb-0 d-flex align-items-center">
+                        <span className={`badge bg-${resultClass}-soft me-2`}>
+                            #{index + 1}
+                            {childIndex !== undefined ? `.${childIndex + 1}` : ''}
+                        </span>
+                        {title}
+                    </h3>
+                    {subtitle && <div className="instruction-subtitle mt-2">{subtitle}</div>}
+                </div>
 
                 <button
                     disabled={defaultRaw}

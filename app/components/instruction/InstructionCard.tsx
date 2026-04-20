@@ -7,6 +7,7 @@ import { SignatureContext } from './SignatureContext';
 
 type InstructionProps = {
     title: string;
+    subtitle?: React.ReactNode;
     children?: React.ReactNode;
     result: SignatureResult;
     index: number;
@@ -21,6 +22,7 @@ type InstructionProps = {
 
 export function InstructionCard({
     title,
+    subtitle,
     children,
     result,
     index,
@@ -49,6 +51,7 @@ export function InstructionCard({
     return (
         <BaseInstructionCard
             title={title}
+            subtitle={subtitle}
             result={result}
             index={index}
             ix={ix}

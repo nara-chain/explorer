@@ -21,7 +21,14 @@ import { useMemo, useState } from 'react';
 import { ChevronDown, ChevronUp, CornerDownRight } from 'react-feather';
 
 import { InstructionCard } from './InstructionCard';
+import { SwapSubtitle } from './meteora/SwapSubtitle';
 import { ProgramEventsCard } from './ProgramEventsCard';
+
+const METEORA_SWAP_PROGRAM_IDS = new Set([
+    'LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo', // DLMM
+    'cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG', // DAMM v2
+    'dbcij3LWUppWqq96dh6gJWwBifmcGfLSB5D4DuSMaqN', // DBC
+]);
 
 // eslint-disable-next-line no-restricted-syntax -- strip trailing " Program" suffix from registered labels
 const stripProgramSuffix = (name: string): string => name.replace(/ Program$/i, '');
@@ -76,8 +83,19 @@ export default function AnchorDetailsCard(props: {
         ];
     }, [details, index, anchorProgram]);
 
+    const subtitle =
+        resolvedIxName && METEORA_SWAP_PROGRAM_IDS.has(ix.programId.toBase58()) ? (
+            <SwapSubtitle
+                ix={ix}
+                program={anchorProgram}
+                instructionIndex={index}
+                ixName={resolvedIxName}
+                signature={signature}
+            />
+        ) : undefined;
+
     return (
-        <InstructionCard title={cardTitle} {...props} eventCards={eventCards}>
+        <InstructionCard title={cardTitle} subtitle={subtitle} {...props} eventCards={eventCards}>
             <AnchorDetails ix={ix} anchorProgram={anchorProgram} />
         </InstructionCard>
     );
