@@ -10,6 +10,7 @@ import {
     getAssetLinkAddress,
     getHyperlaneDomainName,
     getHyperlaneWarpRoute,
+    HyperlaneSide,
     HyperlaneWarpRouteInfo,
 } from './types';
 
@@ -29,12 +30,15 @@ export function HyperlaneWarpDetailsCard({ ix, index, result, innerCards, childI
     const routeLabel = route ? `${route.label} Warp Route` : 'Hyperlane Warp Route';
     const title = decoded ? `${routeLabel}: ${describeWarpKind(decoded.kind)}` : `${routeLabel}: Unknown`;
 
+    const subtitle = route && decoded ? buildBridgeSubtitle(route, decoded) : undefined;
+
     return (
         <InstructionCard
             ix={ix}
             index={index}
             result={result}
             title={title}
+            subtitle={subtitle}
             innerCards={innerCards}
             childIndex={childIndex}
             defaultRaw={!decoded}
@@ -193,6 +197,78 @@ function RouteRows({ route, programId }: { route: HyperlaneWarpRouteInfo; progra
             </tr>
         </>
     );
+}
+
+function buildBridgeSubtitle(
+    route: HyperlaneWarpRouteInfo,
+    decoded: ReturnType<typeof decodeWarpInstruction>
+): React.ReactNode | undefined {
+    if (!decoded) return undefined;
+
+    if (decoded.kind === 'TransferRemote') {
+        // Outbound: user calls warp route directly to bridge OUT.
+        // Source = the route's local side (where this program lives).
+        // Destination = decoded.destinationDomain.
+        return renderBridgeSubtitle({
+            asset: assetSymbol(route),
+            destinationLabel: getHyperlaneDomainName(decoded.destinationDomain),
+            rawAmount: decoded.amount,
+            sourceLabel: chainLabelFromSide(route.side),
+            tokenDecimals: route.decimals,
+        });
+    }
+
+    if (decoded.kind === 'Handle' || decoded.kind === 'HandleAccountMetas') {
+        // Inbound: mailbox CPIs into the local warp route to release/mint.
+        // Source = decoded.origin domain. Destination = local route side.
+        // Amount lives in the embedded TokenMessage body.
+        const tokenMessage = decodeTokenMessage(decoded.messageBody);
+        return renderBridgeSubtitle({
+            asset: assetSymbol(route),
+            destinationLabel: chainLabelFromSide(route.side),
+            rawAmount: tokenMessage?.amount,
+            sourceLabel: getHyperlaneDomainName(decoded.origin),
+            tokenDecimals: route.decimals,
+        });
+    }
+
+    return undefined;
+}
+
+function renderBridgeSubtitle({
+    sourceLabel,
+    destinationLabel,
+    rawAmount,
+    tokenDecimals,
+    asset,
+}: {
+    sourceLabel: string;
+    destinationLabel: string;
+    rawAmount?: bigint;
+    tokenDecimals?: number;
+    asset?: string;
+}): React.ReactNode {
+    return (
+        <div className="d-flex align-items-center flex-wrap" style={{ gap: '6px' }}>
+            <span className="text-muted text-uppercase me-1" style={{ fontSize: '10px', letterSpacing: '0.15em' }}>
+                Bridge
+            </span>
+            {rawAmount !== undefined && (
+                <>
+                    <span className="font-monospace">{formatTokenAmount(rawAmount, tokenDecimals)}</span>
+                    {asset && <span style={{ opacity: 0.85 }}>{asset}</span>}
+                    <span className="swap-arrow">·</span>
+                </>
+            )}
+            <span>{sourceLabel}</span>
+            <span className="swap-arrow">→</span>
+            <span>{destinationLabel}</span>
+        </div>
+    );
+}
+
+function chainLabelFromSide(side: HyperlaneSide): string {
+    return side === 'nara' ? 'Nara' : 'Solana';
 }
 
 function describeWarpKind(kind: string): string {

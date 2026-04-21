@@ -11,6 +11,8 @@ import {
     getHyperlaneDomainName,
     getHyperlaneMailbox,
     getHyperlaneWarpRoute,
+    HyperlaneMailboxInfo,
+    HyperlaneSide,
     HyperlaneWarpRouteInfo,
 } from './types';
 
@@ -41,12 +43,15 @@ export function HyperlaneMailboxDetailsCard({ ix, index, result, innerCards, chi
     const mailboxLabel = mailbox?.label ?? 'Hyperlane Mailbox';
     const title = decoded ? `${mailboxLabel}: ${describeMailboxKind(decoded.kind)}` : `${mailboxLabel}: Unknown`;
 
+    const subtitle = mailbox && decoded ? buildBridgeSubtitle(mailbox, decoded) : undefined;
+
     return (
         <InstructionCard
             ix={ix}
             index={index}
             result={result}
             title={title}
+            subtitle={subtitle}
             innerCards={innerCards}
             childIndex={childIndex}
             defaultRaw={!decoded}
@@ -227,6 +232,86 @@ function OutboxDispatchRows({
             )}
         </>
     );
+}
+
+function buildBridgeSubtitle(
+    mailbox: HyperlaneMailboxInfo,
+    decoded: ReturnType<typeof decodeMailboxInstruction>
+): React.ReactNode | undefined {
+    if (!decoded) return undefined;
+
+    if (decoded.kind === 'OutboxDispatch') {
+        // Outbound: local mailbox sends a message to remote chain.
+        // The CPI caller (sender) is the local warp route, which tells us the asset.
+        const route = getHyperlaneWarpRoute(decoded.sender.toBase58());
+        const tokenMessage = decodeTokenMessage(decoded.messageBody);
+        return renderBridgeSubtitle({
+            asset: route ? assetSymbol(route) : undefined,
+            destinationLabel: chainLabel(decoded.destinationDomain),
+            rawAmount: tokenMessage?.amount,
+            sourceLabel: chainLabelFromSide(mailbox.side),
+            tokenDecimals: route?.decimals,
+        });
+    }
+
+    if (decoded.kind === 'InboxProcess') {
+        // Inbound: local mailbox processes a message from remote chain.
+        // Decode the wrapped HyperlaneMessage header for origin/destination/recipient,
+        // then look up the local recipient warp route for the asset.
+        const message = decodeHyperlaneMessage(decoded.message);
+        if (!message) return undefined;
+        const route = getHyperlaneWarpRoute(message.recipient.toBase58());
+        const tokenMessage = decodeTokenMessage(message.body);
+        return renderBridgeSubtitle({
+            asset: route ? assetSymbol(route) : undefined,
+            destinationLabel: chainLabelFromSide(mailbox.side),
+            rawAmount: tokenMessage?.amount,
+            sourceLabel: chainLabel(message.originDomain),
+            tokenDecimals: route?.decimals,
+        });
+    }
+
+    return undefined;
+}
+
+function renderBridgeSubtitle({
+    sourceLabel,
+    destinationLabel,
+    rawAmount,
+    tokenDecimals,
+    asset,
+}: {
+    sourceLabel: string;
+    destinationLabel: string;
+    rawAmount?: bigint;
+    tokenDecimals?: number;
+    asset?: string;
+}): React.ReactNode {
+    return (
+        <div className="d-flex align-items-center flex-wrap" style={{ gap: '6px' }}>
+            <span className="text-muted text-uppercase me-1" style={{ fontSize: '10px', letterSpacing: '0.15em' }}>
+                Bridge
+            </span>
+            {rawAmount !== undefined && (
+                <>
+                    <span className="font-monospace">{formatTokenAmount(rawAmount, tokenDecimals)}</span>
+                    {asset && <span style={{ opacity: 0.85 }}>{asset}</span>}
+                    <span className="swap-arrow">·</span>
+                </>
+            )}
+            <span>{sourceLabel}</span>
+            <span className="swap-arrow">→</span>
+            <span>{destinationLabel}</span>
+        </div>
+    );
+}
+
+function chainLabel(domain: number): string {
+    return getHyperlaneDomainName(domain);
+}
+
+function chainLabelFromSide(side: HyperlaneSide): string {
+    return side === 'nara' ? 'Nara' : 'Solana';
 }
 
 function describeMailboxKind(kind: string): string {
