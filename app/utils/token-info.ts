@@ -66,25 +66,34 @@ type TokenInfoOverride = {
     verified: boolean;
 };
 
+const USDC_LOGO =
+    'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png';
+const USDT_LOGO =
+    'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg';
+const SOL_LOGO =
+    'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png';
+
 const TOKEN_INFO_OVERRIDES: Record<string, TokenInfoOverride> = {
     // Nara synthetic mints — minted by Hyperlane warp routes when bridging from Solana.
+    // Use the underlying asset's official logo so users recognise them at a glance;
+    // the "(Hyperlane)" suffix in the name conveys it's the bridged variant.
     '7fKh7DqPZmsYPHdGvt9Qw2rZkSEGp9F5dBa3XuuuhavU': {
         decimals: 9,
-        logoURI: '/favicon-v3.svg',
+        logoURI: SOL_LOGO,
         name: 'SOL (Hyperlane)',
         symbol: 'SOL',
         verified: true,
     },
     '8P7UGWjq86N3WUmwEgKeGHJZLcoMJqr5jnRUmeBN7YwR': {
         decimals: 6,
-        logoURI: '/favicon-v3.svg',
+        logoURI: USDC_LOGO,
         name: 'USDC (Hyperlane)',
         symbol: 'USDC',
         verified: true,
     },
     '8yQSyqC85A9Vcqz8gTU2Bk5Y63bnC5378sgx1biTKsjd': {
         decimals: 6,
-        logoURI: '/favicon-v3.svg',
+        logoURI: USDT_LOGO,
         name: 'USDT (Hyperlane)',
         symbol: 'USDT',
         verified: true,
@@ -92,23 +101,24 @@ const TOKEN_INFO_OVERRIDES: Record<string, TokenInfoOverride> = {
     // Solana-side origin mints — locked as collateral by Hyperlane warp routes.
     EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v: {
         decimals: 6,
-        logoURI: 'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png',
+        logoURI: USDC_LOGO,
         name: 'USDC',
         symbol: 'USDC',
         verified: true,
     },
     Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB: {
         decimals: 6,
-        logoURI: 'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg',
+        logoURI: USDT_LOGO,
         name: 'USDT',
         symbol: 'USDT',
         verified: true,
     },
+    // Wrapped native — on Nara this mint is the wrapped NARA, not Solana SOL.
     So11111111111111111111111111111111111111112: {
         decimals: 9,
         logoURI: '/favicon-v3.svg',
-        name: 'NARA Wrapped SOL',
-        symbol: 'NARA-wNARA',
+        name: 'Wrapped NARA',
+        symbol: 'NARA',
         verified: true,
     },
 };
@@ -276,8 +286,28 @@ export async function getTokenInfos(
 ): Promise<Token[] | undefined> {
     const client = await makeUtlClient(cluster, connectionString, genesisHash);
     if (!client) return undefined;
+    const chainId = getChainId(cluster, genesisHash);
     const tokens = await client.fetchMints(addresses);
-    return tokens;
+    // Merge static overrides over whatever UTL returned, and add entries for
+    // overridden mints that UTL didn't return at all (so token holdings,
+    // address lists, etc. always show our nicknames + logos).
+    const returnedAddresses = new Set(tokens.map(t => t.address));
+    const overridden = tokens.map(token => {
+        const override = TOKEN_INFO_OVERRIDES[token.address];
+        return override ? ({ ...token, ...override, address: token.address } as Token) : token;
+    });
+    const missing = addresses
+        .map(a => a.toBase58())
+        .filter(addr => !returnedAddresses.has(addr) && addr in TOKEN_INFO_OVERRIDES)
+        .map(
+            addr =>
+                ({
+                    address: addr,
+                    chainId,
+                    ...TOKEN_INFO_OVERRIDES[addr],
+                } as Token)
+        );
+    return [...overridden, ...missing];
 }
 
 export function getCurrentTokenScaledUiAmountMultiplier(extensions: Array<TokenExtension> | undefined): string {

@@ -7,25 +7,32 @@ import { UTL_API_BASE_URL } from '../env';
 import { TokenInfoHttpError, TokenInfoInvalidResponseError } from './errors';
 import { type FetchConfig, type TokenInfo } from './types';
 
+const USDC_LOGO =
+    'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png';
+const USDT_LOGO =
+    'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg';
+const SOL_LOGO =
+    'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png';
+
 const TOKEN_INFO_OVERRIDES: Record<string, Omit<TokenInfo, 'chainId' | 'address'>> = {
     // Nara synthetic mints — minted by Hyperlane warp routes when bridging from Solana.
     '7fKh7DqPZmsYPHdGvt9Qw2rZkSEGp9F5dBa3XuuuhavU': {
         decimals: 9,
-        logoURI: '/favicon-v3.svg',
+        logoURI: SOL_LOGO,
         name: 'SOL (Hyperlane)',
         symbol: 'SOL',
         verified: true,
     },
     '8P7UGWjq86N3WUmwEgKeGHJZLcoMJqr5jnRUmeBN7YwR': {
         decimals: 6,
-        logoURI: '/favicon-v3.svg',
+        logoURI: USDC_LOGO,
         name: 'USDC (Hyperlane)',
         symbol: 'USDC',
         verified: true,
     },
     '8yQSyqC85A9Vcqz8gTU2Bk5Y63bnC5378sgx1biTKsjd': {
         decimals: 6,
-        logoURI: '/favicon-v3.svg',
+        logoURI: USDT_LOGO,
         name: 'USDT (Hyperlane)',
         symbol: 'USDT',
         verified: true,
@@ -33,24 +40,24 @@ const TOKEN_INFO_OVERRIDES: Record<string, Omit<TokenInfo, 'chainId' | 'address'
     // Solana-side origin mints — locked as collateral by Hyperlane warp routes.
     EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v: {
         decimals: 6,
-        logoURI: 'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png',
+        logoURI: USDC_LOGO,
         name: 'USDC',
         symbol: 'USDC',
         verified: true,
     },
     Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB: {
         decimals: 6,
-        logoURI: 'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg',
+        logoURI: USDT_LOGO,
         name: 'USDT',
         symbol: 'USDT',
         verified: true,
     },
-    // Wrapped SOL (Solana NATIVE_MINT) — kept as user-requested NARA branding.
+    // Wrapped native — on Nara this mint is the wrapped NARA, not Solana SOL.
     So11111111111111111111111111111111111111112: {
         decimals: 9,
         logoURI: '/favicon-v3.svg',
-        name: 'NARA Wrapped SOL',
-        symbol: 'NARA-wNARA',
+        name: 'Wrapped NARA',
+        symbol: 'NARA',
         verified: true,
     },
 };
